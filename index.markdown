@@ -7,18 +7,18 @@ layout: home
 	
 * ludoj
 	* [Komunterio](#) (ellaborata)
+
+* softvaro
+	* [Despero - rustlingva ludmotoro](despero) (ellaborata)	
 	
 * muziko
 	* [Aŭtuna tago de vinbera kolektado (2022)](#) (miksata)
 	* [Armado (2022)](#) (miksata)
 	* [Distopio Lirike (2022)](#) (miksata)
 
-* softvaro
-	* [Despero - rustlingva ludmotoro](https://github.com/konceptosociala/despero) (ellaborata)	
-
 * literaturo
 	* [Versaro](#) (ellaborata)
-	* [Komunterio (esperanto)](#) (verkata)
+	* [Komunterio (esperanto)](libroj/komunterio)
 	* [Комунтерія (українською)](#) (verkata)
 
 ---
