@@ -6,6 +6,19 @@ permalink: /libroj/komunterio/
 
 | **ELŜUTI** | [PDF](#) | [ODT](#) | [HTML](#) | [EPUB](#) |
 
+## Enhavo
+* [Prologo. "Konstitucio de Komunterio (Redakcio de Ø4-jaro, kurtigita)"](#prologo-konstitucio-de-komunterio-redakcio-de-ø4-jaro-kurtigita)
+* [Ĉapitro unu. "Labortago"](#ĉapitro-unu-labortago)
+* [Ĉapitro du. "Blanka nokto"](#ĉapitro-du-blanka-nokto)
+* [Ĉapitro tri. "Bonvenon en na Ankom!"](#ĉapitro-tri-bonvenon-en-na-ankom)
+* [Ĉapitro kvar. "Rusiana Agro di Experimenti"](#ĉapitro-kvar-rusiana-agro-di-experimenti)
+* [Ĉapitro kvin. "Renkonto"](#ĉapitro-kvin-renkonto)
+* [Ĉapitro ses. "Operacio ekstra"](#ĉapitro-ses-operacio-ekstra)
+* [Ĉapitro sep. "Reveno"](#ĉapitro-sep-reveno)
+* [Ĉapitro Ø. "Finkomenco"](#ĉapitro-ø-finkomenco)
+* [Epilogo](#epilogo)
+* [Piednotoj](#piednotoj)
+
 # Prologo. "Konstitucio de Komunterio (Redakcio de Ø4-jaro, kurtigita)"
 
 _**Artikolo 1.**_ La sola regnoreĝimo de Komunterio estas diktaturo, limigebla de
@@ -2648,56 +2661,32 @@ Kun ruĝa flago flugis for.<br>
 
 _**Nikolao Voronij. "La infanto"**_
 
+# Piednotoj
+
 [^1]: ₷ – spesmilo
-
 [^2]: ŜSK – Ŝtatsekureca Komitato
-
 [^3]: "Ne moviĝu! Iu ajn povas esti ie apude."
-
 [^4]: "De kie vi scias ĉi tiun lingvon?"
-
 [^5]: "Mi havas saman demandon. Sed ne nun, mia amiko! Ĉi tie ne estas sekure, la stacio baldaŭ estos kaperita."
-
 [^6]: "Ili rimarkis nin! Rapidu ni!"
-
 [^7]: "Viro, prenu la fusilon."
-
 [^8]: "Kial?"
-
 [^9]: "Por enbati najlojn! ... Ci elpafiĝu!"
-
 [^10]: "Ĉiu povas ami vivon! Promenu silente post mi kaj ĉirkaŭrigardu."
-
 [^11]: "Do, kiel ci scias Idon? Ĉu ci estis antaŭe en Ankom? ... Konvene, mi nomiĝas Zingibra."
-
 [^12]: "Mi estas Niko, plaĉas renkonti vin ... Mi miras, ke oni parolas Ide en Ankom. Mi lernis ĝin mem kaŝe, ĉar en la Komunterio aliaj lingvoj krom E-o estas malpermesitaj, kaj eĉ ĉio, iel ligita kun naciismo, kiel la uzo de la vorto "nacio". Ĉu vi povas paroli la esperlingvon?"
-
 [^13]: "Rusa Kampo de Eksperimentoj"
-
 [^14]: "Ho, ĉi tiuj homoj eĉ ne scias, kiu Hitlero estas... ĉar ne povus scii."
-
 [^15]: "Kial?"
-
 [^16]: "Por eviti analogiojn."
-
 [^17]: "Certe, ja ili ne sciis nomojn de siaj viktimoj!"
-
 [^18]: "Loĝantoj de la urbo! Mi petas vin malsupreniri en rifuĝejon! Mi ripetas: malsupreniru en rifuĝejon por la propra sekureco!"
-
 [^19]: "Haltu! La R.A.d.E (Rusiana Agro di Experimenti) estas antaŭe"
-
 [^20]: "Hej, homoj, ĉi tien!"
-
 [^21]: "Mi pasigos vin per pli sekura vojo"
-
 [^22]: "Mi estas ribelulo, terdefendano de Liberado. Vi ne povas resti ĉi tie plu, ĉar ĉi tiu rifuĝejo estas ema al abatisoj: unu pli eksplodo sepultos vin tuj"
-
 [^23]: "Ho, se ja unu pli sekundo, via kapo fariĝus pureo!"
-
 [^24]: "Hej, bonulo, mi devas atingi la Taĉmenton rapide, kiel oni nur povas. Mi estas tre grava por ili nun. Kvankam mi vere ne certas, kial..."
-
 [^25]: "En akademiejo ĝojaĵilo bonvolu inventiĝi."
-
 [^26]: "Komunterio vokas!"
-
 [^27]: Ŝinelo – granda armea palto.
