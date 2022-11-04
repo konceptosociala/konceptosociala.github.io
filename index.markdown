@@ -9,7 +9,7 @@ layout: home
 	* [Komunterio](#) (ellaborata)
 
 * softvaro
-	* [Despero - rustlingva ludmotoro](despero) (ellaborata)	
+	* [despero - rustlingva ludmotoro](despero) (ellaborata)
 	
 * muziko
 	* [Aŭtuna tago de vinbera kolektado (2022)](#) (miksata)
@@ -19,7 +19,7 @@ layout: home
 * literaturo
 	* [Versaro](#) (ellaborata)
 	* [Komunterio (esperanto)](libroj/komunterio)
-	* [Комунтерія (українською)](#) (verkata)
+	* [Комунтерія (українською)](libroj/комунтерія) (tradukata)
 
 ---
 
