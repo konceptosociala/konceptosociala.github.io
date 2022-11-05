@@ -114,4 +114,4 @@ Movado de punktoj _dekstren_ po _**t**_:
 
 ![movado](/assets/blogo/linia-algebro/movado.svg)
 
-[Parto 2](#)
+[Parto 2](/blogo/linia-algebro-por-despero-2)
