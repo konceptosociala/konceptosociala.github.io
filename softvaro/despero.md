@@ -12,11 +12,19 @@ permalink: /despero/
 
 # Eblecoj
 
-* 1
-* 2
-* 3
-* 4
-* 5
+* Lorum ipsum dolor 
+* Sit amet consecteur
+* Rolvorteto geinstruisto vo kaj
+* Vatto prepozitivo tio
+* Unt minimume frikativo
 
-# Ludoj
-## [Komunterio](/komunterio)
+# Uzataj bibliotekoj
+
+* [ash](#)
+* [rapier3d](#)
+* [hecs](#)
+* [egui](#)
+* [rhai](#)
+* [winit](#)
+* [nalgebra](#)
+* [colored](#)
