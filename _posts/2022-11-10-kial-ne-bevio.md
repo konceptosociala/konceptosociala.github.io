@@ -12,13 +12,13 @@ Kio faras ludon bona? Ĉu unikaj meĥanikoj? Eble. Ĉu spirkaptanta intrigo aŭ 
 
 # Kio fias en Bevio mem?
 
-Kial mi tiel malamas na Bevy Engine nun, kvankam mi same tiel amis ĝin ankoraŭ antaŭ nelonga tempo? La respondo estas **rilato**. La rilato de ĝia ĉefa ellaboristo al sia komunumo, kaj de la komunumo al la produkto mem. Reklamo de ĝi, entreprenita de preskaŭ ĉiu ludmotora jutubisto-superrigardanto, kiel **supernove** kaj **superrevolucia** ludmotoro kun la samaj teĥnologioj, detruis ĝiajn konkurantojn en la mondo de Rusta ludkreado kaj kultis na **@cart** kiel ~~dio de ludmotoroj~~ la plej "sukcesa" Rust-ludmotora disvolvanto: certe sukcesa -- gajni profiton en mezuro de preskaŭ 8,000$ ĉiumonate de siaj propraj fanoj, sed fakte ne dediĉi sufiĉan tempon kaj fervoron al la gravaj aferoj -- estas efektive la financa sukceso.
+Kial mi tiel malamas na Bevy Engine nun, kvankam mi same tiel amis ĝin ankoraŭ antaŭ nelonga tempo? La respondo estas **rilato**. La rilato de ĝia ĉefa ellaboristo al sia komunumo, kaj de la komunumo al la produkto mem. Reklamo de ĝi, entreprenita de preskaŭ ĉiu ludmotora jutubisto-superrigardanto, kiel **supernova** kaj **superrevolucia** ludmotoro kun la samaj teĥnologioj, detruis ĝiajn konkurantojn en la mondo de Rusta ludkreado kaj kultis na **@cart** kiel ~~dio de ludmotoroj~~ la plej "sukcesa" Rust-ludmotora disvolvanto: certe sukcesa -- gajni profiton en mezuro de preskaŭ 8,000$ ĉiumonate de siaj propraj fanoj, sed fakte ne dediĉi sufiĉan tempon kaj fervoron al la gravaj aferoj -- estas efektive la financa sukceso.
 
 Do la grafiko de la motoro post pli ol du jaroj de ellaborado estis kaj estas pli malbona ol tiu de motoroj 2000-jaraj, ne povanta eĉ provizi la uzanton per iel ajn normala **lumo** kaj precipe ne aĉegaj okulsangafluigantaj (tio estas terure akraj kaj kompute pezaj) **ombroj**... Mi vere estis tre ĉagreniĝinta, kiam **mia amata ludmotoro** fariĝis pulvoro antaŭ miaj okuloj.
 
 # Do nun -- la komunumo
 
-Tamen inter ĉio ĉi fekaĵo la plej malplezura afero estas la bevia komunumo. Ĝi neniel plendas pri bevia multjara neuzebleco, pri impertinento de ĝiaj ĉefaj ellaboristoj, sed ordonas al malkontentuloj diri "Dankon!", ĉar la motoro ja estas libera!
+Tamen inter ĉio ĉi fekaĵo la plej malplezura afero estas la bevia komunumo. Ĝi neniel plendas pri bevia multjara neuzebleco, pri impertinento de ĝiaj ĉefaj ellaboristoj, sed ordonas al malkontentuloj diri "Dankon!", ĉar "la motoro ja estas libera"!
 
 Oĥ, pardonu, karaj uloj, mi dirus dankon al **Linus Torvalds** por lia Linukso, aŭ al **Ĥronos-Grupo** por ilia Vulkano aŭ OpenGL, aŭ eĉ al **ambientCG**, kiu iam donis al mi kelkajn teksturojn okaze, sed ne ĉiun aŭtoron de ajna senutila rubo, kiu "por liberaj kondiĉoj" kuŝaĉas sur la tero, mi dankos! 
 
