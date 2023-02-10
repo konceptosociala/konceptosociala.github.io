@@ -4,11 +4,11 @@ title: Despero
 permalink: /despero/
 ---
 
-| [GITHUB](https://github.com/konceptosociala/despero) | [CRATES.IO](#) |
+| [GITHUB](https://github.com/konceptosociala/despero) | [CRATES.IO](https://crates.io/crates/despero) |
 
-<img src="/assets/img/despero.svg" width="20">
+<img src="/assets/img/despero.svg" width="100">
 
-| **Despero** estas rustlingva datum-orientita 3D ludmotoro, kiu efektivigas paradigmon de EKS (Ento-Komponanto-Sistemo) kaj provizas programistojn per taŭga ilaro por disvolvigi FBD-ajn (Fizike Bazita Bildigo) ludojn kun altnivelaj teknologioj |
+| **Despero** estas rustlingva datum-orientita 3D ludmotoro, kiu efektivigas paradigmon de EKS (Ento-Komponanto-Sistemo) kaj provizas programistojn per taŭga ilaro por disvolvigi FBD-ajn (Fizike Bazita Bildigo) ludojn per altnivelaj teknologioj |
 
 # Eblecoj
 
