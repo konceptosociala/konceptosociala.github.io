@@ -6,21 +6,16 @@ layout: home
 <br>
 	
 * ludoj
-	* [~~Komunterio~~](#)
+	* [**komunterio**](komunterio) - post-apokalipsa distopia komputilludo, bazita sur "Komunterio" rakonto
 
 * softvaro
-	* [~~despero - rustlingva ludmotoro~~](despero)
-	
-* muziko
-	* [~~Aŭtuna tago de vinbera kolektado (2022)~~](#)
-	* [~~Armado (2022)~~](#)
-	* [~~Distopio Lirike (2022)~~](#)
+	* [**despero**](despero) - rustlingva EKS-ludmotoro, evoluigata por komunterio ludo
+    * [**sonja**](https://crates.io/crates/sonja) - rustlingva libraro de partiklosistemoj por despero ludmotoro
 
 * literaturo
-	* [Versaro](versaro)
-	* [Komunterio (esperanto)](libroj/komunterio)
-	* [~~Комунтерія (українською)~~](libroj/комунтерія)
-	* [~~Mi (Romantiko)~~](libroj/mi-romantiko)
+	* [**Komunterio** (esperanto)](libroj/komunterio)
+	* [**Комунтерія** (українською)](libroj/комунтерія)
+	* [**Mi (Romantiko)**](libroj/mi-romantiko)
 
 ---
 

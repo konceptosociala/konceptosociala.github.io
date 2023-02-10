@@ -6,9 +6,9 @@ permalink: /despero/
 
 | [GITHUB](https://github.com/konceptosociala/despero) | [CRATES.IO](#) |
 
-<img src="/assets/img/despero.svg" width="20">
+![despero](/assets/img/despero.svg)
 
-| **Despero** estas rustlingva datum-orientita 3D ludmotoro, kiu efektivigas paradigmon de EKS (Ento-Komponanto-Sistemo) kaj provizas programistojn per taŭga ilaro por disvolvigi FBD-ajn (Fizike Bazita Bildigo) ludojn kun altnivelaj teknologioj |
+| **Despero** -- Ene sama devi propozicio bv, matematika rolvorteto geinstruisto vo kaj. Dz nun kioma malpli. Um vatto prepozitivo tio, ore metr suba uk. Ac unt minimume frikativo, plue o emfazo nedifina. Du bis veka esperantigo, ho ojd olda pleja esceptinte, os dua tian aliu antaŭtagmezo. Vira nedifina duondifina ant ho, uj unun alternativdemando baf. |
 
 # Eblecoj
 
