@@ -21,6 +21,11 @@ let config = Config::new();
 println!("My variable: {}", config["var"]);
 {% endhighlight %}
 
+Simpla tasklisto:
+- [x] Finita
+- [ ] Nefinita
+- [ ] Ankaŭ nefinita
+
 En ĉi tiu versio de blogo estos pli multe da trajtoj, kiel `koda sintaksa emfazo`, `informujoj` ktp.
 
 {: .box-error}
