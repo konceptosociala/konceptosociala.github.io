@@ -1,0 +1,10 @@
+base_url = "https://konceptosociala.eu.org"
+compile_sass = false
+output_dir = "docs"
+build_search_index = true
+theme = "socio"
+
+[markdown]
+highlight_code = true
+
+[extra]
