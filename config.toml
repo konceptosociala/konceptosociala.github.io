@@ -1,11 +1,13 @@
 base_url = "https://konceptosociala.eu.org"
 compile_sass = true
 output_dir = "docs"
+default_language = "en"
 build_search_index = true
 theme = "socio"
 
 [markdown]
 highlight_code = true
+highlight_theme = "base16-ocean-dark"
 
 [extra]
 # General
@@ -15,27 +17,29 @@ socio_logo = "/img/ks.svg"
 
 # Navbar links
 socio_navbar_links = [
-    { title = "Home", link = "/" },
-    { title = "Blog", link = "/blog/" },
-    { title = "Software", dropdown = [
-        ["Sonja", "/software/sonja/"],
-        ["...", "..."]
+    { key = "home", link = "/" },
+    { key = "blog", link = "/blog/" },
+    { key = "software", dropdown = [
+        ["sonja", "/software/sonja/"],
     ] },
-    { title = "GitHub", link = "https://github.com/konceptosociala" },
-    { title = "About", link = "/about/" }
+    { key = "github", link = "https://github.com/konceptosociala" },
+    { key = "about", link = "/about/" }
+]
+
+# Multilingualism (uncomment to enable language switcher)
+socio_languages = [
+    { code = "default", name = "English", flag = "us" },
+    { code = "ua", name = "Українська", flag = "ua" },
 ]
 
 # Homepage banner
 socio_banner_display = true
 socio_banner_logo = "/img/ks.svg"
 socio_banner_logo_width = 144
-socio_banner_heading = "Koncepto Sociala"
-socio_banner_descr = "Kreita esti libera."
 
 # Social (comment to hide)
-socio_github = "https://github.com/konceptosociala/socio"
+socio_github = "https://github.com/konceptosociala/"
 socio_mail = "mailto:sanerhp.mail@gmail.com"
-socio_telegram = "https://t.me/ksociala_official"
 # socio_discord = "#"
 # socio_facebook = "#"
 # socio_insta = "#"
@@ -46,19 +50,53 @@ socio_telegram = "https://t.me/ksociala_official"
 
 # Colors
 socio_text_color = "#F5F5F5"
-socio_link_color = "#F5F5F5"
-socio_code_color = "#F5F5F5"
-socio_code_bg = "#2b303b"
+socio_link_color = "#FFF"
+socio_code_color = "#FFF"
+socio_code_bg = "#1D1E23"
 
-socio_post_bg = "#40312F"
-socio_header_bg = "#29201E"
-socio_footer_bg = "#49403E"
-socio_404_bg = "#695451"
-socio_page_bg = "#695451"
-socio_banner_bg = "#49403E"
+socio_post_bg = "#1D1E23"
+socio_header_bg = "#0F0F11"
+socio_footer_bg = "#1D1E23"
+socio_404_bg = "#0F0F11"
+socio_page_bg = "#393C44"
+socio_banner_bg = "#1D1E23"
 
-socio_banner_btn = "success"
+socio_pill_bg = "dark"
+socio_project_bg = "dark"
+socio_pill_btn = "primary"
+socio_banner_btn = "primary"
 socio_search_btn = "light"
+socio_back_btn = "light"
 
 # Misc
 socio_forkme = { enabled = false, repo = "", label = ""}
+
+[translations]
+search = "Search"
+read_more = "Read more"
+banner_button = "Learn more"
+banner_heading = "Koncepto Sociala"
+banner_descr = "Kreita esti libera."
+
+home = "Home"
+blog = "Blog"
+software = "Software"
+sonja = "Sonja"
+github = "GitHub"
+about = "About"
+
+[languages.ua]
+
+[languages.ua.translations]
+search = "Пошук"
+read_more = "Читати далі"
+banner_button = "Дізнатися більше"
+banner_heading = "Koncepto Sociala"
+banner_descr = "Створена бути вільною."
+
+home = "Головна"
+blog = "Блог"
+software = "ПЗ"
+sonja = "Sonja"
+github = "GitHub"
+about = "Про нас"

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="135.38744mm"
+   height="135.48459mm"
+   viewBox="0 0 135.38744 135.48459"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="md.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.0262346"
+     inkscape:cx="176.86015"
+     inkscape:cy="259.68721"
+     inkscape:window-width="1536"
+     inkscape:window-height="800"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Tavolo 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-131.03808,4.1599157)">
+    <title
+       id="title4364">Lua programming language logo</title>
+    <circle
+       style="fill:#212529;fill-opacity:1;stroke:#fefefe;stroke-width:6.45497;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4901"
+       cx="198.77141"
+       cy="63.573414"
+       r="64.505844" />
+    <path
+       d="M 151.38292,84.402703 V 40.50883 h 12.90997 l 12.90996,16.137455 12.90997,-16.137455 h 12.90996 V 84.402703 H 190.11282 V 59.228277 L 177.20285,75.365729 164.29289,59.228277 v 25.174426 z m 80.68727,0 -19.36493,-21.301438 H 225.6152 V 40.50883 h 12.90996 v 22.592435 h 12.90999 z"
+       id="path4704"
+       style="stroke-width:0.645497;fill:#fdfdfd;fill-opacity:1" />
+  </g>
+</svg>

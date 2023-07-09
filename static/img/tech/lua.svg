@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="135.38744mm"
+   height="135.48459mm"
+   viewBox="0 0 135.38744 135.48459"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="lua.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.4727053"
+     inkscape:cx="185.71264"
+     inkscape:cy="243.42955"
+     inkscape:window-width="1536"
+     inkscape:window-height="800"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Tavolo 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-131.03808,4.1599157)">
+    <title
+       id="title4364">Lua programming language logo</title>
+    <path
+       d="M 258.38431,33.1671 A 66.96357,67.011087 0 1 1 235.18986,7.3887087"
+       style="fill:none;stroke:#ffffff;stroke-width:1.55438;stroke-linecap:butt;stroke-dasharray:5.84579;stroke-dashoffset:0;stroke-opacity:1"
+       id="path4368" />
+    <ellipse
+       cx="198.71906"
+       cy="63.589363"
+       style="fill:#ffffff;stroke-width:0.146687;fill-opacity:1"
+       id="circle4370"
+       rx="51.793438"
+       ry="51.830189" />
+    <ellipse
+       cx="220.17281"
+       cy="42.120388"
+       style="fill:#212529;stroke-width:0.146687;fill-opacity:1"
+       id="circle4372"
+       rx="15.169992"
+       ry="15.180756" />
+    <ellipse
+       cx="250.51248"
+       cy="11.759176"
+       fill="#e7e7e7"
+       id="circle4374"
+       style="stroke-width:0.146687;fill:#fefefe;fill-opacity:1"
+       rx="15.170137"
+       ry="15.180902" />
+    <g
+       aria-label="Lua"
+       id="text6335"
+       style="font-size:48.8875px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#212529;stroke-width:1.22219">
+      <path
+         d="m 183.66118,85.533228 v 4.10655 H 163.2751 V 55.76074 h 4.74208 v 29.772488 z"
+         id="path8467" />
+      <path
+         d="m 208.59376,88.906466 q -1.5644,0.3911 -4.15543,0.831087 -2.54215,0.439988 -5.91539,0.439988 -2.93325,0 -4.93764,-0.831088 -2.00439,-0.879975 -3.22657,-2.444375 -1.22219,-1.5644 -1.75995,-3.666562 -0.53777,-2.15105 -0.53777,-4.742088 v -14.27515 h 4.54654 v 13.2974 q 0,4.644313 1.46663,6.6487 1.46662,2.004388 4.93763,2.004388 0.73332,0 1.51552,-0.04889 0.7822,-0.04889 1.46662,-0.09777 0.68443,-0.09777 1.22219,-0.146662 0.58665,-0.09777 0.83109,-0.19555 V 64.218278 h 4.54653 z"
+         id="path8469" />
+      <path
+         d="m 225.01993,86.364316 q 1.61329,0 2.83548,-0.04889 1.27107,-0.09777 2.10216,-0.293325 V 78.44454 q -0.48887,-0.244437 -1.61329,-0.3911 -1.07552,-0.19555 -2.63992,-0.19555 -1.02664,0 -2.19994,0.146663 -1.12441,0.146662 -2.10216,0.635537 -0.92886,0.439988 -1.5644,1.271075 -0.63554,0.7822 -0.63554,2.102163 0,2.444375 1.5644,3.422125 1.5644,0.928863 4.25321,0.928863 z m -0.3911,-22.781576 q 2.7377,0 4.59543,0.733313 1.90661,0.684425 3.03102,2.004387 1.1733,1.271075 1.66218,3.079913 0.48887,1.75995 0.48887,3.911 v 15.888438 q -0.58665,0.09777 -1.66217,0.293325 -1.02664,0.146662 -2.3466,0.293325 -1.31996,0.146662 -2.88436,0.244437 -1.51552,0.146663 -3.03103,0.146663 -2.15105,0 -3.95989,-0.439988 -1.80883,-0.439987 -3.1288,-1.36885 -1.31996,-0.97775 -2.05327,-2.54215 -0.73331,-1.5644 -0.73331,-3.764337 0,-2.102163 0.83108,-3.617676 0.87998,-1.515512 2.3466,-2.444375 1.46663,-0.928862 3.42213,-1.36885 1.9555,-0.439987 4.10655,-0.439987 0.68442,0 1.41774,0.09777 0.73331,0.04889 1.36885,0.19555 0.68442,0.09777 1.1733,0.19555 0.48887,0.09777 0.68442,0.146662 V 73.55579 q 0,-1.124412 -0.24444,-2.199937 -0.24443,-1.124413 -0.87997,-1.9555 -0.63554,-0.879975 -1.75995,-1.36885 -1.07553,-0.537763 -2.83548,-0.537763 -2.24882,0 -3.95988,0.342213 -1.66218,0.293325 -2.49327,0.635537 l -0.53776,-3.764337 q 0.87998,-0.3911 2.93325,-0.733313 2.05328,-0.3911 4.44876,-0.3911 z"
+         id="path8471" />
+    </g>
+  </g>
+</svg>
