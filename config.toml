@@ -2,7 +2,7 @@ base_url = "https://konceptosociala.eu.org"
 compile_sass = true
 output_dir = "docs"
 default_language = "en"
-build_search_index = true
+build_search_index = false
 theme = "socio"
 
 [markdown]
@@ -14,13 +14,18 @@ highlight_theme = "base16-ocean-dark"
 socio_title = "Koncepto Sociala"
 socio_favicon = "/img/ks.svg"
 socio_logo = "/img/ks.svg"
+socio_animations = true
 
 # Navbar links
 socio_navbar_links = [
     { key = "home", link = "/" },
     { key = "blog", link = "/blog/" },
+    { key = "games", dropdown = [
+        ["komunterio", "/games/komunterio/"],
+    ] },
     { key = "software", dropdown = [
         ["sonja", "/software/sonja/"],
+        ["sonja_doryen", "/software/sonja-doryen/"],
     ] },
     { key = "github", link = "https://github.com/konceptosociala" },
     { key = "about", link = "/about/" }
@@ -36,6 +41,7 @@ socio_languages = [
 socio_banner_display = true
 socio_banner_logo = "/img/ks.svg"
 socio_banner_logo_width = 144
+socio_banner_animation = "fadeIn"
 
 # Social (comment to hide)
 socio_github = "https://github.com/konceptosociala/"
@@ -65,14 +71,19 @@ socio_pill_bg = "dark"
 socio_project_bg = "dark"
 socio_pill_btn = "primary"
 socio_banner_btn = "primary"
-socio_search_btn = "light"
 socio_back_btn = "light"
 
 # Misc
 socio_forkme = { enabled = false, repo = "", label = ""}
 
+# Utterances
+[extra.socio_utterances]
+label = "KS Comment"
+repo = "konceptosociala/konceptosociala.github.io"
+theme = "photon-dark"
+
 [translations]
-search = "Search"
+project_page = "Project page"
 read_more = "Read more"
 banner_button = "Learn more"
 banner_heading = "Koncepto Sociala"
@@ -80,23 +91,29 @@ banner_descr = "Kreita esti libera."
 
 home = "Home"
 blog = "Blog"
+games = "Games"
+komunterio = "Komunterio"
 software = "Software"
 sonja = "Sonja"
+sonja_doryen = "Sonja Doryen"
 github = "GitHub"
 about = "About"
 
 [languages.ua]
 
 [languages.ua.translations]
-search = "Пошук"
-read_more = "Читати далі"
+project_page = "Сторінка проєкту"
+read_more = "Детальніше"
 banner_button = "Дізнатися більше"
 banner_heading = "Koncepto Sociala"
 banner_descr = "Створена бути вільною."
 
 home = "Головна"
 blog = "Блог"
+games = "Ігри"
+komunterio = "Komunterio"
 software = "ПЗ"
 sonja = "Sonja"
+sonja_doryen = "Sonja Doryen"
 github = "GitHub"
 about = "Про нас"

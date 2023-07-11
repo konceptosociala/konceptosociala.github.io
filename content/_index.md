@@ -31,12 +31,22 @@ sort_by = "date"
     }}
     {{ 
         project(
-            banner="https://dummyimage.com/1024x460/000/fff.gif",
+            banner="img/projects/sonja_doryen.svg",
             title="Sonja Doryen", 
             subtitle="Roguelike game framework", 
             description="High-level sonja framework used for making 2D roguelike games, based on doryen library.",
             project_page="software/sonja-doryen",
             github_page="https://github.com/konceptosociala/sonja-doryen"
+        ) 
+    }}
+    {{ 
+        project(
+            banner="img/projects/socio.svg",
+            title="Socio", 
+            subtitle="Zola Theme", 
+            description="Modern, simple & highly configurable theme for Koncepto Sociala website.",
+            project_page="https://konceptosociala.eu.org/socio",
+            github_page="https://github.com/konceptosociala/socio"
         ) 
     }}
 </div>
