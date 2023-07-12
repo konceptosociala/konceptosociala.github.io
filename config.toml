@@ -44,6 +44,7 @@ socio_banner_logo_width = 144
 socio_banner_animation = "fadeIn"
 
 # Social (comment to hide)
+socio_telegram = "https://t.me/ksociala_official"
 socio_github = "https://github.com/konceptosociala/"
 socio_mail = "mailto:sanerhp.mail@gmail.com"
 # socio_discord = "#"
@@ -116,4 +117,4 @@ software = "ПЗ"
 sonja = "Sonja"
 sonja_doryen = "Sonja Doryen"
 github = "GitHub"
-about = "Про нас"
+about = "Інфо"

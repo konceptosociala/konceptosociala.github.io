@@ -2,7 +2,7 @@
 title = "Website and theme update"
 +++
 
-After quite some time spent searching for an acceptable color palette for the website, I ended up choosing a nice dark theme.
+After some time spent searching for an acceptable color palette for the website, I ended up choosing a nice dark theme.
 
 So for now the homepage look like this:
 
