@@ -155,7 +155,7 @@ sort_by = "date"
             ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
             OTHER DEALINGS IN THE SOFTWARE.
             <br><br>
-            For more information, please refer to &lt;<a class="font-monospace" href="https://unlicense.org">https://unlicense.org</a>&gt;
+            For more information, please refer to &lt;<a class="font-monospace" href="https://konceptosociala.eu.org/unlicense">https://unlicense.org</a>&gt;
         </div>
     </div>
 </div>

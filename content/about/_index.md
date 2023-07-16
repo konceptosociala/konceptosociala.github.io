@@ -10,7 +10,7 @@ template = "page.html"
 <h1>Is it fully holistic?</h1>
 <p class="lead">Not yet. But I do my best to make our products meet all your needs!</p><br>
 <h1>Is it free?</h1>
-<p class="lead">Yes, it is! Everything on this website and <a href="https://github.com/konceptosociala">here</a> is free and open source, being <del>unlicensed</del> licensed under permissive <a href="https://unlicense.org/">Unlicense license</a>!</p><br>
+<p class="lead">Yes, it is! Everything on this website and <a href="https://github.com/konceptosociala">here</a> is free and open source, being <del>unlicensed</del> licensed under permissive <a href="https://konceptosociala.eu.org/unlicense">Unlicense license</a>!</p><br>
 <h1>How can you contact me?</h1>
 <p class="lead">
     <ul>

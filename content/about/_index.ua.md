@@ -10,7 +10,7 @@ template = "page.html"
 <h1>Чи є воно повністю цілісним?</h1>
 <p class="lead">Ще ні. Але я роблю все можливе, щоб наша продукція відповідала всім вашим потребам!</p><br>
 <h1>Чи це безкоштовно?</h1>
-<p class="lead">Так! Усе на цьому веб-сайті та <a href="https://github.com/konceptosociala">тут</a> є безкоштовним і з відкритим початковим кодом, будучи <del>неліцензованим</del> ліцензованим згідно з дозвільною ліцензією <a href="https://unlicense.org/">Unlicense</a>!</p><br>
+<p class="lead">Так! Усе на цьому веб-сайті та <a href="https://github.com/konceptosociala">тут</a> є безкоштовним і з відкритим початковим кодом, будучи <del>неліцензованим</del> ліцензованим згідно з дозвільною ліцензією <a href="https://konceptosociala.eu.org/unlicense">Unlicense</a>!</p><br>
 <h1>Як ви можете зв'язатися зі мною?</h1>
 <p class="lead">
     <ul>
