@@ -1,15 +1,15 @@
 +++
-title = "Процедурний макрос Material для Sonja"
+title = "Material derive macro for Sonja"
 +++
 
-Крейт Sonja містить досить корисний трейт `Material`, який дозволяє розробнику створювати власні матеріали на основі шейдерів GLSL. Його приблизна реалізація для кастомного матеріалу `MyMaterial` на початку виглядала так:
+The Sonja crate contains a quite useful `Material` trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material `MyMaterial` initially looked like this:
 
 ```rust
-// Typetag використовуємо для серіалізації колекції матеріалів `Vec<Arc<dyn Material>>`
+// Typetag is used to serialize the collection of materials `Vec<Arc<dyn Material>>`
 #[typetag::serde]
 impl Material for MyMaterial {
     fn pipeline(renderer: &Renderer) -> Pipeline {      
-        // Опис вхідних даних шейдера
+        // Shader input attributes
         let instance_attributes = vec![
             ShaderInputAttribute{
                 binding: 1,
@@ -26,21 +26,21 @@ impl Material for MyMaterial {
             ...
         ];
         
-        // Створення вертекс-шейдера
+        // Vertex shader creation
         let vertex_shader = vk::ShaderModuleCreateInfo::builder()
             .code(vk_shader_macros::include_glsl!(
                 "./src/shaders/vertex_combined.glsl", 
                 kind: vert,
             ));
         
-        // Створення фрагмент-шейдера
+        // Fragment shader creation
         let fragment_shader = vk::ShaderModuleCreateInfo::builder()
             .code(vk_shader_macros::include_glsl!(
                 "./src/shaders/fragment_combined.glsl",
                 kind: frag,
             ));
         
-        // Ручна ініціалізація графічного пайплайну
+        // Manual graphics pipeline initialization
         Pipeline::init(
             &renderer,
             &vertex_shader,
@@ -53,7 +53,7 @@ impl Material for MyMaterial {
 }
 ```
 
-Тобто розробник мав власноруч створювати шейдери і графічні пайплайни для кожного матеріала, що було б досить неефективно, так як довелося б писати велику кількість повторюваного і відносно низькорівневого коду. Таким чином є доречним розділити трейт `Material` на кілька методів:
+That is, the developer had to manually create shaders and graphic pipelines for each material, which would be quite inefficient, as it would be necessary to write a large amount of boilerplate and relatively low-level code. Thus, it is appropriate to split the `Material` trait into several methods:
 
 ```rust
 #[typetag::serde(tag = "material")]
