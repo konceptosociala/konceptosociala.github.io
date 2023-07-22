@@ -53,7 +53,7 @@ impl Material for MyMaterial {
 }
 ```
 
-That is, the developer had to manually create shaders and graphic pipelines for each material, which would be quite inefficient, as it would be necessary to write a large amount of boilerplate and relatively low-level code. Thus, it is appropriate to split the `Material` trait into several methods:
+That is, the developer had to manually create shaders and graphic pipelines for each material, which would be quite inefficient, as it would be necessary to write a large amount of boilerplate and relatively low-level code. Thus, it is appropriate to split `Material` trait into several methods:
 
 ```rust
 #[typetag::serde(tag = "material")]
@@ -72,7 +72,7 @@ pub trait Material: AsAny + std::fmt::Debug + Send + Sync {
 }
 ```
 
-, де `ShaderInput` буде структурою даних, що зберігатиме необхідні атрибути для створення графічного пайплайну:
+, where `ShaderInput` will be a data structure that will hold the necessary attributes to create a graphics pipeline:
 
 ```rust
 pub struct ShaderInput {
@@ -82,20 +82,20 @@ pub struct ShaderInput {
 }
 ```
 
-Все інше перемістимо до методу прив'язки кастомного матеріалу до рендерера:
+Let's move everything else to the method of binding the custom material to the renderer:
 
 ```rust
 pub fn bind_material<M: Material + Sync + Send>(&mut self){
-    // Перевірка чи матеріал вже прив'язаний
+    // Checking if the material is already attached
     if self.material_pipelines.contains_key(&TypeId::of::<M>()) {
         log::error!("Material type '{}' is already bound!", std::any::type_name::<M>());
     } else {        
-        // Створення шейдерів та ін.        
+        // Creating shaders, etc.    
         let vertex_shader = vk::ShaderModuleCreateInfo::builder().code(M::vertex());
         let fragment_shader = vk::ShaderModuleCreateInfo::builder().code(M::fragment());
         let shader_input = M::input();
         
-        // Створення пайплайну
+        // Creating a pipeline
         let pipeline = Pipeline::init(
             &self,
             &vertex_shader,
@@ -110,27 +110,27 @@ pub fn bind_material<M: Material + Sync + Send>(&mut self){
 }
 ```
 
-Наразі реалізація кастомних матеріалів стала більш простою, проте все ще залишаються невирішеними кілька проблем:
-1. Необхідність описувати кожне поле матеріалу (наприклад, `roughness: f32`, `albedo: u32` тощо) вручну, включаючи тип поля, розмір у байтах та положення у вершинному шейдері;
-2. Повторюване використання макросу `include_glsl!` для компіляції шейдерів у методах `vertex()` та `fragment()`.
+Currently, the implementation of custom materials has become easier, but several problems still remain unsolved:
+1. The need to describe each material field (`roughness: f32`, `albedo: u32`, etc.) manually, including field type, size in bytes, and location in the vertex shader;
+2. Repetitive using `include_glsl!` macro to compile shaders in `vertex()` and `fragment()` methods.
 
-Усі ці проблеми можна вирішити за допомогою написання власного derive-макросу `Material`.
+All these problems can be solved by writing your own `Material` derive macro.
 
-## Структура макросу
+## Macro structue
 
-Нехай оголошення нашого матеріалу буде таким: 
+Let the declaration of our material be like:
 
 ```rust
 #[repr(C)]
 #[derive(Material, Clone, Default, Debug, Serialize, Deserialize)]
 pub struct MyMaterial {
-    pub color: [f32; 3], // rgb-вектор для кольору
-    pub albedo: u32, // індекс масиву текстур
-    pub blank: i32, // знакове ціле число для тесту
+    pub color: [f32; 3], // rgb-vector for color
+    pub albedo: u32, // texture array index
+    pub blank: i32, // just-for-test integer
 }
 ```
 
-Базовий функціонал макросу включатиме в себе створення атрибутів вхідних даних шейдерів на основі полів структури матеріалу і компіляцію самих шейдерів. Для цього додамо атрибут `material`, що буде включати шляхи до вершинного (`vertex`) та фрагментного (`fragment`) шейдерів. Також додамо опціональний параметр `topology`, щоб вказати топологію рендерінгу примітивів (список трикутників, ліній, точок тощо), що за замовчуванням буде дорівнювати `"triangle_list"`:
+The basic functionality of the macro will include the creating input attributes for shaders based on the fields of the material structure, and the compilation of the shaders themselves. For this, we will add `material` attribute, which will include the paths to the vertex and fragment shaders. We will also add an optional parameter `topology` to specify the topology of rendering primitives (a list of triangles, lines, points, etc.), which will be equal to `"triangle_list"` by default:
 
 ```rust
 #[repr(C)]
@@ -146,7 +146,7 @@ pub struct MyMaterial {
 }
 ```
 
-Ще було б непогано додати автоматичну генерацію білдеру. Додамо параметри `#[color]` для поля `color` і `#[texture]` для поля `albedo`, що будуть вказувати макросу замінити параметри функцій білдеру на `Color<f32>` і `AssetHandle<'T'>` відповідно. Отже, кінцевий вид декларації нашого матеріалу буде таким:
+Also it would be nice to add automatic generation of Builder. Let's add parameters `#[color]` for the `color` field and `#[texture]` for the `albedo` field, which will tell the macro to replace the parameters of the builder functions with `Color<f32>` and `AssetHandle<'T'>` respectively. So, the final form of the declaration of our material will be as follows:
 
 ```rust
 #[repr(C)]
@@ -164,11 +164,11 @@ pub struct MyMaterial {
 }
 ```
 
-Тепер перейдемо безпосередньо до реалізації макросу.
+Now let's go directly to the macro implementation.
 
-## Імплементація трейту Material для MyMaterial
+## Implementation of Material trait for MyMaterial
 
-Спочатку створимо новий крейт `macros` і в lib.rs одразу імпортуємо необхідні модулі та додамо основну derive-функцію з атрибутами material, texture та color:
+First, let's create a new crate `macros` and import the necessary modules into lib.rs, adding main derive function with the attributes material, texture and color:
 
 ```rust
 use core::panic;
@@ -186,7 +186,7 @@ pub fn derive_material(input: TokenStream) -> TokenStream {
 }
 ```
 
-Також додамо структуру `Opts`, де будуть зберігатися атрибути самого матеріалу:
+We will also add the `Opts` structure, where the material attributes will be stored:
 
 ```rust
 #[derive(FromDeriveInput)]
@@ -198,8 +198,7 @@ struct Opts {
 }
 ```
 
-Отримаємо атрибути матеріалу за допомогою `Opts::from_derive_input`; збережемо його ідентифіактор у змінній `ident` й дані самої структури у змінній `data`, паралельно обмежуючи використання макроса на типах крім `struct` конструкцією `let ... else`:
-
+Let us get the attributes of the material using `Opts::from_derive_input`; save its identifier in the `ident` variable and the data of the structure in the `data` variable, while restricting the use of the macro on types other than `struct` with the `let ... else` construction:
 
 ```rust
 let opts = Opts::from_derive_input(&input).expect("Wrong options");
@@ -210,7 +209,7 @@ let Data::Struct(data) = input.data else {
 };
 ```
 
-Початковий output нашого макросу (без генерації білдера) виглядатиме так:
+Initial output of our macro (without builder generating) will look like this:
 
 ```rust
 let output = quote! {
@@ -223,7 +222,7 @@ let output = quote! {
 }
 ```
 
-Отже, для цього створимо три змінні: vertex, fragment та input, а також відповідні функції, що будуть повертати `TokenStream`:
+So, for this, create three variables: vertex, fragment and input, as well as the corresponding functions that will return `TokenStream`:
 
 ```rust
 let vertex = get_vertex_path(&opts);
@@ -237,7 +236,7 @@ fn get_fragment_path(opts: &Opts) -> proc_macro2::TokenStream {...}
 fn get_shader_input(opts: &Opts, data: &DataStruct) -> proc_macro2::TokenStream {...}
 ```
 
-За допомогою `match` отримуємо шлях до шейдера з атрибутів vertex та fragment, і використовуємо його в іншому процедурному макросі `include_glsl!` з крейту [`vk-shader-macros`](https://crates.io/crates/vk-shader-macros):
+With the help of `match` we get the path to the shader from the `vertex` and `fragment` attributes, and use it in another procedural macro `include_glsl!` from the crate [`vk-shader-macros`](https://crates.io/crates/vk-shader-macros):
 
 ```rust
 fn get_vertex_path(opts: &Opts) -> proc_macro2::TokenStream {
@@ -269,8 +268,7 @@ fn get_fragment_path(opts: &Opts) -> proc_macro2::TokenStream {
 }
 ```
 
-Для генерації атрибутів вхідних шейдерних даних алгоритм буде трохи складнішим. Для початку нам потрібно отримати топологію примітивів та перелік форматів (типів) полів структури, які будуть використані шейдером.
-
+The algorithm for generating shader input attributes will be a bit more complicated. To begin with, we need to get the topology of the primitives and the list of formats (types) of the structure fields that will be used by the shader.
 
 ```rust
 fn get_shader_input(
@@ -288,12 +286,11 @@ fn get_shader_input(
 }
 ```
 
-Одержуємо топологію способом аналогічним тому, як ми отримували шлях до шейдерів зі структури `Opts`:
-
+Get the topology in a way similar to how we got the path to shaders from the `Opts` structure:
 
 ```rust
 let topology = match &opts.topology {
-    Some(topology) => match topology.as_str() { // робимо перелік усіх можливих топологій Vulkan
+    Some(topology) => match topology.as_str() { // list all possible Vulkan topologies
         "point_list" => quote! { ::sonja::render::ShaderTopology::POINT_LIST },
         "line_list" => quote! { ::sonja::render::ShaderTopology::LINE_LIST },
         "line_strip" => quote! { ::sonja::render::ShaderTopology::LINE_STRIP },
@@ -306,11 +303,11 @@ let topology = match &opts.topology {
         "triangle_strip_with_adjacency" => quote! { ::sonja::render::ShaderTopology::TRIANGLE_STRIP_WITH_ADJACENCY },
         _ => panic!("Unsupported topology \"{}\"", topology),
     },
-    None => quote! { ::sonja::render::ShaderTopology::TRIANGLE_LIST }, // якщо атрибут відсутній, то використовувати список трикутників (рендерінг поверхні граней 3Д-моделей) за замовчуванням
+    None => quote! { ::sonja::render::ShaderTopology::TRIANGLE_LIST }, // if the attribute is missing, then use the list of triangles (rendering of 3D models' faces' surface) by default
 };
 ```
 
-Щоб отримати перелік форматів полів, проітеруємо структуру `data.fields` та повернемо `Map<...>`:
+To get a list of field formats, iterate over the `data.fields` structure and return `Map<...>`:
 
 ```rust
 let format = data.fields.iter().map(|f| {
@@ -321,20 +318,20 @@ let format = data.fields.iter().map(|f| {
 });
 ```
 
-Список типів, які можуть бути використані як шейдерні вхідна дані, невеликий: цілі числа, числа з рухомою комою та вектори - масиви типу [f32; 2], [f32; 3] та [f32; 4], отже кілька типів масиву та простих типів. Перевіримо тип поля `ty` на те, чи є він масивом або звичайним типом, та конвертуємо його у рядкову репрезентацію для подальшого матчінгу:
+The list of types that can be used as shader input data is quite small: integers, floating-point numbers, and vectors - arrays of type [f32; 2], [f32; 3] and [f32; 4], i.e. several array types and simple types. Let's check the type of the `ty` field to see if it is an array or a regular type, and convert it to a string representation for further matching:
 
 ```rust
 match ty {
-    Type::Array(array) => { // чи масив
-        match array.into_token_stream().to_string().as_str() { // конвертуємо тип у строку
+    Type::Array(array) => { // whether array
+        match array.into_token_stream().to_string().as_str() { // converting type to string
             "[f32 ; 2]" => quote! { ::sonja::render::ShaderInputFormat::R32G32_SFLOAT },
             "[f32 ; 3]" => quote! { ::sonja::render::ShaderInputFormat::R32G32B32_SFLOAT },
             "[f32 ; 4]" => quote! { ::sonja::render::ShaderInputFormat::R32G32B32A32_SFLOAT },
-            "[f32 ; 1]" => quote! { ::sonja::render::ShaderInputFormat::R32_SFLOAT }, // масив з одного елемента представляємо як звичайний `float`
+            "[f32 ; 1]" => quote! { ::sonja::render::ShaderInputFormat::R32_SFLOAT }, // array of one element is represented as an ordinary `float`
             _ => panic!("Unsupported input format: \"{}\"", array.into_token_stream().to_string().as_str())
         }
     },
-    Type::Path(path) => { // чи звичайний тип
+    Type::Path(path) => { // whether regular type
         match path.into_token_stream().to_string().as_str() {
             "f32" => quote! { ::sonja::render::ShaderInputFormat::R32_SFLOAT },
             "u32" => quote! { ::sonja::render::ShaderInputFormat::R8G8B8A8_UINT },
@@ -342,11 +339,11 @@ match ty {
             _ => panic!("Unsupported input format: \"{}\"", path.into_token_stream().to_string().as_str())
         }
     },
-    _ => panic!("Unsupported input format"), // якщо формат поля інший - панікуємо!
+    _ => panic!("Unsupported input format"), // if the format of the field is different - panic!
 }
 ```
 
-Тепер розглянемо структуру `ShaderInput`:
+Now consider the `ShaderInput` structure:
 
 ```rust
 pub struct ShaderInput {
@@ -356,7 +353,7 @@ pub struct ShaderInput {
 }
 ```
 
-А також внутрішню структуру `ShaderInputAttribute`:
+And also the internal `ShaderInputAttribute` structure:
 
 ```rust
 pub struct ShaderInputAttribute {
@@ -367,14 +364,13 @@ pub struct ShaderInputAttribute {
 }
 ```
 
-Якщо топологія та формат полів у нас є, `binding` є завжди сталим, то нам все ще потрібен зсув вхідних даних (offset), їх положення (location) та сумарний розмір даних матеріалу (instance_size). Ці всі значення ми можемо отримати вже при ітерації форматів полів:
-
+If we have the topology and format of the fields, the `binding` is always constant, then we still need the offset of the input data, its location and the total size in bytes (instance_size). We can get all these values when iterating the field formats:
 
 ```rust
 quote! {
     fn input() -> ::sonja::render::ShaderInput {
-        let mut location = 3; // положення першого параметра в шейдері починаючи з "0" (перші 3 зайняті параметрами самої 3Д-моделі)
-        let mut offset = 0; // зсув першого параметра (оскільки параметр перший, отже зсув відсутній)
+        let mut location = 3; // location of the first parameter in the shader starting from "0" (the first 3 are occupied by the parameters of the 3D model itself)
+        let mut offset = 0; // offset of the first parameter (since the parameter is the first, therefore there is no offset)
         let mut attributes = vec![];
         #(
             attributes.push(
@@ -386,7 +382,7 @@ quote! {
                 }
             );
 
-            offset += match #format { // збільшуємо зсув наступного параметра на розмір поточного
+            offset += match #format { // increase the offset of the next parameter by the size of the current one
                 ::sonja::render::ShaderInputFormat::R8G8B8A8_UINT
                     | ::sonja::render::ShaderInputFormat::R8G8B8A8_SINT 
                     | ::sonja::render::ShaderInputFormat::R32_SFLOAT => 4,
@@ -396,9 +392,9 @@ quote! {
                 _ => 0,
             };
 
-            location += 1; // збільшуємо положення наступного параметра на 1
+            location += 1; // increase the location of the next parameter by 1
         )*
-        let instance_size = offset as usize; // по завершенню ітерації встановлюємо загальний розмір даних 
+        let instance_size = offset as usize; // at the end of the iterations, we set the total size of the data
 
         ::sonja::render::ShaderInput {
             attributes,
@@ -409,11 +405,11 @@ quote! {
 }
 ```
 
-Отже, тепер реалізація трейту `Material` для власного типу буде виконуватися набагато простіше. Але не забуваємо про генерацію білдеру, що може ще більше полегшити створення кастомних матеріалів.
+Well, now implementation of `Material` trait for your own type will be much easier. But do not forget about generation of the builder, which can make it even easier to create our custom materials.
 
-## Генерація MyMaterialBuilder
+## MyMaterialBuilder generating
 
-Розширимо output макросу і додамо реалізацію створення білдеру:
+Let's expand the output of our macro and add an implementation of builder creation:
 
 ```rust
 let output = quote! {
@@ -425,40 +421,39 @@ let output = quote! {
     }
 
     impl #ident {
-        pub fn builder() -> #ident_builder { // додаємо функцію ініціалізації білдера в матеріал
+        pub fn builder() -> #ident_builder { // add builder initialization function to the material
             #ident_builder::new()
         }
     }
 
     #[derive(Clone, Default, Debug)]
-    pub struct #ident_builder { // генеруємо саму структуру білдера
+    pub struct #ident_builder { // generate builder struct
         #(#fields,)*
     }
 
     impl #ident_builder {
-        pub fn new() -> Self { // ...шаблонна функція ініціалізації
+        pub fn new() -> Self { // ...typical init function
             Self::default()
         }
 
-        pub fn build(self) -> #ident { // ...метод, що створює екземпляр матеріалу з даних білдера
+        pub fn build(self) -> #ident { // ...method that creates an instance of a material from builder data
             #ident {
                 #(#build_function)*
             }
         }
 
-        #(#functions)* // і додаємо функції налаштування білдера
+        #(#functions)* // and add builder configuration functions
     }
 };
 ```
 
-Тепер йдемо по порядку. Треба створити ідентифікатор білдера. Це робиться просто: всього лиш додаємо суфікс "Builder" до ідентифікатора структури. Зробимо це за допомогою макроса `format!`:
-
+Now let's go seriatim. We need to create a builder ident. It's easy: just add the suffix "Builder" to the identifier of the structure. Let's do this using default `format!` macro:
 
 ```rust
 let ident_builder = Ident::new(format!("{}Builder", ident.to_string()).as_str(), Span::call_site());
 ```
 
-Далі треба скопіювати поля структури до білдера, щоб потім використовувати їх при його ініціалізації:
+Next, we need to copy fields of the structure to the builder in order to use them during its initialization:
 
 ```rust
 let fields = data.fields.iter().map(|f| {
@@ -471,7 +466,7 @@ let fields = data.fields.iter().map(|f| {
 });
 ```
 
-Створимо функції за назвами полів структури (`color()`, `albedo()` тощо) для конфігурації білдера:
+Create functions based on the names of the structure fields (`color()`, `albedo()`, etc.) for the builder configuration:
 
 ```rust
 let functions = data.fields.iter().map(|f| {
@@ -488,7 +483,7 @@ let functions = data.fields.iter().map(|f| {
 });
 ```
 
-Давайте для зручності створимо перелік `FieldAttribute`, що визначатиме, який атрибут був застосований до даного поля (і чи був взагалі):
+For our convenience, let's create a enum `FieldAttribute`, which will determine which attribute was applied to current field (and whether it was):
 
 ```rust
 enum FieldAttribute {
@@ -498,13 +493,13 @@ enum FieldAttribute {
 }
 ```
 
-Тоді маємо:
+Then we are having:
 
 ```rust
 let attr = match f.attrs.get(0) {
     Some(attr) => {
         if let Meta::Path(path) = &attr.meta {
-            match path.into_token_stream().to_string().as_str() { // знову репрезентуємо токени як рядок тексту
+            match path.into_token_stream().to_string().as_str() { // again we represent the tokens as a string
                 "color" => FieldAttribute::Color,
                 "texture" => FieldAttribute::Texture,
                 _ => panic!("Invalid field attribute: \"{}\"", attr.into_token_stream().to_string().as_str()),
@@ -519,7 +514,7 @@ let attr = match f.attrs.get(0) {
 };
 ```
 
-А тепер перевіряємо атрибути для коректної генерації нашої функції:
+And now we check the attributes for the precise generation of our function:
 
 ```rust
 match attr {
@@ -544,7 +539,7 @@ match attr {
 }
 ```
 
-І нарешті для функції `build()` згенеруємо "присвоєння" полям нового матеріалу значень полів білдера:
+And finally, for the `build()` function, we will generate the "assignment" of the values of the builder fields to the fields of our new material:
 
 ```rust
 let build_function = data.fields.iter().map(|f| {
@@ -555,15 +550,15 @@ let build_function = data.fields.iter().map(|f| {
 });
 ```
 
-## Заключення
+## Conclusion
 
-Таким чином, що ми маємо?
+So what do we have?
 
-1. Створення атрибутів полів матеріалу для їх використання у шейдерах;
-2. Автоматична генерація білдеру матеріалу для його швидкої ініціалізації.
+1. Easy creating material field attributes for their use in shaders;
+2. Automatic generation of the material builder for its quick initialization.
 
-Що можна ще зробити?
+What else can be done?
 
-Як приклад, можна додати атрибут поля `#[default = ...]`, що буде задавати стандартні значення полів у білдері під час його створення.
+As an example, you can add the `#[default = ...]` field attribute, which will set the default field values in the builder when it is created.
 
-Повний код макросу ви можете знайти [за посиланням](https://github.com/konceptosociala/sonja/blob/main/macros/src/lib.rs).
+You can find the complete macro code [at the link](https://github.com/konceptosociala/sonja/blob/main/macros/src/lib.rs).

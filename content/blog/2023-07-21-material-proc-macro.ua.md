@@ -398,7 +398,7 @@ quote! {
 
             location += 1; // збільшуємо положення наступного параметра на 1
         )*
-        let instance_size = offset as usize; // по завершенню ітерації встановлюємо загальний розмір даних 
+        let instance_size = offset as usize; // по завершенню ітерацій встановлюємо загальний розмір даних 
 
         ::sonja::render::ShaderInput {
             attributes,

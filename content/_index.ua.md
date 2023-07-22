@@ -4,12 +4,6 @@ paginate_by = 3
 sort_by = "date"
 +++
 
-<style>
-    .license-li::marker {
-        content: '';
-    }
-</style>
-
 {{ section(color="#393C44") }}
 
 # Наші проєкти
@@ -161,3 +155,9 @@ sort_by = "date"
 </div>
 
 {{ endsection(color="#4B1B7F", type="plain") }}
+
+<style>
+    .license-li::marker {
+        content: '';
+    }
+</style>
