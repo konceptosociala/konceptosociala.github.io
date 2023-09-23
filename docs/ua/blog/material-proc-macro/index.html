@@ -9,15 +9,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="Крейт Sonja містить досить корисний трейт Material, який дозволяє розробнику створювати власні матеріали на основі шейдерів GLSL. Його приблизна реалізація для кастомного матеріалу MyMaterial на початку виглядала так:
-&#x2F;&#x2F; Typetag використовуємо для серіаліз…"/>
+    <meta name="description" content="Крейт Flatbox містить досить корисний трейт Material, який дозволяє розробнику створювати власні матеріали на основі шейдерів GLSL. Його приблизна реалізація для кастомного матеріалу MyMaterial на початку виглядала так:
+&#x2F;&#x2F; Typetag використовуємо для серіал…"/>
 
     <meta property="og:url" content="https:&#x2F;&#x2F;konceptosociala.eu.org&#x2F;ua&#x2F;blog&#x2F;material-proc-macro&#x2F;" />
-    <meta property="og:title" content="Процедурний макрос Material для Sonja | Koncepto Sociala
+    <meta property="og:title" content="Процедурний макрос Material для Flatbox | Koncepto Sociala
 " />
     <meta property="og:type" content="website" />
-    <meta property="og:description" content="Крейт Sonja містить досить корисний трейт Material, який дозволяє розробнику створювати власні матеріали на основі шейдерів GLSL. Його приблизна реалізація для кастомного матеріалу MyMaterial на початку виглядала так:
-&#x2F;&#x2F; Typetag використовуємо для серіаліз…" />
+    <meta property="og:description" content="Крейт Flatbox містить досить корисний трейт Material, який дозволяє розробнику створювати власні матеріали на основі шейдерів GLSL. Його приблизна реалізація для кастомного матеріалу MyMaterial на початку виглядала так:
+&#x2F;&#x2F; Typetag використовуємо для серіал…" />
     <meta property="og:image" content="
     
         https://konceptosociala.eu.org/img/ks.svg
@@ -26,10 +26,10 @@
 
     <meta property="twitter:domain" content="konceptosociala.eu.org">
     <meta property="twitter:url" content="https:&#x2F;&#x2F;konceptosociala.eu.org&#x2F;ua&#x2F;blog&#x2F;material-proc-macro&#x2F;">
-    <meta name="twitter:title" content="Процедурний макрос Material для Sonja | Koncepto Sociala
+    <meta name="twitter:title" content="Процедурний макрос Material для Flatbox | Koncepto Sociala
 ">
-    <meta name="twitter:description" content="Крейт Sonja містить досить корисний трейт Material, який дозволяє розробнику створювати власні матеріали на основі шейдерів GLSL. Його приблизна реалізація для кастомного матеріалу MyMaterial на початку виглядала так:
-&#x2F;&#x2F; Typetag використовуємо для серіаліз…">
+    <meta name="twitter:description" content="Крейт Flatbox містить досить корисний трейт Material, який дозволяє розробнику створювати власні матеріали на основі шейдерів GLSL. Його приблизна реалізація для кастомного матеріалу MyMaterial на початку виглядала так:
+&#x2F;&#x2F; Typetag використовуємо для серіал…">
     <meta name="twitter:image" content="
     
         https://konceptosociala.eu.org/img/ks.svg
@@ -60,7 +60,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
-    <title>Процедурний макрос Material для Sonja | Koncepto Sociala
+    <title>Процедурний макрос Material для Flatbox | Koncepto Sociala
 </title>
 </head>
 <body>
@@ -141,18 +141,18 @@
                                             <li><a class="dropdown-item" href="
     
         
-            https://konceptosociala.eu.org/ua/software/sonja
+            https://konceptosociala.eu.org/ua/software/flatbox
         
     
-">Sonja</a></li>
+">Flatbox</a></li>
                                         
                                             <li><a class="dropdown-item" href="
     
         
-            https://konceptosociala.eu.org/ua/software/sonja-doryen
+            https://konceptosociala.eu.org/ua/software/flatbox-doryen
         
     
-">Sonja Doryen</a></li>
+">Flatbox Doryen</a></li>
                                         
                                     </ul>
                                 </li>
@@ -231,9 +231,9 @@
         
 <div class="post px-lg-5 mx-lg-5 mt-3">
     <p class="date">~~ 2023-07-21 ~~</p>
-    <h1 class="title">Процедурний макрос Material для Sonja</h1>
+    <h1 class="title">Процедурний макрос Material для Flatbox</h1>
     <hr class="big-hr">
-    <p>Крейт Sonja містить досить корисний трейт <code>Material</code>, який дозволяє розробнику створювати власні матеріали на основі шейдерів GLSL. Його приблизна реалізація для кастомного матеріалу <code>MyMaterial</code> на початку виглядала так:</p>
+    <p>Крейт Flatbox містить досить корисний трейт <code>Material</code>, який дозволяє розробнику створювати власні матеріали на основі шейдерів GLSL. Його приблизна реалізація для кастомного матеріалу <code>MyMaterial</code> на початку виглядала так:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#65737e;">// Typetag використовуємо для серіалізації колекції матеріалів `Vec&lt;Arc&lt;dyn Material&gt;&gt;`
 </span><span>#[</span><span style="color:#bf616a;">typetag</span><span>::</span><span style="color:#bf616a;">serde</span><span>]
 </span><span style="color:#b48ead;">impl </span><span>Material </span><span style="color:#b48ead;">for </span><span>MyMaterial {
@@ -409,8 +409,8 @@
 </span></code></pre>
 <p>Початковий output нашого макросу (без генерації білдера) виглядатиме так:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let</span><span> output = quote! {
-</span><span>    #[::</span><span style="color:#bf616a;">sonja</span><span>::</span><span style="color:#bf616a;">assets</span><span>::</span><span style="color:#bf616a;">typetag</span><span>::</span><span style="color:#bf616a;">serde</span><span>]
-</span><span>    </span><span style="color:#b48ead;">impl </span><span>::sonja::render::Material </span><span style="color:#b48ead;">for</span><span> #ident {
+</span><span>    #[::</span><span style="color:#bf616a;">flatbox</span><span>::</span><span style="color:#bf616a;">assets</span><span>::</span><span style="color:#bf616a;">typetag</span><span>::</span><span style="color:#bf616a;">serde</span><span>]
+</span><span>    </span><span style="color:#b48ead;">impl </span><span>::flatbox::render::Material </span><span style="color:#b48ead;">for</span><span> #ident {
 </span><span>        #vertex
 </span><span>        #fragment
 </span><span>        #input
@@ -433,7 +433,7 @@
 </span><span>    </span><span style="color:#b48ead;">match </span><span>&amp;opts.vertex {
 </span><span>        Some(path) =&gt; quote! {
 </span><span>            </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">vertex</span><span>() -&gt; &amp;</span><span style="color:#b48ead;">&#39;static </span><span>[</span><span style="color:#b48ead;">u32</span><span>] {
-</span><span>                ::sonja::render::include_glsl!(
+</span><span>                ::flatbox::render::include_glsl!(
 </span><span>                    #path, 
 </span><span>                    kind: vert,
 </span><span>                )
@@ -447,7 +447,7 @@
 </span><span>    </span><span style="color:#b48ead;">match </span><span>&amp;opts.fragment {
 </span><span>        Some(path) =&gt; quote! {
 </span><span>            </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">fragment</span><span>() -&gt; &amp;</span><span style="color:#b48ead;">&#39;static </span><span>[</span><span style="color:#b48ead;">u32</span><span>] {
-</span><span>                ::sonja::render::include_glsl!(
+</span><span>                ::flatbox::render::include_glsl!(
 </span><span>                    #path, 
 </span><span>                    kind: frag,
 </span><span>                )
@@ -466,7 +466,7 @@
 </span><span>    </span><span style="color:#b48ead;">let</span><span> format = ...;
 </span><span>
 </span><span>    quote! {
-</span><span>        </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">input</span><span>() -&gt; ::sonja::render::ShaderInput {
+</span><span>        </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">input</span><span>() -&gt; ::flatbox::render::ShaderInput {
 </span><span>            ...
 </span><span>        }
 </span><span>    }
@@ -475,19 +475,19 @@
 <p>Одержуємо топологію способом аналогічним тому, як ми отримували шлях до шейдерів зі структури <code>Opts</code>:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let</span><span> topology = </span><span style="color:#b48ead;">match </span><span>&amp;opts.topology {
 </span><span>    Some(topology) =&gt; </span><span style="color:#b48ead;">match</span><span> topology.</span><span style="color:#96b5b4;">as_str</span><span>() { </span><span style="color:#65737e;">// робимо перелік усіх можливих топологій Vulkan
-</span><span>        &quot;</span><span style="color:#a3be8c;">point_list</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">POINT_LIST </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">line_list</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">LINE_LIST </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">line_strip</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">LINE_STRIP </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_list</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_LIST </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_strip</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_STRIP </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_fan</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_FAN </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">line_list_with_adjacency</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">LINE_LIST_WITH_ADJACENCY </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">line_strip_with_adjacency</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">LINE_STRIP_WITH_ADJACENCY </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_list_with_adjacency</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_LIST_WITH_ADJACENCY </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_strip_with_adjacency</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_STRIP_WITH_ADJACENCY </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">point_list</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">POINT_LIST </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">line_list</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">LINE_LIST </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">line_strip</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">LINE_STRIP </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_list</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_LIST </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_strip</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_STRIP </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_fan</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_FAN </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">line_list_with_adjacency</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">LINE_LIST_WITH_ADJACENCY </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">line_strip_with_adjacency</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">LINE_STRIP_WITH_ADJACENCY </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_list_with_adjacency</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_LIST_WITH_ADJACENCY </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_strip_with_adjacency</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_STRIP_WITH_ADJACENCY </span><span>},
 </span><span>        _ =&gt; panic!(&quot;</span><span style="color:#a3be8c;">Unsupported topology </span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">{}</span><span style="color:#96b5b4;">\&quot;</span><span>&quot;, topology),
 </span><span>    },
-</span><span>    None =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_LIST </span><span>}, </span><span style="color:#65737e;">// якщо атрибут відсутній, то використовувати список трикутників (рендерінг поверхні граней 3Д-моделей) за замовчуванням
+</span><span>    None =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_LIST </span><span>}, </span><span style="color:#65737e;">// якщо атрибут відсутній, то використовувати список трикутників (рендерінг поверхні граней 3Д-моделей) за замовчуванням
 </span><span>};
 </span></code></pre>
 <p>Щоб отримати перелік форматів полів, проітеруємо структуру <code>data.fields</code> та повернемо <code>Map&lt;...&gt;</code>:</p>
@@ -502,18 +502,18 @@
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">match</span><span> ty {
 </span><span>    Type::Array(array) =&gt; { </span><span style="color:#65737e;">// чи масив
 </span><span>        </span><span style="color:#b48ead;">match</span><span> array.</span><span style="color:#96b5b4;">into_token_stream</span><span>().</span><span style="color:#96b5b4;">to_string</span><span>().</span><span style="color:#96b5b4;">as_str</span><span>() { </span><span style="color:#65737e;">// конвертуємо тип у строку
-</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 2]</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32_SFLOAT </span><span>},
-</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 3]</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32_SFLOAT </span><span>},
-</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 4]</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32A32_SFLOAT </span><span>},
-</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 1]</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32_SFLOAT </span><span>}, </span><span style="color:#65737e;">// масив з одного елемента представляємо як звичайний `float`
+</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 2]</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32_SFLOAT </span><span>},
+</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 3]</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32_SFLOAT </span><span>},
+</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 4]</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32A32_SFLOAT </span><span>},
+</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 1]</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32_SFLOAT </span><span>}, </span><span style="color:#65737e;">// масив з одного елемента представляємо як звичайний `float`
 </span><span>            _ =&gt; panic!(&quot;</span><span style="color:#a3be8c;">Unsupported input format: </span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">{}</span><span style="color:#96b5b4;">\&quot;</span><span>&quot;, array.</span><span style="color:#96b5b4;">into_token_stream</span><span>().</span><span style="color:#96b5b4;">to_string</span><span>().</span><span style="color:#96b5b4;">as_str</span><span>())
 </span><span>        }
 </span><span>    },
 </span><span>    Type::Path(path) =&gt; { </span><span style="color:#65737e;">// чи звичайний тип
 </span><span>        </span><span style="color:#b48ead;">match</span><span> path.</span><span style="color:#96b5b4;">into_token_stream</span><span>().</span><span style="color:#96b5b4;">to_string</span><span>().</span><span style="color:#96b5b4;">as_str</span><span>() {
-</span><span>            &quot;</span><span style="color:#a3be8c;">f32</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32_SFLOAT </span><span>},
-</span><span>            &quot;</span><span style="color:#a3be8c;">u32</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_UINT </span><span>},
-</span><span>            &quot;</span><span style="color:#a3be8c;">i32</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_SINT </span><span>},
+</span><span>            &quot;</span><span style="color:#a3be8c;">f32</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32_SFLOAT </span><span>},
+</span><span>            &quot;</span><span style="color:#a3be8c;">u32</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_UINT </span><span>},
+</span><span>            &quot;</span><span style="color:#a3be8c;">i32</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_SINT </span><span>},
 </span><span>            _ =&gt; panic!(&quot;</span><span style="color:#a3be8c;">Unsupported input format: </span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">{}</span><span style="color:#96b5b4;">\&quot;</span><span>&quot;, path.</span><span style="color:#96b5b4;">into_token_stream</span><span>().</span><span style="color:#96b5b4;">to_string</span><span>().</span><span style="color:#96b5b4;">as_str</span><span>())
 </span><span>        }
 </span><span>    },
@@ -537,13 +537,13 @@
 </span></code></pre>
 <p>Якщо топологія та формат полів у нас є, <code>binding</code> є завжди сталим, то нам все ще потрібен зсув вхідних даних (offset), їх положення (location) та сумарний розмір даних матеріалу (instance_size). Ці всі значення ми можемо отримати вже при ітерації форматів полів:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span>quote! {
-</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">input</span><span>() -&gt; ::sonja::render::ShaderInput {
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">input</span><span>() -&gt; ::flatbox::render::ShaderInput {
 </span><span>        </span><span style="color:#b48ead;">let mut</span><span> location = </span><span style="color:#d08770;">3</span><span>; </span><span style="color:#65737e;">// положення першого параметра в шейдері починаючи з &quot;0&quot; (перші 3 зайняті параметрами самої 3Д-моделі)
 </span><span>        </span><span style="color:#b48ead;">let mut</span><span> offset = </span><span style="color:#d08770;">0</span><span>; </span><span style="color:#65737e;">// зсув першого параметра (оскільки параметр перший, отже зсув відсутній)
 </span><span>        </span><span style="color:#b48ead;">let mut</span><span> attributes = vec![];
 </span><span>        #(
 </span><span>            attributes.</span><span style="color:#96b5b4;">push</span><span>(
-</span><span>                ::sonja::render::ShaderInputAttribute{
+</span><span>                ::flatbox::render::ShaderInputAttribute{
 </span><span>                    binding: </span><span style="color:#d08770;">1</span><span>,
 </span><span>                    location: location,
 </span><span>                    offset: offset,
@@ -552,12 +552,12 @@
 </span><span>            );
 </span><span>
 </span><span>            offset += </span><span style="color:#b48ead;">match </span><span>#format { </span><span style="color:#65737e;">// збільшуємо зсув наступного параметра на розмір поточного
-</span><span>                ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_UINT
-</span><span>                    | ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_SINT 
-</span><span>                    | ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">4</span><span>,
-</span><span>                ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">8</span><span>,
-</span><span>                ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">12</span><span>,
-</span><span>                ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32A32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">16</span><span>,
+</span><span>                ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_UINT
+</span><span>                    | ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_SINT 
+</span><span>                    | ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">4</span><span>,
+</span><span>                ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">8</span><span>,
+</span><span>                ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">12</span><span>,
+</span><span>                ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32A32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">16</span><span>,
 </span><span>                _ =&gt; </span><span style="color:#d08770;">0</span><span>,
 </span><span>            };
 </span><span>
@@ -565,7 +565,7 @@
 </span><span>        )*
 </span><span>        </span><span style="color:#b48ead;">let</span><span> instance_size = offset as </span><span style="color:#b48ead;">usize</span><span>; </span><span style="color:#65737e;">// по завершенню ітерацій встановлюємо загальний розмір даних 
 </span><span>
-</span><span>        ::sonja::render::ShaderInput {
+</span><span>        ::flatbox::render::ShaderInput {
 </span><span>            attributes,
 </span><span>            instance_size,
 </span><span>            topology: #topology,
@@ -577,8 +577,8 @@
 <h2 id="generatsiia-mymaterialbuilder">Генерація MyMaterialBuilder</h2>
 <p>Розширимо output макросу і додамо реалізацію створення білдеру:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let</span><span> output = quote! {
-</span><span>    #[::</span><span style="color:#bf616a;">sonja</span><span>::</span><span style="color:#bf616a;">assets</span><span>::</span><span style="color:#bf616a;">typetag</span><span>::</span><span style="color:#bf616a;">serde</span><span>]
-</span><span>    </span><span style="color:#b48ead;">impl </span><span>::sonja::render::Material </span><span style="color:#b48ead;">for</span><span> #ident {
+</span><span>    #[::</span><span style="color:#bf616a;">flatbox</span><span>::</span><span style="color:#bf616a;">assets</span><span>::</span><span style="color:#bf616a;">typetag</span><span>::</span><span style="color:#bf616a;">serde</span><span>]
+</span><span>    </span><span style="color:#b48ead;">impl </span><span>::flatbox::render::Material </span><span style="color:#b48ead;">for</span><span> #ident {
 </span><span>        #vertex
 </span><span>        #fragment
 </span><span>        #input
@@ -665,13 +665,13 @@
 <p>А тепер перевіряємо атрибути для коректної генерації нашої функції:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">match</span><span> attr {
 </span><span>    FieldAttribute::Color =&gt; quote! {
-</span><span>        </span><span style="color:#b48ead;">pub fn </span><span>#</span><span style="color:#96b5b4;">name</span><span>(</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, value: ::sonja::render::Color&lt;</span><span style="color:#b48ead;">f32</span><span>&gt;) -&gt; </span><span style="color:#b48ead;">Self </span><span>{ 
+</span><span>        </span><span style="color:#b48ead;">pub fn </span><span>#</span><span style="color:#96b5b4;">name</span><span>(</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, value: ::flatbox::render::Color&lt;</span><span style="color:#b48ead;">f32</span><span>&gt;) -&gt; </span><span style="color:#b48ead;">Self </span><span>{ 
 </span><span>            </span><span style="color:#bf616a;">self</span><span>.#name = value.</span><span style="color:#96b5b4;">into</span><span>();
 </span><span>            </span><span style="color:#bf616a;">self
 </span><span>        }
 </span><span>    },
 </span><span>    FieldAttribute::Texture =&gt; quote! {
-</span><span>        </span><span style="color:#b48ead;">pub fn </span><span>#</span><span style="color:#96b5b4;">name</span><span>(</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, value: ::sonja::assets::AssetHandle&lt;&#39;T&#39;&gt;) -&gt; </span><span style="color:#b48ead;">Self </span><span>{ 
+</span><span>        </span><span style="color:#b48ead;">pub fn </span><span>#</span><span style="color:#96b5b4;">name</span><span>(</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, value: ::flatbox::assets::AssetHandle&lt;&#39;T&#39;&gt;) -&gt; </span><span style="color:#b48ead;">Self </span><span>{ 
 </span><span>            </span><span style="color:#bf616a;">self</span><span>.#name = value.</span><span style="color:#96b5b4;">into</span><span>();
 </span><span>            </span><span style="color:#bf616a;">self
 </span><span>        }
@@ -700,7 +700,7 @@
 </ol>
 <p>Що можна ще зробити?</p>
 <p>Як приклад, можна додати атрибут поля <code>#[default = ...]</code>, що буде задавати стандартні значення полів у білдері під час його створення.</p>
-<p>Повний код макросу ви можете знайти <a href="https://github.com/konceptosociala/sonja/blob/main/macros/src/lib.rs">за посиланням</a>.</p>
+<p>Повний код макросу ви можете знайти <a href="https://github.com/konceptosociala/flatbox/blob/main/macros/src/lib.rs">за посиланням</a>.</p>
 
 </div>
 

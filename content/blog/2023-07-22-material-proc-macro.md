@@ -1,8 +1,8 @@
 +++
-title = "Material derive macro for Sonja"
+title = "Material derive macro for Flatbox"
 +++
 
-The Sonja crate contains a quite useful `Material` trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material `MyMaterial` initially looked like this:
+The Flatbox crate contains a quite useful `Material` trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material `MyMaterial` initially looked like this:
 
 ```rust
 // Typetag is used to serialize the collection of materials `Vec<Arc<dyn Material>>`
@@ -213,8 +213,8 @@ Initial output of our macro (without builder generating) will look like this:
 
 ```rust
 let output = quote! {
-    #[::sonja::assets::typetag::serde]
-    impl ::sonja::render::Material for #ident {
+    #[::flatbox::assets::typetag::serde]
+    impl ::flatbox::render::Material for #ident {
         #vertex
         #fragment
         #input
@@ -243,7 +243,7 @@ fn get_vertex_path(opts: &Opts) -> proc_macro2::TokenStream {
     match &opts.vertex {
         Some(path) => quote! {
             fn vertex() -> &'static [u32] {
-                ::sonja::render::include_glsl!(
+                ::flatbox::render::include_glsl!(
                     #path, 
                     kind: vert,
                 )
@@ -257,7 +257,7 @@ fn get_fragment_path(opts: &Opts) -> proc_macro2::TokenStream {
     match &opts.fragment {
         Some(path) => quote! {
             fn fragment() -> &'static [u32] {
-                ::sonja::render::include_glsl!(
+                ::flatbox::render::include_glsl!(
                     #path, 
                     kind: frag,
                 )
@@ -279,7 +279,7 @@ fn get_shader_input(
     let format = ...;
 
     quote! {
-        fn input() -> ::sonja::render::ShaderInput {
+        fn input() -> ::flatbox::render::ShaderInput {
             ...
         }
     }
@@ -291,19 +291,19 @@ Get the topology in a way similar to how we got the path to shaders from the `Op
 ```rust
 let topology = match &opts.topology {
     Some(topology) => match topology.as_str() { // list all possible Vulkan topologies
-        "point_list" => quote! { ::sonja::render::ShaderTopology::POINT_LIST },
-        "line_list" => quote! { ::sonja::render::ShaderTopology::LINE_LIST },
-        "line_strip" => quote! { ::sonja::render::ShaderTopology::LINE_STRIP },
-        "triangle_list" => quote! { ::sonja::render::ShaderTopology::TRIANGLE_LIST },
-        "triangle_strip" => quote! { ::sonja::render::ShaderTopology::TRIANGLE_STRIP },
-        "triangle_fan" => quote! { ::sonja::render::ShaderTopology::TRIANGLE_FAN },
-        "line_list_with_adjacency" => quote! { ::sonja::render::ShaderTopology::LINE_LIST_WITH_ADJACENCY },
-        "line_strip_with_adjacency" => quote! { ::sonja::render::ShaderTopology::LINE_STRIP_WITH_ADJACENCY },
-        "triangle_list_with_adjacency" => quote! { ::sonja::render::ShaderTopology::TRIANGLE_LIST_WITH_ADJACENCY },
-        "triangle_strip_with_adjacency" => quote! { ::sonja::render::ShaderTopology::TRIANGLE_STRIP_WITH_ADJACENCY },
+        "point_list" => quote! { ::flatbox::render::ShaderTopology::POINT_LIST },
+        "line_list" => quote! { ::flatbox::render::ShaderTopology::LINE_LIST },
+        "line_strip" => quote! { ::flatbox::render::ShaderTopology::LINE_STRIP },
+        "triangle_list" => quote! { ::flatbox::render::ShaderTopology::TRIANGLE_LIST },
+        "triangle_strip" => quote! { ::flatbox::render::ShaderTopology::TRIANGLE_STRIP },
+        "triangle_fan" => quote! { ::flatbox::render::ShaderTopology::TRIANGLE_FAN },
+        "line_list_with_adjacency" => quote! { ::flatbox::render::ShaderTopology::LINE_LIST_WITH_ADJACENCY },
+        "line_strip_with_adjacency" => quote! { ::flatbox::render::ShaderTopology::LINE_STRIP_WITH_ADJACENCY },
+        "triangle_list_with_adjacency" => quote! { ::flatbox::render::ShaderTopology::TRIANGLE_LIST_WITH_ADJACENCY },
+        "triangle_strip_with_adjacency" => quote! { ::flatbox::render::ShaderTopology::TRIANGLE_STRIP_WITH_ADJACENCY },
         _ => panic!("Unsupported topology \"{}\"", topology),
     },
-    None => quote! { ::sonja::render::ShaderTopology::TRIANGLE_LIST }, // if the attribute is missing, then use the list of triangles (rendering of 3D models' faces' surface) by default
+    None => quote! { ::flatbox::render::ShaderTopology::TRIANGLE_LIST }, // if the attribute is missing, then use the list of triangles (rendering of 3D models' faces' surface) by default
 };
 ```
 
@@ -324,18 +324,18 @@ The list of types that can be used as shader input data is quite small: integers
 match ty {
     Type::Array(array) => { // whether array
         match array.into_token_stream().to_string().as_str() { // converting type to string
-            "[f32 ; 2]" => quote! { ::sonja::render::ShaderInputFormat::R32G32_SFLOAT },
-            "[f32 ; 3]" => quote! { ::sonja::render::ShaderInputFormat::R32G32B32_SFLOAT },
-            "[f32 ; 4]" => quote! { ::sonja::render::ShaderInputFormat::R32G32B32A32_SFLOAT },
-            "[f32 ; 1]" => quote! { ::sonja::render::ShaderInputFormat::R32_SFLOAT }, // array of one element is represented as an ordinary `float`
+            "[f32 ; 2]" => quote! { ::flatbox::render::ShaderInputFormat::R32G32_SFLOAT },
+            "[f32 ; 3]" => quote! { ::flatbox::render::ShaderInputFormat::R32G32B32_SFLOAT },
+            "[f32 ; 4]" => quote! { ::flatbox::render::ShaderInputFormat::R32G32B32A32_SFLOAT },
+            "[f32 ; 1]" => quote! { ::flatbox::render::ShaderInputFormat::R32_SFLOAT }, // array of one element is represented as an ordinary `float`
             _ => panic!("Unsupported input format: \"{}\"", array.into_token_stream().to_string().as_str())
         }
     },
     Type::Path(path) => { // whether regular type
         match path.into_token_stream().to_string().as_str() {
-            "f32" => quote! { ::sonja::render::ShaderInputFormat::R32_SFLOAT },
-            "u32" => quote! { ::sonja::render::ShaderInputFormat::R8G8B8A8_UINT },
-            "i32" => quote! { ::sonja::render::ShaderInputFormat::R8G8B8A8_SINT },
+            "f32" => quote! { ::flatbox::render::ShaderInputFormat::R32_SFLOAT },
+            "u32" => quote! { ::flatbox::render::ShaderInputFormat::R8G8B8A8_UINT },
+            "i32" => quote! { ::flatbox::render::ShaderInputFormat::R8G8B8A8_SINT },
             _ => panic!("Unsupported input format: \"{}\"", path.into_token_stream().to_string().as_str())
         }
     },
@@ -368,13 +368,13 @@ If we have the topology and format of the fields, the `binding` is always consta
 
 ```rust
 quote! {
-    fn input() -> ::sonja::render::ShaderInput {
+    fn input() -> ::flatbox::render::ShaderInput {
         let mut location = 3; // location of the first parameter in the shader starting from "0" (the first 3 are occupied by the parameters of the 3D model itself)
         let mut offset = 0; // offset of the first parameter (since the parameter is the first, therefore there is no offset)
         let mut attributes = vec![];
         #(
             attributes.push(
-                ::sonja::render::ShaderInputAttribute{
+                ::flatbox::render::ShaderInputAttribute{
                     binding: 1,
                     location: location,
                     offset: offset,
@@ -383,12 +383,12 @@ quote! {
             );
 
             offset += match #format { // increase the offset of the next parameter by the size of the current one
-                ::sonja::render::ShaderInputFormat::R8G8B8A8_UINT
-                    | ::sonja::render::ShaderInputFormat::R8G8B8A8_SINT 
-                    | ::sonja::render::ShaderInputFormat::R32_SFLOAT => 4,
-                ::sonja::render::ShaderInputFormat::R32G32_SFLOAT => 8,
-                ::sonja::render::ShaderInputFormat::R32G32B32_SFLOAT => 12,
-                ::sonja::render::ShaderInputFormat::R32G32B32A32_SFLOAT => 16,
+                ::flatbox::render::ShaderInputFormat::R8G8B8A8_UINT
+                    | ::flatbox::render::ShaderInputFormat::R8G8B8A8_SINT 
+                    | ::flatbox::render::ShaderInputFormat::R32_SFLOAT => 4,
+                ::flatbox::render::ShaderInputFormat::R32G32_SFLOAT => 8,
+                ::flatbox::render::ShaderInputFormat::R32G32B32_SFLOAT => 12,
+                ::flatbox::render::ShaderInputFormat::R32G32B32A32_SFLOAT => 16,
                 _ => 0,
             };
 
@@ -396,7 +396,7 @@ quote! {
         )*
         let instance_size = offset as usize; // at the end of the iterations, we set the total size of the data
 
-        ::sonja::render::ShaderInput {
+        ::flatbox::render::ShaderInput {
             attributes,
             instance_size,
             topology: #topology,
@@ -413,8 +413,8 @@ Let's expand the output of our macro and add an implementation of builder creati
 
 ```rust
 let output = quote! {
-    #[::sonja::assets::typetag::serde]
-    impl ::sonja::render::Material for #ident {
+    #[::flatbox::assets::typetag::serde]
+    impl ::flatbox::render::Material for #ident {
         #vertex
         #fragment
         #input
@@ -519,13 +519,13 @@ And now we check the attributes for the precise generation of our function:
 ```rust
 match attr {
     FieldAttribute::Color => quote! {
-        pub fn #name(mut self, value: ::sonja::render::Color<f32>) -> Self { 
+        pub fn #name(mut self, value: ::flatbox::render::Color<f32>) -> Self { 
             self.#name = value.into();
             self
         }
     },
     FieldAttribute::Texture => quote! {
-        pub fn #name(mut self, value: ::sonja::assets::AssetHandle<'T'>) -> Self { 
+        pub fn #name(mut self, value: ::flatbox::assets::AssetHandle<'T'>) -> Self { 
             self.#name = value.into();
             self
         }
@@ -561,4 +561,4 @@ What else can be done?
 
 As an example, you can add the `#[default = ...]` field attribute, which will set the default field values in the builder when it is created.
 
-You can find the complete macro code [at the link](https://github.com/konceptosociala/sonja/blob/main/macros/src/lib.rs).
+You can find the complete macro code [at the link](https://github.com/konceptosociala/flatbox/blob/main/macros/src/lib.rs).

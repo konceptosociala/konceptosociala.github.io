@@ -21,22 +21,22 @@ sort_by = "date"
     }}
     {{ 
         project(
-            banner="/img/projects/sonja.svg"
-            title="Sonja", 
+            banner="/img/projects/flatbox.jpg"
+            title="Flatbox", 
             subtitle="3D ігровий двигун", 
             description="Написаний на Rust. Він підтримує PBR-рендеринг, фізику, скрипти Lua та характеризується власною системою розширень для реалізації індивідуальної ігрової логіки.",
-            project_page="software/sonja",
-            github_page="https://github.com/konceptosociala/sonja"
+            project_page="software/flatbox",
+            github_page="https://github.com/konceptosociala/flatbox"
         ) 
     }}
     {{ 
         project(
-            banner="/img/projects/sonja_doryen.svg",
-            title="Sonja Doryen", 
+            banner="/img/projects/flatbox_doryen.jpg",
+            title="Flatbox Doryen", 
             subtitle="Roguelike ігровий фреймворк", 
-            description="Високорівневий фреймворк для Sonja, що використовується для створення двовимірних roguelike ігор, на основі бібліотеки doryen.",
-            project_page="software/sonja-doryen",
-            github_page="https://github.com/konceptosociala/sonja-doryen"
+            description="Високорівневий фреймворк для Flatbox, що використовується для створення двовимірних roguelike ігор, на основі бібліотеки doryen.",
+            project_page="software/flatbox-doryen",
+            github_page="https://github.com/konceptosociala/flatbox-doryen"
         ) 
     }}
     {{ 

@@ -24,8 +24,8 @@ socio_navbar_links = [
         ["komunterio", "/games/komunterio/"],
     ] },
     { key = "software", dropdown = [
-        ["sonja", "/software/sonja/"],
-        ["sonja_doryen", "/software/sonja-doryen/"],
+        ["flatbox", "/software/flatbox/"],
+        ["flatbox_doryen", "/software/flatbox-doryen/"],
     ] },
     { key = "github", link = "https://github.com/konceptosociala" },
     { key = "about", link = "/about/" }
@@ -95,8 +95,8 @@ blog = "Blog"
 games = "Games"
 komunterio = "Komunterio"
 software = "Software"
-sonja = "Sonja"
-sonja_doryen = "Sonja Doryen"
+flatbox = "Flatbox"
+flatbox_doryen = "Flatbox Doryen"
 github = "GitHub"
 about = "About"
 
@@ -114,7 +114,7 @@ blog = "Блог"
 games = "Ігри"
 komunterio = "Komunterio"
 software = "ПЗ"
-sonja = "Sonja"
-sonja_doryen = "Sonja Doryen"
+flatbox = "Flatbox"
+flatbox_doryen = "Flatbox Doryen"
 github = "GitHub"
 about = "Інфо"

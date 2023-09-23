@@ -9,15 +9,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="The Sonja crate contains a quite useful Material trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material MyMaterial initially looked like this:
-&#x2F;&#x2F; Typetag is used to serial…"/>
+    <meta name="description" content="The Flatbox crate contains a quite useful Material trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material MyMaterial initially looked like this:
+&#x2F;&#x2F; Typetag is used to seri…"/>
 
     <meta property="og:url" content="https:&#x2F;&#x2F;konceptosociala.eu.org&#x2F;blog&#x2F;material-proc-macro&#x2F;" />
-    <meta property="og:title" content="Material derive macro for Sonja | Koncepto Sociala
+    <meta property="og:title" content="Material derive macro for Flatbox | Koncepto Sociala
 " />
     <meta property="og:type" content="website" />
-    <meta property="og:description" content="The Sonja crate contains a quite useful Material trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material MyMaterial initially looked like this:
-&#x2F;&#x2F; Typetag is used to serial…" />
+    <meta property="og:description" content="The Flatbox crate contains a quite useful Material trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material MyMaterial initially looked like this:
+&#x2F;&#x2F; Typetag is used to seri…" />
     <meta property="og:image" content="
     
         https://konceptosociala.eu.org/img/ks.svg
@@ -26,10 +26,10 @@
 
     <meta property="twitter:domain" content="konceptosociala.eu.org">
     <meta property="twitter:url" content="https:&#x2F;&#x2F;konceptosociala.eu.org&#x2F;blog&#x2F;material-proc-macro&#x2F;">
-    <meta name="twitter:title" content="Material derive macro for Sonja | Koncepto Sociala
+    <meta name="twitter:title" content="Material derive macro for Flatbox | Koncepto Sociala
 ">
-    <meta name="twitter:description" content="The Sonja crate contains a quite useful Material trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material MyMaterial initially looked like this:
-&#x2F;&#x2F; Typetag is used to serial…">
+    <meta name="twitter:description" content="The Flatbox crate contains a quite useful Material trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material MyMaterial initially looked like this:
+&#x2F;&#x2F; Typetag is used to seri…">
     <meta name="twitter:image" content="
     
         https://konceptosociala.eu.org/img/ks.svg
@@ -60,7 +60,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
-    <title>Material derive macro for Sonja | Koncepto Sociala
+    <title>Material derive macro for Flatbox | Koncepto Sociala
 </title>
 </head>
 <body>
@@ -141,18 +141,18 @@
                                             <li><a class="dropdown-item" href="
     
         
-            https://konceptosociala.eu.org/software/sonja
+            https://konceptosociala.eu.org/software/flatbox
         
     
-">Sonja</a></li>
+">Flatbox</a></li>
                                         
                                             <li><a class="dropdown-item" href="
     
         
-            https://konceptosociala.eu.org/software/sonja-doryen
+            https://konceptosociala.eu.org/software/flatbox-doryen
         
     
-">Sonja Doryen</a></li>
+">Flatbox Doryen</a></li>
                                         
                                     </ul>
                                 </li>
@@ -231,9 +231,9 @@
         
 <div class="post px-lg-5 mx-lg-5 mt-3">
     <p class="date">~~ 2023-07-22 ~~</p>
-    <h1 class="title">Material derive macro for Sonja</h1>
+    <h1 class="title">Material derive macro for Flatbox</h1>
     <hr class="big-hr">
-    <p>The Sonja crate contains a quite useful <code>Material</code> trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material <code>MyMaterial</code> initially looked like this:</p>
+    <p>The Flatbox crate contains a quite useful <code>Material</code> trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material <code>MyMaterial</code> initially looked like this:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#65737e;">// Typetag is used to serialize the collection of materials `Vec&lt;Arc&lt;dyn Material&gt;&gt;`
 </span><span>#[</span><span style="color:#bf616a;">typetag</span><span>::</span><span style="color:#bf616a;">serde</span><span>]
 </span><span style="color:#b48ead;">impl </span><span>Material </span><span style="color:#b48ead;">for </span><span>MyMaterial {
@@ -409,8 +409,8 @@
 </span></code></pre>
 <p>Initial output of our macro (without builder generating) will look like this:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let</span><span> output = quote! {
-</span><span>    #[::</span><span style="color:#bf616a;">sonja</span><span>::</span><span style="color:#bf616a;">assets</span><span>::</span><span style="color:#bf616a;">typetag</span><span>::</span><span style="color:#bf616a;">serde</span><span>]
-</span><span>    </span><span style="color:#b48ead;">impl </span><span>::sonja::render::Material </span><span style="color:#b48ead;">for</span><span> #ident {
+</span><span>    #[::</span><span style="color:#bf616a;">flatbox</span><span>::</span><span style="color:#bf616a;">assets</span><span>::</span><span style="color:#bf616a;">typetag</span><span>::</span><span style="color:#bf616a;">serde</span><span>]
+</span><span>    </span><span style="color:#b48ead;">impl </span><span>::flatbox::render::Material </span><span style="color:#b48ead;">for</span><span> #ident {
 </span><span>        #vertex
 </span><span>        #fragment
 </span><span>        #input
@@ -433,7 +433,7 @@
 </span><span>    </span><span style="color:#b48ead;">match </span><span>&amp;opts.vertex {
 </span><span>        Some(path) =&gt; quote! {
 </span><span>            </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">vertex</span><span>() -&gt; &amp;</span><span style="color:#b48ead;">&#39;static </span><span>[</span><span style="color:#b48ead;">u32</span><span>] {
-</span><span>                ::sonja::render::include_glsl!(
+</span><span>                ::flatbox::render::include_glsl!(
 </span><span>                    #path, 
 </span><span>                    kind: vert,
 </span><span>                )
@@ -447,7 +447,7 @@
 </span><span>    </span><span style="color:#b48ead;">match </span><span>&amp;opts.fragment {
 </span><span>        Some(path) =&gt; quote! {
 </span><span>            </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">fragment</span><span>() -&gt; &amp;</span><span style="color:#b48ead;">&#39;static </span><span>[</span><span style="color:#b48ead;">u32</span><span>] {
-</span><span>                ::sonja::render::include_glsl!(
+</span><span>                ::flatbox::render::include_glsl!(
 </span><span>                    #path, 
 </span><span>                    kind: frag,
 </span><span>                )
@@ -466,7 +466,7 @@
 </span><span>    </span><span style="color:#b48ead;">let</span><span> format = ...;
 </span><span>
 </span><span>    quote! {
-</span><span>        </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">input</span><span>() -&gt; ::sonja::render::ShaderInput {
+</span><span>        </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">input</span><span>() -&gt; ::flatbox::render::ShaderInput {
 </span><span>            ...
 </span><span>        }
 </span><span>    }
@@ -475,19 +475,19 @@
 <p>Get the topology in a way similar to how we got the path to shaders from the <code>Opts</code> structure:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let</span><span> topology = </span><span style="color:#b48ead;">match </span><span>&amp;opts.topology {
 </span><span>    Some(topology) =&gt; </span><span style="color:#b48ead;">match</span><span> topology.</span><span style="color:#96b5b4;">as_str</span><span>() { </span><span style="color:#65737e;">// list all possible Vulkan topologies
-</span><span>        &quot;</span><span style="color:#a3be8c;">point_list</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">POINT_LIST </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">line_list</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">LINE_LIST </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">line_strip</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">LINE_STRIP </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_list</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_LIST </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_strip</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_STRIP </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_fan</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_FAN </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">line_list_with_adjacency</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">LINE_LIST_WITH_ADJACENCY </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">line_strip_with_adjacency</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">LINE_STRIP_WITH_ADJACENCY </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_list_with_adjacency</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_LIST_WITH_ADJACENCY </span><span>},
-</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_strip_with_adjacency</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_STRIP_WITH_ADJACENCY </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">point_list</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">POINT_LIST </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">line_list</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">LINE_LIST </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">line_strip</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">LINE_STRIP </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_list</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_LIST </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_strip</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_STRIP </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_fan</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_FAN </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">line_list_with_adjacency</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">LINE_LIST_WITH_ADJACENCY </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">line_strip_with_adjacency</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">LINE_STRIP_WITH_ADJACENCY </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_list_with_adjacency</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_LIST_WITH_ADJACENCY </span><span>},
+</span><span>        &quot;</span><span style="color:#a3be8c;">triangle_strip_with_adjacency</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_STRIP_WITH_ADJACENCY </span><span>},
 </span><span>        _ =&gt; panic!(&quot;</span><span style="color:#a3be8c;">Unsupported topology </span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">{}</span><span style="color:#96b5b4;">\&quot;</span><span>&quot;, topology),
 </span><span>    },
-</span><span>    None =&gt; quote! { ::sonja::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_LIST </span><span>}, </span><span style="color:#65737e;">// if the attribute is missing, then use the list of triangles (rendering of 3D models&#39; faces&#39; surface) by default
+</span><span>    None =&gt; quote! { ::flatbox::render::ShaderTopology::</span><span style="color:#d08770;">TRIANGLE_LIST </span><span>}, </span><span style="color:#65737e;">// if the attribute is missing, then use the list of triangles (rendering of 3D models&#39; faces&#39; surface) by default
 </span><span>};
 </span></code></pre>
 <p>To get a list of field formats, iterate over the <code>data.fields</code> structure and return <code>Map&lt;...&gt;</code>:</p>
@@ -502,18 +502,18 @@
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">match</span><span> ty {
 </span><span>    Type::Array(array) =&gt; { </span><span style="color:#65737e;">// whether array
 </span><span>        </span><span style="color:#b48ead;">match</span><span> array.</span><span style="color:#96b5b4;">into_token_stream</span><span>().</span><span style="color:#96b5b4;">to_string</span><span>().</span><span style="color:#96b5b4;">as_str</span><span>() { </span><span style="color:#65737e;">// converting type to string
-</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 2]</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32_SFLOAT </span><span>},
-</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 3]</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32_SFLOAT </span><span>},
-</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 4]</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32A32_SFLOAT </span><span>},
-</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 1]</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32_SFLOAT </span><span>}, </span><span style="color:#65737e;">// array of one element is represented as an ordinary `float`
+</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 2]</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32_SFLOAT </span><span>},
+</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 3]</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32_SFLOAT </span><span>},
+</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 4]</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32A32_SFLOAT </span><span>},
+</span><span>            &quot;</span><span style="color:#a3be8c;">[f32 ; 1]</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32_SFLOAT </span><span>}, </span><span style="color:#65737e;">// array of one element is represented as an ordinary `float`
 </span><span>            _ =&gt; panic!(&quot;</span><span style="color:#a3be8c;">Unsupported input format: </span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">{}</span><span style="color:#96b5b4;">\&quot;</span><span>&quot;, array.</span><span style="color:#96b5b4;">into_token_stream</span><span>().</span><span style="color:#96b5b4;">to_string</span><span>().</span><span style="color:#96b5b4;">as_str</span><span>())
 </span><span>        }
 </span><span>    },
 </span><span>    Type::Path(path) =&gt; { </span><span style="color:#65737e;">// whether regular type
 </span><span>        </span><span style="color:#b48ead;">match</span><span> path.</span><span style="color:#96b5b4;">into_token_stream</span><span>().</span><span style="color:#96b5b4;">to_string</span><span>().</span><span style="color:#96b5b4;">as_str</span><span>() {
-</span><span>            &quot;</span><span style="color:#a3be8c;">f32</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32_SFLOAT </span><span>},
-</span><span>            &quot;</span><span style="color:#a3be8c;">u32</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_UINT </span><span>},
-</span><span>            &quot;</span><span style="color:#a3be8c;">i32</span><span>&quot; =&gt; quote! { ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_SINT </span><span>},
+</span><span>            &quot;</span><span style="color:#a3be8c;">f32</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32_SFLOAT </span><span>},
+</span><span>            &quot;</span><span style="color:#a3be8c;">u32</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_UINT </span><span>},
+</span><span>            &quot;</span><span style="color:#a3be8c;">i32</span><span>&quot; =&gt; quote! { ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_SINT </span><span>},
 </span><span>            _ =&gt; panic!(&quot;</span><span style="color:#a3be8c;">Unsupported input format: </span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">{}</span><span style="color:#96b5b4;">\&quot;</span><span>&quot;, path.</span><span style="color:#96b5b4;">into_token_stream</span><span>().</span><span style="color:#96b5b4;">to_string</span><span>().</span><span style="color:#96b5b4;">as_str</span><span>())
 </span><span>        }
 </span><span>    },
@@ -537,13 +537,13 @@
 </span></code></pre>
 <p>If we have the topology and format of the fields, the <code>binding</code> is always constant, then we still need the offset of the input data, its location and the total size in bytes (instance_size). We can get all these values when iterating the field formats:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span>quote! {
-</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">input</span><span>() -&gt; ::sonja::render::ShaderInput {
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">input</span><span>() -&gt; ::flatbox::render::ShaderInput {
 </span><span>        </span><span style="color:#b48ead;">let mut</span><span> location = </span><span style="color:#d08770;">3</span><span>; </span><span style="color:#65737e;">// location of the first parameter in the shader starting from &quot;0&quot; (the first 3 are occupied by the parameters of the 3D model itself)
 </span><span>        </span><span style="color:#b48ead;">let mut</span><span> offset = </span><span style="color:#d08770;">0</span><span>; </span><span style="color:#65737e;">// offset of the first parameter (since the parameter is the first, therefore there is no offset)
 </span><span>        </span><span style="color:#b48ead;">let mut</span><span> attributes = vec![];
 </span><span>        #(
 </span><span>            attributes.</span><span style="color:#96b5b4;">push</span><span>(
-</span><span>                ::sonja::render::ShaderInputAttribute{
+</span><span>                ::flatbox::render::ShaderInputAttribute{
 </span><span>                    binding: </span><span style="color:#d08770;">1</span><span>,
 </span><span>                    location: location,
 </span><span>                    offset: offset,
@@ -552,12 +552,12 @@
 </span><span>            );
 </span><span>
 </span><span>            offset += </span><span style="color:#b48ead;">match </span><span>#format { </span><span style="color:#65737e;">// increase the offset of the next parameter by the size of the current one
-</span><span>                ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_UINT
-</span><span>                    | ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_SINT 
-</span><span>                    | ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">4</span><span>,
-</span><span>                ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">8</span><span>,
-</span><span>                ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">12</span><span>,
-</span><span>                ::sonja::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32A32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">16</span><span>,
+</span><span>                ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_UINT
+</span><span>                    | ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R8G8B8A8_SINT 
+</span><span>                    | ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">4</span><span>,
+</span><span>                ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">8</span><span>,
+</span><span>                ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">12</span><span>,
+</span><span>                ::flatbox::render::ShaderInputFormat::</span><span style="color:#d08770;">R32G32B32A32_SFLOAT </span><span>=&gt; </span><span style="color:#d08770;">16</span><span>,
 </span><span>                _ =&gt; </span><span style="color:#d08770;">0</span><span>,
 </span><span>            };
 </span><span>
@@ -565,7 +565,7 @@
 </span><span>        )*
 </span><span>        </span><span style="color:#b48ead;">let</span><span> instance_size = offset as </span><span style="color:#b48ead;">usize</span><span>; </span><span style="color:#65737e;">// at the end of the iterations, we set the total size of the data
 </span><span>
-</span><span>        ::sonja::render::ShaderInput {
+</span><span>        ::flatbox::render::ShaderInput {
 </span><span>            attributes,
 </span><span>            instance_size,
 </span><span>            topology: #topology,
@@ -577,8 +577,8 @@
 <h2 id="mymaterialbuilder-generating">MyMaterialBuilder generating</h2>
 <p>Let's expand the output of our macro and add an implementation of builder creation:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let</span><span> output = quote! {
-</span><span>    #[::</span><span style="color:#bf616a;">sonja</span><span>::</span><span style="color:#bf616a;">assets</span><span>::</span><span style="color:#bf616a;">typetag</span><span>::</span><span style="color:#bf616a;">serde</span><span>]
-</span><span>    </span><span style="color:#b48ead;">impl </span><span>::sonja::render::Material </span><span style="color:#b48ead;">for</span><span> #ident {
+</span><span>    #[::</span><span style="color:#bf616a;">flatbox</span><span>::</span><span style="color:#bf616a;">assets</span><span>::</span><span style="color:#bf616a;">typetag</span><span>::</span><span style="color:#bf616a;">serde</span><span>]
+</span><span>    </span><span style="color:#b48ead;">impl </span><span>::flatbox::render::Material </span><span style="color:#b48ead;">for</span><span> #ident {
 </span><span>        #vertex
 </span><span>        #fragment
 </span><span>        #input
@@ -665,13 +665,13 @@
 <p>And now we check the attributes for the precise generation of our function:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">match</span><span> attr {
 </span><span>    FieldAttribute::Color =&gt; quote! {
-</span><span>        </span><span style="color:#b48ead;">pub fn </span><span>#</span><span style="color:#96b5b4;">name</span><span>(</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, value: ::sonja::render::Color&lt;</span><span style="color:#b48ead;">f32</span><span>&gt;) -&gt; </span><span style="color:#b48ead;">Self </span><span>{ 
+</span><span>        </span><span style="color:#b48ead;">pub fn </span><span>#</span><span style="color:#96b5b4;">name</span><span>(</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, value: ::flatbox::render::Color&lt;</span><span style="color:#b48ead;">f32</span><span>&gt;) -&gt; </span><span style="color:#b48ead;">Self </span><span>{ 
 </span><span>            </span><span style="color:#bf616a;">self</span><span>.#name = value.</span><span style="color:#96b5b4;">into</span><span>();
 </span><span>            </span><span style="color:#bf616a;">self
 </span><span>        }
 </span><span>    },
 </span><span>    FieldAttribute::Texture =&gt; quote! {
-</span><span>        </span><span style="color:#b48ead;">pub fn </span><span>#</span><span style="color:#96b5b4;">name</span><span>(</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, value: ::sonja::assets::AssetHandle&lt;&#39;T&#39;&gt;) -&gt; </span><span style="color:#b48ead;">Self </span><span>{ 
+</span><span>        </span><span style="color:#b48ead;">pub fn </span><span>#</span><span style="color:#96b5b4;">name</span><span>(</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, value: ::flatbox::assets::AssetHandle&lt;&#39;T&#39;&gt;) -&gt; </span><span style="color:#b48ead;">Self </span><span>{ 
 </span><span>            </span><span style="color:#bf616a;">self</span><span>.#name = value.</span><span style="color:#96b5b4;">into</span><span>();
 </span><span>            </span><span style="color:#bf616a;">self
 </span><span>        }
@@ -700,7 +700,7 @@
 </ol>
 <p>What else can be done?</p>
 <p>As an example, you can add the <code>#[default = ...]</code> field attribute, which will set the default field values in the builder when it is created.</p>
-<p>You can find the complete macro code <a href="https://github.com/konceptosociala/sonja/blob/main/macros/src/lib.rs">at the link</a>.</p>
+<p>You can find the complete macro code <a href="https://github.com/konceptosociala/flatbox/blob/main/macros/src/lib.rs">at the link</a>.</p>
 
 </div>
 

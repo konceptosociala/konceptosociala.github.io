@@ -1,8 +1,8 @@
 +++
-title = "Процедурний макрос Material для Sonja"
+title = "Процедурний макрос Material для Flatbox"
 +++
 
-Крейт Sonja містить досить корисний трейт `Material`, який дозволяє розробнику створювати власні матеріали на основі шейдерів GLSL. Його приблизна реалізація для кастомного матеріалу `MyMaterial` на початку виглядала так:
+Крейт Flatbox містить досить корисний трейт `Material`, який дозволяє розробнику створювати власні матеріали на основі шейдерів GLSL. Його приблизна реалізація для кастомного матеріалу `MyMaterial` на початку виглядала так:
 
 ```rust
 // Typetag використовуємо для серіалізації колекції матеріалів `Vec<Arc<dyn Material>>`
@@ -214,8 +214,8 @@ let Data::Struct(data) = input.data else {
 
 ```rust
 let output = quote! {
-    #[::sonja::assets::typetag::serde]
-    impl ::sonja::render::Material for #ident {
+    #[::flatbox::assets::typetag::serde]
+    impl ::flatbox::render::Material for #ident {
         #vertex
         #fragment
         #input
@@ -244,7 +244,7 @@ fn get_vertex_path(opts: &Opts) -> proc_macro2::TokenStream {
     match &opts.vertex {
         Some(path) => quote! {
             fn vertex() -> &'static [u32] {
-                ::sonja::render::include_glsl!(
+                ::flatbox::render::include_glsl!(
                     #path, 
                     kind: vert,
                 )
@@ -258,7 +258,7 @@ fn get_fragment_path(opts: &Opts) -> proc_macro2::TokenStream {
     match &opts.fragment {
         Some(path) => quote! {
             fn fragment() -> &'static [u32] {
-                ::sonja::render::include_glsl!(
+                ::flatbox::render::include_glsl!(
                     #path, 
                     kind: frag,
                 )
@@ -281,7 +281,7 @@ fn get_shader_input(
     let format = ...;
 
     quote! {
-        fn input() -> ::sonja::render::ShaderInput {
+        fn input() -> ::flatbox::render::ShaderInput {
             ...
         }
     }
@@ -294,19 +294,19 @@ fn get_shader_input(
 ```rust
 let topology = match &opts.topology {
     Some(topology) => match topology.as_str() { // робимо перелік усіх можливих топологій Vulkan
-        "point_list" => quote! { ::sonja::render::ShaderTopology::POINT_LIST },
-        "line_list" => quote! { ::sonja::render::ShaderTopology::LINE_LIST },
-        "line_strip" => quote! { ::sonja::render::ShaderTopology::LINE_STRIP },
-        "triangle_list" => quote! { ::sonja::render::ShaderTopology::TRIANGLE_LIST },
-        "triangle_strip" => quote! { ::sonja::render::ShaderTopology::TRIANGLE_STRIP },
-        "triangle_fan" => quote! { ::sonja::render::ShaderTopology::TRIANGLE_FAN },
-        "line_list_with_adjacency" => quote! { ::sonja::render::ShaderTopology::LINE_LIST_WITH_ADJACENCY },
-        "line_strip_with_adjacency" => quote! { ::sonja::render::ShaderTopology::LINE_STRIP_WITH_ADJACENCY },
-        "triangle_list_with_adjacency" => quote! { ::sonja::render::ShaderTopology::TRIANGLE_LIST_WITH_ADJACENCY },
-        "triangle_strip_with_adjacency" => quote! { ::sonja::render::ShaderTopology::TRIANGLE_STRIP_WITH_ADJACENCY },
+        "point_list" => quote! { ::flatbox::render::ShaderTopology::POINT_LIST },
+        "line_list" => quote! { ::flatbox::render::ShaderTopology::LINE_LIST },
+        "line_strip" => quote! { ::flatbox::render::ShaderTopology::LINE_STRIP },
+        "triangle_list" => quote! { ::flatbox::render::ShaderTopology::TRIANGLE_LIST },
+        "triangle_strip" => quote! { ::flatbox::render::ShaderTopology::TRIANGLE_STRIP },
+        "triangle_fan" => quote! { ::flatbox::render::ShaderTopology::TRIANGLE_FAN },
+        "line_list_with_adjacency" => quote! { ::flatbox::render::ShaderTopology::LINE_LIST_WITH_ADJACENCY },
+        "line_strip_with_adjacency" => quote! { ::flatbox::render::ShaderTopology::LINE_STRIP_WITH_ADJACENCY },
+        "triangle_list_with_adjacency" => quote! { ::flatbox::render::ShaderTopology::TRIANGLE_LIST_WITH_ADJACENCY },
+        "triangle_strip_with_adjacency" => quote! { ::flatbox::render::ShaderTopology::TRIANGLE_STRIP_WITH_ADJACENCY },
         _ => panic!("Unsupported topology \"{}\"", topology),
     },
-    None => quote! { ::sonja::render::ShaderTopology::TRIANGLE_LIST }, // якщо атрибут відсутній, то використовувати список трикутників (рендерінг поверхні граней 3Д-моделей) за замовчуванням
+    None => quote! { ::flatbox::render::ShaderTopology::TRIANGLE_LIST }, // якщо атрибут відсутній, то використовувати список трикутників (рендерінг поверхні граней 3Д-моделей) за замовчуванням
 };
 ```
 
@@ -327,18 +327,18 @@ let format = data.fields.iter().map(|f| {
 match ty {
     Type::Array(array) => { // чи масив
         match array.into_token_stream().to_string().as_str() { // конвертуємо тип у строку
-            "[f32 ; 2]" => quote! { ::sonja::render::ShaderInputFormat::R32G32_SFLOAT },
-            "[f32 ; 3]" => quote! { ::sonja::render::ShaderInputFormat::R32G32B32_SFLOAT },
-            "[f32 ; 4]" => quote! { ::sonja::render::ShaderInputFormat::R32G32B32A32_SFLOAT },
-            "[f32 ; 1]" => quote! { ::sonja::render::ShaderInputFormat::R32_SFLOAT }, // масив з одного елемента представляємо як звичайний `float`
+            "[f32 ; 2]" => quote! { ::flatbox::render::ShaderInputFormat::R32G32_SFLOAT },
+            "[f32 ; 3]" => quote! { ::flatbox::render::ShaderInputFormat::R32G32B32_SFLOAT },
+            "[f32 ; 4]" => quote! { ::flatbox::render::ShaderInputFormat::R32G32B32A32_SFLOAT },
+            "[f32 ; 1]" => quote! { ::flatbox::render::ShaderInputFormat::R32_SFLOAT }, // масив з одного елемента представляємо як звичайний `float`
             _ => panic!("Unsupported input format: \"{}\"", array.into_token_stream().to_string().as_str())
         }
     },
     Type::Path(path) => { // чи звичайний тип
         match path.into_token_stream().to_string().as_str() {
-            "f32" => quote! { ::sonja::render::ShaderInputFormat::R32_SFLOAT },
-            "u32" => quote! { ::sonja::render::ShaderInputFormat::R8G8B8A8_UINT },
-            "i32" => quote! { ::sonja::render::ShaderInputFormat::R8G8B8A8_SINT },
+            "f32" => quote! { ::flatbox::render::ShaderInputFormat::R32_SFLOAT },
+            "u32" => quote! { ::flatbox::render::ShaderInputFormat::R8G8B8A8_UINT },
+            "i32" => quote! { ::flatbox::render::ShaderInputFormat::R8G8B8A8_SINT },
             _ => panic!("Unsupported input format: \"{}\"", path.into_token_stream().to_string().as_str())
         }
     },
@@ -372,13 +372,13 @@ pub struct ShaderInputAttribute {
 
 ```rust
 quote! {
-    fn input() -> ::sonja::render::ShaderInput {
+    fn input() -> ::flatbox::render::ShaderInput {
         let mut location = 3; // положення першого параметра в шейдері починаючи з "0" (перші 3 зайняті параметрами самої 3Д-моделі)
         let mut offset = 0; // зсув першого параметра (оскільки параметр перший, отже зсув відсутній)
         let mut attributes = vec![];
         #(
             attributes.push(
-                ::sonja::render::ShaderInputAttribute{
+                ::flatbox::render::ShaderInputAttribute{
                     binding: 1,
                     location: location,
                     offset: offset,
@@ -387,12 +387,12 @@ quote! {
             );
 
             offset += match #format { // збільшуємо зсув наступного параметра на розмір поточного
-                ::sonja::render::ShaderInputFormat::R8G8B8A8_UINT
-                    | ::sonja::render::ShaderInputFormat::R8G8B8A8_SINT 
-                    | ::sonja::render::ShaderInputFormat::R32_SFLOAT => 4,
-                ::sonja::render::ShaderInputFormat::R32G32_SFLOAT => 8,
-                ::sonja::render::ShaderInputFormat::R32G32B32_SFLOAT => 12,
-                ::sonja::render::ShaderInputFormat::R32G32B32A32_SFLOAT => 16,
+                ::flatbox::render::ShaderInputFormat::R8G8B8A8_UINT
+                    | ::flatbox::render::ShaderInputFormat::R8G8B8A8_SINT 
+                    | ::flatbox::render::ShaderInputFormat::R32_SFLOAT => 4,
+                ::flatbox::render::ShaderInputFormat::R32G32_SFLOAT => 8,
+                ::flatbox::render::ShaderInputFormat::R32G32B32_SFLOAT => 12,
+                ::flatbox::render::ShaderInputFormat::R32G32B32A32_SFLOAT => 16,
                 _ => 0,
             };
 
@@ -400,7 +400,7 @@ quote! {
         )*
         let instance_size = offset as usize; // по завершенню ітерацій встановлюємо загальний розмір даних 
 
-        ::sonja::render::ShaderInput {
+        ::flatbox::render::ShaderInput {
             attributes,
             instance_size,
             topology: #topology,
@@ -417,8 +417,8 @@ quote! {
 
 ```rust
 let output = quote! {
-    #[::sonja::assets::typetag::serde]
-    impl ::sonja::render::Material for #ident {
+    #[::flatbox::assets::typetag::serde]
+    impl ::flatbox::render::Material for #ident {
         #vertex
         #fragment
         #input
@@ -524,13 +524,13 @@ let attr = match f.attrs.get(0) {
 ```rust
 match attr {
     FieldAttribute::Color => quote! {
-        pub fn #name(mut self, value: ::sonja::render::Color<f32>) -> Self { 
+        pub fn #name(mut self, value: ::flatbox::render::Color<f32>) -> Self { 
             self.#name = value.into();
             self
         }
     },
     FieldAttribute::Texture => quote! {
-        pub fn #name(mut self, value: ::sonja::assets::AssetHandle<'T'>) -> Self { 
+        pub fn #name(mut self, value: ::flatbox::assets::AssetHandle<'T'>) -> Self { 
             self.#name = value.into();
             self
         }
@@ -566,4 +566,4 @@ let build_function = data.fields.iter().map(|f| {
 
 Як приклад, можна додати атрибут поля `#[default = ...]`, що буде задавати стандартні значення полів у білдері під час його створення.
 
-Повний код макросу ви можете знайти [за посиланням](https://github.com/konceptosociala/sonja/blob/main/macros/src/lib.rs).
+Повний код макросу ви можете знайти [за посиланням](https://github.com/konceptosociala/flatbox/blob/main/macros/src/lib.rs).

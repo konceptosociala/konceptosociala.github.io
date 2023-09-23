@@ -21,22 +21,22 @@ sort_by = "date"
     }}
     {{ 
         project(
-            banner="img/projects/sonja.svg"
-            title="Sonja", 
+            banner="img/projects/flatbox.jpg"
+            title="Flatbox", 
             subtitle="3D game engine", 
             description="Written in Rust. It supports PBR rendering, physics, Lua scripting and features extension system in order to implement custom game logic.",
-            project_page="software/sonja",
-            github_page="https://github.com/konceptosociala/sonja"
+            project_page="software/flatbox",
+            github_page="https://github.com/konceptosociala/flatbox"
         ) 
     }}
     {{ 
         project(
-            banner="img/projects/sonja_doryen.svg",
-            title="Sonja Doryen", 
+            banner="img/projects/flatbox_doryen.jpg",
+            title="Flatbox Doryen", 
             subtitle="Roguelike game framework", 
-            description="High-level Sonja framework used for making 2D roguelike games, based on doryen library.",
-            project_page="software/sonja-doryen",
-            github_page="https://github.com/konceptosociala/sonja-doryen"
+            description="High-level Flatbox framework used for making 2D roguelike games, based on doryen library.",
+            project_page="software/flatbox-doryen",
+            github_page="https://github.com/konceptosociala/flatbox-doryen"
         ) 
     }}
     {{ 
