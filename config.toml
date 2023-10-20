@@ -27,6 +27,7 @@ socio_navbar_links = [
         ["flatbox", "/software/flatbox/"],
         ["flatbox_doryen", "/software/flatbox-doryen/"],
     ] },
+    { key = "music", link = "/music/" },
     { key = "github", link = "https://github.com/konceptosociala" },
     { key = "about", link = "/about/" }
 ]
@@ -97,6 +98,7 @@ komunterio = "Komunterio"
 software = "Software"
 flatbox = "Flatbox"
 flatbox_doryen = "Flatbox Doryen"
+music = "Music"
 github = "GitHub"
 about = "About"
 
@@ -116,5 +118,6 @@ komunterio = "Komunterio"
 software = "ПЗ"
 flatbox = "Flatbox"
 flatbox_doryen = "Flatbox Doryen"
+music = "Музика"
 github = "GitHub"
 about = "Інфо"
