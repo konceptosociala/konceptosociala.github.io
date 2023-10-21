@@ -27,7 +27,7 @@ title = "Flatbox: Simplicity & Rust"
         pill(
             banner="/img/projects/flatbox/features/pbr.svg",
             title="PBR rendering",
-            description="Flatbox provides modern PBR renderer written with Vulkan API.",
+            description="Flatbox provides modern PBR renderer written with modern OpenGL.",
             circle=false
         )
     }}
@@ -69,6 +69,7 @@ title = "Flatbox: Simplicity & Rust"
             subtitle="Videogame", 
             description="Post-apocalyptic dystopian game, based on Komunterio novel.",
             project_page="/games/komunterio",
+            page_label="Project page",
             github_page="https://github.com/konceptosociala/komunterio"
         ) 
     }}

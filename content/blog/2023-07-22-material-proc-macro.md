@@ -2,6 +2,8 @@
 title = "Material derive macro for Flatbox"
 +++
 
+**WARNING**: This article is about an old version of `flatbox` crate, which is completely rewritten now.    
+
 The Flatbox crate contains a quite useful `Material` trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material `MyMaterial` initially looked like this:
 
 ```rust
@@ -561,4 +563,4 @@ What else can be done?
 
 As an example, you can add the `#[default = ...]` field attribute, which will set the default field values in the builder when it is created.
 
-You can find the complete macro code [at the link](https://github.com/konceptosociala/flatbox/blob/main/macros/src/lib.rs).
+You can find the complete macro code [at the link](https://github.com/konceptosociala/flatbox_legacy/blob/main/macros/src/lib.rs).

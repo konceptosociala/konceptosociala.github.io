@@ -16,6 +16,7 @@ sort_by = "date"
             subtitle="Videogame", 
             description="Post-apocalyptic dystopian game, based on Komunterio novel.",
             project_page="games/komunterio",
+            page_label="Project page",
             github_page="https://github.com/konceptosociala/komunterio"
         ) 
     }}
@@ -26,6 +27,7 @@ sort_by = "date"
             subtitle="3D game engine", 
             description="Written in Rust. It supports PBR rendering, physics, Lua scripting and features extension system in order to implement custom game logic.",
             project_page="software/flatbox",
+            page_label="Project page",
             github_page="https://github.com/konceptosociala/flatbox"
         ) 
     }}
@@ -36,6 +38,7 @@ sort_by = "date"
             subtitle="Roguelike game framework", 
             description="High-level Flatbox framework used for making 2D roguelike games, based on doryen library.",
             project_page="software/flatbox-doryen",
+            page_label="Project page",
             github_page="https://github.com/konceptosociala/flatbox-doryen"
         ) 
     }}
@@ -46,6 +49,7 @@ sort_by = "date"
             subtitle="Zola Theme", 
             description="Modern, simple & highly configurable theme for Koncepto Sociala website.",
             project_page="https://konceptosociala.eu.org/socio",
+            page_label="Project page",
             github_page="https://github.com/konceptosociala/socio"
         ) 
     }}

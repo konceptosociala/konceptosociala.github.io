@@ -9,221 +9,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="The Flatbox crate contains a quite useful Material trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material MyMaterial initially looked like this:
-&#x2F;&#x2F; Typetag is used to seri…"/>
+    <meta name="description" content="WARNING: This article is about an old version of flatbox crate, which is completely rewritten now.
+The Flatbox crate contains a quite useful Material trait that allows the developer to create their own materials based on GLSL shaders. Its approximate imple…"/>
 
     <meta property="og:url" content="https:&#x2F;&#x2F;konceptosociala.eu.org&#x2F;blog&#x2F;material-proc-macro&#x2F;" />
-    <meta property="og:title" content="Material derive macro for Flatbox | Koncepto Sociala
-" />
+    <meta property="og:title" content="Material derive macro for Flatbox |Koncepto Sociala" />
     <meta property="og:type" content="website" />
-    <meta property="og:description" content="The Flatbox crate contains a quite useful Material trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material MyMaterial initially looked like this:
-&#x2F;&#x2F; Typetag is used to seri…" />
-    <meta property="og:image" content="
-    
-        https://konceptosociala.eu.org/img/ks.svg
-    
-" />
+    <meta property="og:description" content="WARNING: This article is about an old version of flatbox crate, which is completely rewritten now.
+The Flatbox crate contains a quite useful Material trait that allows the developer to create their own materials based on GLSL shaders. Its approximate imple…" />
+    <meta property="og:image" content="https://konceptosociala.eu.org/img/ks.svg" />
 
     <meta property="twitter:domain" content="konceptosociala.eu.org">
     <meta property="twitter:url" content="https:&#x2F;&#x2F;konceptosociala.eu.org&#x2F;blog&#x2F;material-proc-macro&#x2F;">
-    <meta name="twitter:title" content="Material derive macro for Flatbox | Koncepto Sociala
-">
-    <meta name="twitter:description" content="The Flatbox crate contains a quite useful Material trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material MyMaterial initially looked like this:
-&#x2F;&#x2F; Typetag is used to seri…">
-    <meta name="twitter:image" content="
-    
-        https://konceptosociala.eu.org/img/ks.svg
-    
-">
-
-    
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css"/>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <meta name="twitter:title" content="Material derive macro for Flatbox |Koncepto Sociala">
+    <meta name="twitter:description" content="WARNING: This article is about an old version of flatbox crate, which is completely rewritten now.
+The Flatbox crate contains a quite useful Material trait that allows the developer to create their own materials based on GLSL shaders. Its approximate imple…">
+    <meta name="twitter:image" content="https://konceptosociala.eu.org/img/ks.svg"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css"/><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
-    <link href="
-    
-        https://konceptosociala.eu.org/navbar.css
-    
-" rel="stylesheet" type="text/css">
-    <link href="
-    
-        https://konceptosociala.eu.org/theme.css
-    
-" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="
-    
-        https://konceptosociala.eu.org/img/ks.svg
-    
-" type="image/x-icon">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    
-    <title>Material derive macro for Flatbox | Koncepto Sociala
-</title>
+    <link href="https://konceptosociala.eu.org/navbar.css" rel="stylesheet" type="text/css">
+    <link href="https://konceptosociala.eu.org/theme.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="https://konceptosociala.eu.org/img/ks.svg" type="image/x-icon"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/><title>Material derive macro for Flatbox |Koncepto Sociala</title>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark" style="background: #0F0F11;">
             <div class="container-fluid">
-                <a class="navbar-brand" href="
-    
-        
-            https://konceptosociala.eu.org
-        
-    
-">
-                    
-                        <img src="
-    
-        https://konceptosociala.eu.org/img/ks.svg
-    
-" alt="Website logo" height="35">
-                    
-                </a>
+                <a class="navbar-brand" href="https://konceptosociala.eu.org"><img src="https://konceptosociala.eu.org/img/ks.svg" alt="Website logo" height="35"></a>
                 <a class="navicon-button plus d-lg-none" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <div class="navicon"></div>
                 </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        
-                            
-                                <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="
-    
-        
-            https://konceptosociala.eu.org
-        
-    
-">Home</a>
-                                </li>
-                            
-                        
-                            
-                                <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="
-    
-        
-            https://konceptosociala.eu.org/blog
-        
-    
-">Blog</a>
-                                </li>
-                            
-                        
-                            
-                                <li class="nav-item dropdown">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0"><li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="https://konceptosociala.eu.org">Home</a>
+                                </li><li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="https://konceptosociala.eu.org/blog">Blog</a>
+                                </li><li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Games
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        
-                                            <li><a class="dropdown-item" href="
-    
-        
-            https://konceptosociala.eu.org/games/komunterio
-        
-    
-">Komunterio</a></li>
-                                        
-                                    </ul>
-                                </li>
-                            
-                        
-                            
-                                <li class="nav-item dropdown">
+                                    <ul class="dropdown-menu"><li><a class="dropdown-item" href="https://konceptosociala.eu.org/games/komunterio">Komunterio</a></li></ul>
+                                </li><li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Software
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        
-                                            <li><a class="dropdown-item" href="
-    
-        
-            https://konceptosociala.eu.org/software/flatbox
-        
-    
-">Flatbox</a></li>
-                                        
-                                            <li><a class="dropdown-item" href="
-    
-        
-            https://konceptosociala.eu.org/software/flatbox-doryen
-        
-    
-">Flatbox Doryen</a></li>
-                                        
-                                    </ul>
-                                </li>
-                            
-                        
-                            
-                                <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="
-    
-        
-            https://konceptosociala.eu.org/music
-        
-    
-">Music</a>
-                                </li>
-                            
-                        
-                            
-                                <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="
-    
-        https://github.com/konceptosociala
-    
-">GitHub</a>
-                                </li>
-                            
-                        
-                            
-                                <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="
-    
-        
-            https://konceptosociala.eu.org/about
-        
-    
-">About</a>
-                                </li>
-                            
-                        
-                        
-                        <li class="nav-item dropdown">
+                                    <ul class="dropdown-menu"><li><a class="dropdown-item" href="https://konceptosociala.eu.org/software/flatbox">Flatbox</a></li><li><a class="dropdown-item" href="https://konceptosociala.eu.org/software/flatbox-doryen">Flatbox Doryen</a></li></ul>
+                                </li><li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="https://konceptosociala.eu.org/music">Music</a>
+                                </li><li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="https://github.com/konceptosociala">GitHub</a>
+                                </li><li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="https://konceptosociala.eu.org/about">About</a>
+                                </li><li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fa fa-globe mt-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="d-lg-none text-uppercase"> en</span>
                             </a>
-                            <ul class="dropdown-menu">
-                                
-                                
-                                                                                 
-                                        
-                                    
-                                    <li><a class="dropdown-item" href="https:&#x2F;&#x2F;konceptosociala.eu.org&#x2F;blog&#x2F;material-proc-macro">
-                                        
-                                            <span class="fi fi-us"></span>
-                                        
+                            <ul class="dropdown-menu"><li><a class="dropdown-item" href="https:&#x2F;&#x2F;konceptosociala.eu.org&#x2F;blog&#x2F;material-proc-macro"><span class="fi fi-us"></span>
                                         English
-                                    </a></li>
-                                
-                                    
-                                        
-                                    
-                                    <li><a class="dropdown-item" href="https:&#x2F;&#x2F;konceptosociala.eu.org&#x2F;ua&#x2F;blog&#x2F;material-proc-macro">
-                                        
-                                            <span class="fi fi-ua"></span>
-                                        
+                                    </a></li><li><a class="dropdown-item" href="https:&#x2F;&#x2F;konceptosociala.eu.org&#x2F;ua&#x2F;blog&#x2F;material-proc-macro"><span class="fi fi-ua"></span>
                                         Українська
-                                    </a></li>
-                                
-                            </ul>
-                        </li>
-                        
-                    </ul>
+                                    </a></li><li><a class="dropdown-item" href="https:&#x2F;&#x2F;konceptosociala.eu.org&#x2F;ru&#x2F;blog&#x2F;material-proc-macro"><span class="fi fi-ua"></span>
+                                        Русский
+                                    </a></li><li><a class="dropdown-item" href="https:&#x2F;&#x2F;konceptosociala.eu.org&#x2F;eo&#x2F;blog&#x2F;material-proc-macro"><span class="fi fi-un"></span>
+                                        Esperanto
+                                    </a></li></ul>
+                        </li></ul>
                 </div>
             </div>
         </nav>
@@ -234,18 +83,13 @@
                 <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill" style="fill: #0F0F11"></path>
             </svg>
         </div>
-    </header>
-
-    
-<section class="section" style="background: #393C44;">
-    <div class="container content" style="min-height: 90vh;">
-        
-        
-<div class="post px-lg-5 mx-lg-5 mt-3">
+    </header><section class="section" style="background: #393C44;">
+    <div class="container content" style="min-height: 90vh;"><div class="post px-lg-5 mx-lg-5 mt-3">
     <p class="date">~~ 2023-07-22 ~~</p>
     <h1 class="title">Material derive macro for Flatbox</h1>
     <hr class="big-hr">
-    <p>The Flatbox crate contains a quite useful <code>Material</code> trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material <code>MyMaterial</code> initially looked like this:</p>
+    <p><strong>WARNING</strong>: This article is about an old version of <code>flatbox</code> crate, which is completely rewritten now.</p>
+<p>The Flatbox crate contains a quite useful <code>Material</code> trait that allows the developer to create their own materials based on GLSL shaders. Its approximate implementation for the custom material <code>MyMaterial</code> initially looked like this:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#65737e;">// Typetag is used to serialize the collection of materials `Vec&lt;Arc&lt;dyn Material&gt;&gt;`
 </span><span>#[</span><span style="color:#bf616a;">typetag</span><span>::</span><span style="color:#bf616a;">serde</span><span>]
 </span><span style="color:#b48ead;">impl </span><span>Material </span><span style="color:#b48ead;">for </span><span>MyMaterial {
@@ -712,33 +556,21 @@
 </ol>
 <p>What else can be done?</p>
 <p>As an example, you can add the <code>#[default = ...]</code> field attribute, which will set the default field values in the builder when it is created.</p>
-<p>You can find the complete macro code <a href="https://github.com/konceptosociala/flatbox/blob/main/macros/src/lib.rs">at the link</a>.</p>
+<p>You can find the complete macro code <a href="https://github.com/konceptosociala/flatbox_legacy/blob/main/macros/src/lib.rs">at the link</a>.</p>
 
-</div>
-
-<script src="https://utteranc.es/client.js"
+</div><script src="https://utteranc.es/client.js"
         repo="konceptosociala&#x2F;konceptosociala.github.io"
-        issue-term="pathname"
-        
-        label="KS Comment"
-        
-        theme="photon-dark"
+        issue-term="pathname"label="KS Comment"theme="photon-dark"
         crossorigin="anonymous"
         async>
 </script>
-
-
-        
     </div>
     <div class="curve-section">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill" style="fill: #393C44"></path>
         </svg>
     </div>
-</section>
-
-
-    <footer class="d-flex flex-wrap justify-content-between align-items-center" style="background: #1D1E23">
+</section><footer class="d-flex flex-wrap justify-content-between align-items-center" style="background: #1D1E23">
         <div class="col-md-4 d-flex align-items-center">
             <a href="/" class="mb-3 me-2 mb-md-0 text-light text-decoration-none lh-1">
                 <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
@@ -746,27 +578,9 @@
             <span class="text-light">Koncepto Sociala © 2023</span>
         </div>
       
-        <ul class="nav p-3 col-md-4 justify-content-end list-unstyled d-flex">
-            <li class="ms-3"><a title="GitHub" class="fa fa-github social" href="https:&#x2F;&#x2F;github.com&#x2F;konceptosociala&#x2F;"></a></li>
-            <li class="ms-3"><a title="E-mail" class="fa fa-email-bulk social" href="mailto:sanerhp.mail@gmail.com"></a></li>
-            <li class="ms-3"><a title="Telegram" class="fa fa-telegram social" href="https:&#x2F;&#x2F;t.me&#x2F;ksociala_official"></a></li>
-            
-            
-            
-            
-            
-            
-            
-        </ul>
-    </footer> 
-
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script> 
+        <ul class="nav p-3 col-md-4 justify-content-end list-unstyled d-flex"><li class="ms-3"><a title="GitHub" class="fa fa-github social" href="https:&#x2F;&#x2F;github.com&#x2F;konceptosociala&#x2F;"></a></li><li class="ms-3"><a title="E-mail" class="fa fa-email-bulk social" href="mailto:sanerhp.mail@gmail.com"></a></li><li class="ms-3"><a title="Telegram" class="fa fa-telegram social" href="https:&#x2F;&#x2F;t.me&#x2F;ksociala_official"></a></li></ul>
+    </footer><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <script src="
-    
-        https://konceptosociala.eu.org/js/script.js
-    
-"></script>
+    <script src="https://konceptosociala.eu.org/js/script.js"></script>
 </body>
 </html>

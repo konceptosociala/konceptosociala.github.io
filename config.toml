@@ -36,6 +36,8 @@ socio_navbar_links = [
 socio_languages = [
     { code = "default", name = "English", flag = "us" },
     { code = "ua", name = "Українська", flag = "ua" },
+    { code = "ru", name = "Русский", flag = "ua" },
+    { code = "eo", name = "Esperanto", flag = "un" },
 ]
 
 # Homepage banner
@@ -48,13 +50,6 @@ socio_banner_animation = "fadeIn"
 socio_telegram = "https://t.me/ksociala_official"
 socio_github = "https://github.com/konceptosociala/"
 socio_mail = "mailto:sanerhp.mail@gmail.com"
-# socio_discord = "#"
-# socio_facebook = "#"
-# socio_insta = "#"
-# socio_linkedin = "#"
-# socio_reddit = "#"
-# socio_twitter = "#"
-# socio_youtube = "#"
 
 # Colors
 socio_text_color = "#F5F5F5"
@@ -85,7 +80,6 @@ repo = "konceptosociala/konceptosociala.github.io"
 theme = "photon-dark"
 
 [translations]
-project_page = "Project page"
 read_more = "Read more"
 banner_button = "Learn more"
 banner_heading = "Koncepto Sociala"
@@ -105,7 +99,6 @@ about = "About"
 [languages.ua]
 
 [languages.ua.translations]
-project_page = "Сторінка проєкту"
 read_more = "Детальніше"
 banner_button = "Дізнатися більше"
 banner_heading = "Koncepto Sociala"
@@ -121,3 +114,41 @@ flatbox_doryen = "Flatbox Doryen"
 music = "Музика"
 github = "GitHub"
 about = "Інфо"
+
+[languages.eo]
+
+[languages.eo.translations]
+read_more = "Detale"
+banner_button = "Lerni plu"
+banner_heading = "Koncepto Sociala"
+banner_descr = "Kreita esti libera."
+
+home = "Ĉefpaĝo"
+blog = "Blogo"
+games = "Ludoj"
+komunterio = "Komunterio"
+software = "Softvaro"
+flatbox = "Flatbox"
+flatbox_doryen = "Flatbox Doryen"
+music = "Muziko"
+github = "GitHub"
+about = "Informo"
+
+[languages.ru]
+
+[languages.ru.translations]
+read_more = "Подробнее"
+banner_button = "Узнать больше"
+banner_heading = "Koncepto Sociala"
+banner_descr = "Создана быть свободной."
+
+home = "Главная"
+blog = "Блог"
+games = "Игры"
+komunterio = "Komunterio"
+software = "ПО"
+flatbox = "Flatbox"
+flatbox_doryen = "Flatbox Doryen"
+music = "Музыка"
+github = "GitHub"
+about = "Инфо"

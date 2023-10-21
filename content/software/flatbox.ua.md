@@ -27,7 +27,7 @@ title = "Flatbox: Простота & Rust"
         pill(
             banner="/img/projects/flatbox/features/pbr.svg",
             title="PBR рендерінг",
-            description="Flatbox пропонує сучасний PBR рендерер, написаний за допомогою Vulkan API.",
+            description="Flatbox пропонує сучасний PBR рендерер, написаний за допомогою сучасного OpenGL.",
             circle=false
         )
     }}
@@ -69,6 +69,7 @@ title = "Flatbox: Простота & Rust"
             subtitle="Відеогра", 
             description="Постапокаліптична антиутопічна гра, заснована на повісті 'Комунтерія'.",
             project_page="games/komunterio",
+            page_label="Сторінка проєкту",
             github_page="https://github.com/konceptosociala/komunterio"
         ) 
     }}

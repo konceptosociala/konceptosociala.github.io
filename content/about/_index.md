@@ -6,7 +6,7 @@ template = "page.html"
 
 <p class="lead text-center">I'm Oleksandr Hnutov, an independent developer and artist from Ukraine 🇺🇦!</p><br>
 <h1>What am I doing?</h1>
-<p class="lead">Making software. And arts. For <b class="bold">you</b>! ❤️</p><br>
+<p class="lead">Making software. And arts. For you!</p><br>
 <h1>Is it fully holistic?</h1>
 <p class="lead">Not yet. But I do my best to make our products meet all your needs!</p><br>
 <h1>Is it free?</h1>

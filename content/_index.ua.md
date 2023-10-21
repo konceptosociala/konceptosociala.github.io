@@ -16,6 +16,7 @@ sort_by = "date"
             subtitle="Відеогра", 
             description="Постапокаліптична антиутопічна гра, заснована на повісті 'Комунтерія'.",
             project_page="games/komunterio",
+            page_label="Сторінка проєкту",
             github_page="https://github.com/konceptosociala/komunterio"
         ) 
     }}
@@ -26,6 +27,7 @@ sort_by = "date"
             subtitle="3D ігровий двигун", 
             description="Написаний на Rust. Він підтримує PBR-рендеринг, фізику, скрипти Lua та характеризується власною системою розширень для реалізації індивідуальної ігрової логіки.",
             project_page="software/flatbox",
+            page_label="Сторінка проєкту",
             github_page="https://github.com/konceptosociala/flatbox"
         ) 
     }}
@@ -36,6 +38,7 @@ sort_by = "date"
             subtitle="Roguelike ігровий фреймворк", 
             description="Високорівневий фреймворк для Flatbox, що використовується для створення двовимірних roguelike ігор, на основі бібліотеки doryen.",
             project_page="software/flatbox-doryen",
+            page_label="Сторінка проєкту",
             github_page="https://github.com/konceptosociala/flatbox-doryen"
         ) 
     }}
@@ -46,6 +49,7 @@ sort_by = "date"
             subtitle="Тема Zola", 
             description="Сучасна, проста та високоналаштовувана тема для веб-сайту Koncepto Sociala.",
             project_page="https://konceptosociala.eu.org/socio",
+            page_label="Сторінка проєкту",
             github_page="https://github.com/konceptosociala/socio"
         ) 
     }}
