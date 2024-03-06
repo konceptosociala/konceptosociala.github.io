@@ -5,7 +5,23 @@
 }(function($, window, document) {
 
     $(function() {
-        // do logic
+            
+        var glide = new Glide('.glide', {
+            type: 'carousel',
+            perView: 3,
+            focusAt: 'center',
+            breakpoints: {
+                1280: {
+                    perView: 2
+                },
+                1024: {
+                    perView: 1
+                }
+            }
+        })
+          
+        glide.mount()
+
     });
 
 }));
