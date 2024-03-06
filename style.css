@@ -1,0 +1,257 @@
+/* ==================== GENERAL ==================== */
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-family: "Montserrat Alternates", sans-serif;
+}
+
+/* ==================== DECORATIVE ==================== */
+
+.arrow-down {
+  position: absolute;
+  bottom: 10vh;
+  left: 48.5vw;
+  font-size: 3vw;
+  color: darkslategray;
+  z-index: 1;
+}
+
+/* ==================== TOP BAR ==================== */
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 20px;
+  z-index: 2; 
+}
+
+.top-bar * {
+  padding-right: 15px;
+  font-family: "Ubuntu Mono";
+  font-weight: bolder;
+  color: black;
+  text-decoration: none;
+  z-index: 1;
+}
+.top-bar .logo { font-size: 36px }
+.top-bar .link { font-size: 18px }
+
+.top-bar-mobile {
+  position: fixed;
+  width: 100vw; 
+  z-index: 3;
+  display: none;
+}
+
+.top-bar-mobile .logo {
+  margin-left: 5px;
+  font-size: 48px;
+  font-family: "Ubuntu Mono";
+  font-weight: bolder;
+  color: black;
+  text-decoration: none;
+  z-index: 1  ;
+}
+
+.top-bar-mobile .link {
+  font-size: 32px;
+  font-family: "Ubuntu Mono";
+  font-weight: bolder;
+  color: white;
+  text-decoration: none;
+  background-color: black;
+  padding: 10px;
+  margin: 5px;
+  clip-path: polygon(calc(100% - 25px) 0, 100% 25px, 100% 100%, 0 100%, 0 0);
+  transition: all .1s;
+}
+
+.top-bar-mobile .link:hover {
+  color: black;
+  background-color: white;
+}
+
+.top-bar-mobile .link.icon {
+  color: white;
+  background-color: black;
+  padding: 18px 20px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 33% 100%, 0 66%);
+}
+
+.top-bar-mobile .links { 
+  flex-direction: column;
+  margin-top: 50px;
+  display: none; 
+}
+
+/* ==================== TITLE SECTION ==================== */
+
+.title-section {  display: grid;
+  height: 100vh;
+  grid-template-columns: 0.8fr 1fr 1.2fr;
+  grid-template-rows: 0.8fr 0.6fr 1.6fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    ". . pc"
+    ". slogan pc"
+    ". . pc";
+}
+
+.title-section .lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 120vh;
+  z-index: -1;
+  background-image: url("img/lines.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
+
+.slogan { grid-area: slogan; }
+.pc { grid-area: pc; }
+
+.slogan {
+  font-weight: 800;
+  font-style: normal;
+  font-size: 5vw;
+  text-transform: uppercase;
+  padding-left: auto;
+  white-space: nowrap;
+}
+
+.slogan-gradient {
+  background: #0053B2;
+  background: linear-gradient(to right, #0053B2 23%, #0091CF 80%);
+  background-clip: text;
+  color: transparent;
+}
+
+.pc {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("img/retropc.png");
+}
+
+/* ==================== INTRO SECTION ==================== */
+
+.intro-section {
+  background-color: #212121;
+  margin-left: 15%;
+  padding-right: 10%;
+  clip-path: polygon(50px 0, 100% 0, 100% 100%, 0 100%, 0 50px);
+  padding-top: 75px;
+  padding-left: 75px;
+}
+
+.intro-section h1 {
+  color: white;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 48px;
+  text-transform: uppercase;
+}
+
+.intro-gradient {
+  background: rgb(0,119,255);
+  background: linear-gradient(90deg, rgba(0,119,255,1) 23%, rgba(59,197,255,1) 80%); 
+  background-clip: text;
+  color: transparent
+}
+
+.technologies {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
+
+.technology {
+  width: 300px;
+  height: 300px;
+  padding: 2px;
+  margin: 10px;
+  clip-path: polygon(25px 0, 100% 0, 100% 100%, 0 100%, 0 25px);
+  background: linear-gradient(0deg, rgba(18,18,18,1) 0%, rgba(0,145,207,1) 100%);
+}
+
+.technology .content {
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(25px 0, 100% 0, 100% 100%, 0 100%, 0 25px);
+  background: rgb(18,18,18);
+  background: linear-gradient(0deg, rgba(18,18,18,1) 0%, rgba(43,43,43,1) 100%);
+  padding: 30px;
+}
+
+.technology .content .number {
+  font-style: normal;
+  font-family: "Ubuntu Mono";
+  font-weight: bold;
+  font-size: 20px;
+  color: rgba(0,145,207,1);
+  background-color: rgba(18,18,18,1);
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.technology .content .title {
+  font-style: normal;
+  font-family: "Ubuntu Mono";
+  font-weight: bold;
+  font-size: 36px;
+  color: white;
+  margin-top: 20px;
+}
+
+.technology .content .description {
+  font-style: normal;
+  font-family: "Ubuntu Mono";
+  font-size: 20px;
+  color: lightgray;
+  margin-top: 20px;
+}
+
+/* ==================== QUERIES ==================== */
+
+@media screen and (orientation: portrait) {
+
+  .title-section .lines { background-size: cover; }
+
+  .slogan { 
+    font-size: 12vw; 
+    white-space:initial;
+  }
+
+  .arrow-down { 
+    left: 47.5vw;
+    font-size: 5vh;
+  }
+
+  .pc { display: none; }
+
+  .intro-section h1 { font-size: 7vw; }
+
+}
+
+@media screen and (max-width: 960px) {
+  .top-bar { display: none; }
+  .top-bar-mobile {display: inline; }
+}

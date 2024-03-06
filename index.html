@@ -3,9 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fonts.css">
+    <title>KS</title>
 </head>
 <body>
-    v2
+    <i class="fa fa-angle-double-down arrow-down animate__animated animate__infinite animate__slideInDown" aria-hidden="true"></i>
+    <div class="top-bar">
+        <a href="/" class="logo">KS</a>
+        <a href="#software" class="link">software</a>
+        <a href="#info" class="link">info</a>
+        <a href="#social" class="link">social</a>
+    </div>
+    <div class="top-bar-mobile">
+        <a href="/" class="logo">KS</a>
+        <a href="javascript:void(0);" class="icon link" onclick="toggleTopbar()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <div class="links animate__animated animate__faster">
+            <a href="#software" class="link">software</a>
+            <a href="#info" class="link">info</a>
+            <a href="#social" class="link">social</a>
+        </div>
+      </div>
+    <section class="title-section animate__animated animate__slow animate__fadeIn">
+        <div class="slogan">
+            <h1 class="slogan">Open <span class="slogan-gradient">software</span><br>for all</h1>
+        </div>
+        <div class="pc animate__animated animate__slow animate__fadeInRight"></div>
+        <div class="lines"></div>
+    </section>
+    <section class="intro-section">
+        <h1>Modern <span class="intro-gradient">technologies</span> we use</h1>
+        <div class="technologies">
+            <div class="technology">
+                <div class="content">
+                    <i class="number">01</i>
+                    <h3 class="title">Rust</h3>
+                    <p class="description">Fancy functional programming language known for safety, speed, and concurrency.</p>
+                </div>
+            </div>
+            <div class="technology">
+                <div class="content">
+                    <i class="number">02</i>
+                    <h3 class="title">.NET</h3>
+                    <p class="description">Software development framework, providing a programming model for building various types of applications.</p>
+                </div>
+            </div>
+            <div class="technology">
+                <div class="content">
+                    <i class="number">03</i>
+                    <h3 class="title">PHP</h3>
+                    <p class="description">Scripting language widely used for server-side web development, known for simplicity and large community.</p>
+                </div>
+            </div>
+            <div class="technology">
+                <div class="content">
+                    <i class="number">04</i>
+                    <h3 class="title">htmx</h3>
+                    <p class="description">Lightweight web framework that uses HTML attributes to create web applications.</p>
+                </div>
+            </div>
+            <div class="technology">
+                <div class="content">
+                    <i class="number">05</i>
+                    <h3 class="title">OpenGL</h3>
+                    <p class="description">Cross-platform graphics API that allows applications to render 2D and 3D computer graphics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
