@@ -6,7 +6,7 @@ permalink: /about/
 
 Howdy, I am Oleksandr Hnutov, a <script>document.write(Math.round(Date.now() / (365 * 24 * 60 * 60 * 1000) + 1970 - 2006));</script>-year programmer from Kyiv, Ukraine. 
 I just like to make stuff in Rust and other fancy programming languages
-(づ ᴗ _ᴗ)づ ❤︎
+(づ ^ _^)づ ❤︎
 
 My stack is:
 
