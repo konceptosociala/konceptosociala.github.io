@@ -1,4 +1,9 @@
-.highlight pre { filter: invert(0.95) !important; } 
+.highlight pre { filter: invert(0.9) !important; } 
+
+pre, code {
+    white-space: pre !important;
+    overflow-x: scroll !important;
+}
 
 .highlight pre { background-color: #404040 }
 .highlight .hll { background-color: #404040 }

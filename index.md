@@ -2,7 +2,7 @@
 layout: home
 ---
 
-| [blog](blog) | [github](https://github.com/konceptosociala/) | [tg@channel](https://t.me/hnutov) | [about](about) |
+| [blog](blog) | [github](https://github.com/konceptosociala/) | [soundcloud](https://soundcloud.com/janesnote) | [about](about) |
 
 <br>
 
@@ -17,10 +17,9 @@ layout: home
 	</ul>
 
 * software
-    * [**konn**](https://github.com/konceptosociala/konn) - cross-platform web 
-	browser and protocol for fast and elegant Internet sites
-    * [**flatbox**](https://github.com/konceptosociala/flatbox) - rusty ECS-driven 
-	game engine, being developed for Komunterio
+    * [**wgsldoc**](https://github.com/konceptosociala/wgsldoc) - WGSL static web documentation generator
+    * [**termgpu**](https://github.com/konceptosociala/termgpu) - GPU-driven terminal rendering library
+	* [**frago**](https://github.com/konceptosociala/frago) - mobile application for writing posts for GitHub Pages driven blog 
 
 * literature
 	* [**Komunterio** (esperanto)](https://github.com/konceptosociala/Komunterio-EO)

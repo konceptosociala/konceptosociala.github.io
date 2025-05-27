@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 'Voxel Ray Tracing in Bevy (part 1)'
-permalink: /blog/voxel-ray-tracing-in-bevy
+title: 'Deferred Voxel Ray Tracing in Bevy (part 1)'
+permalink: /blog/deferred-voxel-ray-tracing-in-bevy
 ---
 
 Modern computers, especially their GPUs, can process more and more data in less time, 
@@ -17,7 +17,7 @@ ray from each pixel to their surface. These two ways are different both in visua
 performance aspects, but in this post we're going to combine them to get a golden ratio 
 in the rendering process.
 
-# Basics of Ray Tracing 
+## Basics of Ray Tracing 
 
 In simple words, **ray tracing** is a process of tracing a path from an imaginary 
 eye (camera) through each pixel in a screen (viewport), and calculating the color 
@@ -26,7 +26,7 @@ sources, physical properties of the object's material etc.
 
 | ![ray_tracing_demonstration](/assets/blog/voxel-ray-tracing/ray_trace_diagram.svg) | 
 |:--:| 
-| *Common ray tracing demonstration* |
+| *Common ray tracing demonstration* | 
 
 
 In an ordinary sense, a ray tracer casts a ray from each pixel, which traverses 
@@ -43,4 +43,15 @@ of a global voxel volume and baked maps (normals, depth etc.)
 A similar approach is used in the Teardown game, and now we'll implement it. 
 In this post only the first stage of the process will be covered.
 
-# Rendering voxel volume as a 3D mesh material
+## Rendering voxel volume as a 3D mesh material
+
+First of all, we need to choose a data structure to store our voxel data for efficient
+using it in our shaders. The best choice is using 3D texture with `textureLoad` function
+to access voxel data in our shader:
+
+1. Using 3D texture in a shader allows easy 3-dimensional indexing and data retrieval and
+mip-maping technology for the further LOD optimizations
+2. `textureLoad` function is fast as it skips filtering and address correction and
+does a raw fetch from texture memory
+
+We discovered a topic about loading 3D textures in Bevy in [this post](/blog/loading-3d-texture-in-bevy).
