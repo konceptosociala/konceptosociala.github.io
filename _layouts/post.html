@@ -4,6 +4,8 @@ layout: default
 
 {%-include back_link.html-%}
 
+<p class="print-only">Koncepto Sociala (c) Hnutov Oleksandr</p>
+
 <article>
   <p class="post-meta">
     <time datetime="{{ page.date }}">{{ page.date | date: site.theme_config.date_format }}</time>
@@ -14,7 +16,7 @@ layout: default
   {{ content }}
 </article>
 
-<div class="col-lg-8 col-md-10 mx-auto" style="filter: invert(0) !important">
+<div class="col-lg-8 col-md-10 mx-auto no-print" style="filter: invert(0) !important">
     <hr>
     <script src="https://utteranc.es/client.js"
         repo="konceptosociala/konceptosociala.github.io"

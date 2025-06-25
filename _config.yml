@@ -35,7 +35,7 @@ plugins:
 highlighter: rouge
 theme_config:
   appearance: "dark"
-  back_home_text: "<--" # customize text for homepage link in post layout
+  back_home_text: "<b class='no-print'><--</b>" # customize text for homepage link in post layout
   date_format: "%-d-%-m-%Y" # customize how date is formatted
   show_description: true # show blog description in home page
   

@@ -17,10 +17,16 @@ My stack is:
     * [**egui** _(for games)_](https://crates.io/crates/egui) (_Rust_)
 
 * **Gamedev/CG**:
-    * [**Bevy**](https://crates.io/crates/bevy) (_Rust_)
-    * [**jMonkeyEngine**](https://jmonkeyengine.org/) (_Java_)
-    * [**OpenGL** _(Rust bindings)_](https://crates.io/crates/gl) (_Rust_)
+    * [**LOVR**](https://lovr.org/) (_Lua_)
+    * [**libGDX**](https://libgdx.com/) (_Java_)
     * [**wgpu**](https://crates.io/crates/wgpu) (_Rust_)
+    * [**OpenGL** _(Rust bindings)_](https://crates.io/crates/gl) (_Rust_)
+    * [**Bevy**](https://crates.io/crates/bevy) (_Rust_)
+
+* **Web**:
+    * [**jQuery**](https://jquery.com/) (_JavaScript_)
+    * [**PHP 8**](https://www.php.net/) (_PHP_)
+    * [**Bootstrap**](https://getbootstrap.com/) (_CSS_)
 
 * **Documents**:
     * [**Typst**](https://typst.app/)
