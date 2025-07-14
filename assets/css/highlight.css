@@ -1,10 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
 
+.w {
+    max-width: 720px;
+}
+
+td {
+    text-align: center;
+}
+
 html {
     background-color: black;
 }
 
-p, a, li, ul, ol, pre, code {
+hr {
+    color: white
+}
+
+hr::after, hr::before {
+    color: black
+}
+
+p, a, li, ul, ol, pre, code, tr, td, hr {
     font-family: monospace;
     font-size: 16px;
     line-height: 24px;
