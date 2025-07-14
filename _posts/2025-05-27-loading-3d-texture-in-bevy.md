@@ -9,7 +9,7 @@ in Bevy (as of version 0.15) only supports 2D image loading for now, so we need 
 implement a custom 3D image asset loader. For our tutorial we will use `png` and `jpeg` raster image
 types, but you can also try to implement importing of raw MagicaVoxel data, e.g. using `dot_vox` crate.
 
-### Implementing `Image3dLoader`
+### Implementing Image3dLoader
 
 First, we'll define our voxel texture format, Bevy plugin and loader struct itself:
 
