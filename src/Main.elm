@@ -12,6 +12,7 @@ import Page.Blog as Blog
 import Utils.Utils exposing (pageTitle)
 import Page.Post as Post
 import Dict
+import Utils.Utils exposing (pageLayout)
 
 main : Program () (Model Event) Event
 main =
@@ -19,22 +20,40 @@ main =
       { init = init
       , view = \m -> 
          { title = pageTitle m.route
-         , body = [ toUnstyled 
+         , body = [ toUnstyled
             (case m.route of
                Home ->
-                  Home.view
+                  pageLayout 
+                     "Koncepto Sociala"
+                     Home.view
 
                Blog ->
-                  Blog.view
+                  pageLayout 
+                     "Blog"
+                     Blog.view
 
                About ->
-                  About.view
+                  pageLayout 
+                     "About me"
+                     About.view
 
                NotFound page ->
-                  NotFound.view page
+                  pageLayout
+                     "404 | Page not found"
+                     (NotFound.view page)
 
                Post id ->
-                  Post.view (Dict.get id m.posts)
+                  let post = Dict.get id m.posts in
+                  case post of
+                     Just found ->
+                        pageLayout
+                           found.name
+                           (Post.view found)
+
+                     Nothing ->
+                        pageLayout
+                           "404 | Page not found"
+                           (NotFound.view ("post/"++id))
             ) ]
          }
       , update = update

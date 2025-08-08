@@ -7,6 +7,7 @@ import Dict exposing (Dict)
 import Utils.Post as Post
 import Utils.Post exposing (Post)
 import Posts.LiniaAlgebroPorDespero1
+import Posts.Loading3DTextureInBevy
 
 type alias Model msg =
    { key : Nav.Key
@@ -26,4 +27,5 @@ init _ url key =
 allPosts : Dict String (Post msg)
 allPosts = Dict.fromList <| List.sortWith Post.compare 
    [ Posts.LiniaAlgebroPorDespero1.post
+   , Posts.Loading3DTextureInBevy.post
    ]

@@ -2,9 +2,29 @@ module Utils.Utils exposing (..)
 
 import Html.Styled exposing (..)
 import Route exposing (Route(..))
-import Html.Styled exposing (Html, div, text)
 import Markdown.Parser as Markdown
 import Markdown.Renderer
+import Html.Styled.Attributes exposing (css)
+import Css exposing (..)
+
+pageLayout : String -> Html msg -> Html msg
+pageLayout title view = 
+   div 
+      [ css 
+         [ width (vw 75)
+         , marginLeft auto
+         , marginRight auto
+         ] 
+      ]
+   [ h1 
+      [ css
+         [ fontFamilies ["Montserrat Underline"]
+         , fontSize (px 128)
+         ]
+      ] 
+      [ text title ]
+   , div [] [view]
+   ]
 
 parseMarkdown : String -> Html msg
 parseMarkdown markdownInput =
