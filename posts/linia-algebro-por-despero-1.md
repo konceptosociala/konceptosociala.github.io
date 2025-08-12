@@ -1,6 +1,6 @@
 ---
 title:  "Linia algebro por Despero (parto 1)"
-date: 2022-11-04
+date: 2022-11-04 
 ---
 
 Ĉi tio estas reskribaĵo de mia propra resumo pri linia algebro por kreado de [flatbox ludmotoro](https://github.com/konceptosociala/flatbox_legacy). Ĝi estas uzata por mi kiel kaŝoslipeto, sed vi povas uzi ĝin por vi mem (se vi trovos ĝin utila). Dankon al [ashen-aetna](https://hoj-senna.github.io/ashen-aetna/)!

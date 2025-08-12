@@ -16,37 +16,51 @@ type alias Model msg =
    { key : Nav.Key
    , route : Route
    , currentPage : Maybe (Html msg)
+   , currentTitle : Maybe (String)
    }
 
 init : () -> Url -> Nav.Key -> ( Model Event, Cmd Event )
 init _ url key = 
    let
       route = parseUrl url
-      model = 
+      model =
          { key = key
          , route = route
          , currentPage = Nothing
+         , currentTitle = Nothing
          }
    in
    
    case model.route of
       Home ->
-         ( { model | currentPage = Just (pageLayout "Koncepto Sociala" Home.view) }
+         (  { model 
+               | currentPage = Just (pageLayout "Koncepto Sociala" Home.view) 
+               , currentTitle = Just "Koncepto Sociala"
+            }
          , Cmd.none
          )
 
       Blog ->
-         ( { model | currentPage = Just (pageLayout "Blog" Blog.view) }
+         (  { model 
+               | currentPage = Just (pageLayout "Blog" Blog.view) 
+               , currentTitle = Just "Blog"
+            }
          , Cmd.none
          )
 
       About ->
-         ( { model | currentPage = Just (pageLayout "About" About.view) }
+         (  { model 
+               | currentPage = Just (pageLayout "About" About.view) 
+               , currentTitle = Just "About"
+            }
          , Cmd.none
          )
 
       NotFound page ->
-         ( { model | currentPage = Just (pageLayout "404 | Not Found" (NotFound.view page)) }
+         (  { model 
+               | currentPage = Just (pageLayout "404 | Not Found" (NotFound.view page)) 
+               , currentTitle = Just "404 | Not Found"
+            }
          , Cmd.none
          )
 

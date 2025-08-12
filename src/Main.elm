@@ -5,7 +5,6 @@ import Model exposing (Model, init)
 import Event exposing (Event(..))
 import Route exposing (Route(..))
 import Html.Styled exposing (toUnstyled)
-import Utils.Utils exposing (pageTitle)
 import Html.Styled exposing (text)
 import Update exposing (update)
 
@@ -14,11 +13,18 @@ main =
    Browser.application
       { init = init
       , view = \m -> 
-         { title = pageTitle m.route
-          , body = 
+         { title = 
+            case m.currentTitle of
+               Just title 
+                  -> title
+
+               Nothing 
+                  -> "Loading..."
+         , body = 
             case m.currentPage of
                Just pageView ->
                   [ toUnstyled pageView ]
+                  
                Nothing ->
                   [ toUnstyled (text "Loading...") ]
          }

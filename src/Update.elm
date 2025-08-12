@@ -5,13 +5,13 @@ import Browser.Navigation as Nav
 import Route exposing (parseUrl, Route(..))
 import Model exposing (Model)
 import Html.Styled exposing (text)
-import Event exposing (Event)
 import Event exposing (Event(..))
 import Url
 import Utils.Utils exposing (pageLayout)
 import Utils.Post as PostModel
 import Parser
 import Page.Post as Post
+import Utils.Utils exposing (parsingErrors)
 
 update : Event -> Model Event -> ( Model Event, Cmd Event )
 update msg model = 
@@ -36,20 +36,25 @@ update msg model =
 
                case post of
                   Ok p ->
-                     ( { model | currentPage = Just (
-                        pageLayout 
-                           "Post" 
-                           (Post.view p)
-                     ) }
+                     (  { model 
+                           | currentPage = Just (pageLayout p.name (Post.view p)) 
+                           , currentTitle = Just p.name
+                        }
                      , Cmd.none
                      )
 
-                  Err _ ->
-                     ( { model | currentPage = Just (text "Post parsing error") }
+                  Err errors ->
+                     (  { model 
+                           | currentPage = Just (text ("Post parsing error:\n" ++ parsingErrors errors))
+                           , currentTitle = Just "Post parsing error"
+                        }
                      , Cmd.none
                      )
 
             Err _ ->
-               ( { model | currentPage = Just (text "No post found") }
+               ( { model 
+                     | currentPage = Just (text "Post not found") 
+                     , currentTitle = Just "Post not found"
+                  }
                , Cmd.none
                )
