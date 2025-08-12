@@ -1,4 +1,5 @@
 module Page.NotFound exposing (..)
+
 import Html.Styled exposing (..)
 import Event exposing (Event)
 

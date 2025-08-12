@@ -3,29 +3,57 @@ module Model exposing (..)
 import Url exposing (Url)
 import Browser.Navigation as Nav
 import Route exposing (parseUrl, Route(..))
-import Dict exposing (Dict)
-import Utils.Post as Post
-import Utils.Post exposing (Post)
-import Posts.LiniaAlgebroPorDespero1
-import Posts.Loading3DTextureInBevy
+import Html.Styled exposing (Html)
+import Page.Home as Home
+import Page.Blog as Blog
+import Page.About as About
+import Page.NotFound as NotFound
+import Http
+import Event exposing (Event(..))
+import Utils.Utils exposing (pageLayout)
 
 type alias Model msg =
    { key : Nav.Key
    , route : Route
-   , posts : Dict String (Post msg)
+   , currentPage : Maybe (Html msg)
    }
 
-init : () -> Url -> Nav.Key -> ( Model msg, Cmd msg )
+init : () -> Url -> Nav.Key -> ( Model Event, Cmd Event )
 init _ url key = 
-   ( { key = key
-     , route = parseUrl url 
-     , posts = allPosts
-     }
-   , Cmd.none 
-   )
+   let
+      route = parseUrl url
+      model = 
+         { key = key
+         , route = route
+         , currentPage = Nothing
+         }
+   in
+   
+   case model.route of
+      Home ->
+         ( { model | currentPage = Just (pageLayout "Koncepto Sociala" Home.view) }
+         , Cmd.none
+         )
 
-allPosts : Dict String (Post msg)
-allPosts = Dict.fromList <| List.sortWith Post.compare 
-   [ Posts.LiniaAlgebroPorDespero1.post
-   , Posts.Loading3DTextureInBevy.post
-   ]
+      Blog ->
+         ( { model | currentPage = Just (pageLayout "Blog" Blog.view) }
+         , Cmd.none
+         )
+
+      About ->
+         ( { model | currentPage = Just (pageLayout "About" About.view) }
+         , Cmd.none
+         )
+
+      NotFound page ->
+         ( { model | currentPage = Just (pageLayout "404 | Not Found" (NotFound.view page)) }
+         , Cmd.none
+         )
+
+      Post id ->
+         ( model
+         , Http.get
+            { url = "../posts/" ++ id ++ ".md"
+            , expect = Http.expectString PostLoaded
+            }
+         )

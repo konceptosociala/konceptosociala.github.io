@@ -1,4 +1,5 @@
 module Utils.Date exposing (..)
+import Parser exposing (..)
 
 type alias Date =
    { year : Int
@@ -15,3 +16,12 @@ compare d1 d2 =
                Basics.compare d1.day d2.day
             other -> other
       other -> other
+
+parse : Parser Date
+parse =
+   succeed Date
+      |= int
+      |. symbol "-"
+      |= int
+      |. symbol "-"
+      |= int
