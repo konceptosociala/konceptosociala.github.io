@@ -4,8 +4,7 @@ import Browser
 import Model exposing (Model, init)
 import Event exposing (Event(..))
 import Route exposing (Route(..))
-import Html.Styled exposing (toUnstyled)
-import Html.Styled exposing (text)
+import Html exposing (text)
 import Update exposing (update)
 
 main : Program () (Model Event) Event
@@ -23,10 +22,10 @@ main =
          , body = 
             case m.currentPage of
                Just pageView ->
-                  [ toUnstyled pageView ]
+                  [ pageView ]
                   
                Nothing ->
-                  [ toUnstyled (text "Loading...") ]
+                  [ text "Loading..." ]
          }
       , update = update
       , subscriptions = always Sub.none

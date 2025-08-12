@@ -1,6 +1,6 @@
 module Page.NotFound exposing (..)
 
-import Html.Styled exposing (..)
+import Html exposing (..)
 import Event exposing (Event)
 
 view : String -> Html Event

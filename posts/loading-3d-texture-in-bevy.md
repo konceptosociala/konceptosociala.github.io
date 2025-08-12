@@ -1,7 +1,6 @@
 ---
-layout: post
-title: 'Loading 3D texture in Bevy'
-permalink: /blog/loading-3d-texture-in-bevy
+title: "Loading 3D texture in Bevy"
+date: 2025-05-27
 ---
 
 To load an image into our app Bevy provides us with a custom `Image` type. However, `AssetServer`

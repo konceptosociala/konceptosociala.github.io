@@ -1,32 +1,22 @@
 module Utils.Utils exposing (pageLayout, pageTitle, parsingErrors, parseMarkdown)
 
-import Html.Styled exposing (..)
+import Html exposing (..)
 import Route exposing (Route(..))
 import Markdown.Parser as Markdown
 import Markdown.Renderer
-import Html.Styled.Attributes exposing (css)
 import Css exposing (..)
-import Parser exposing (DeadEnd)
-import Parser exposing (Problem)
+import Parser exposing (DeadEnd, Problem)
+import Html.Attributes exposing (..)
 
 pageLayout : String -> Html msg -> Html msg
 pageLayout title view = 
    div 
-      [ css 
-         [ width (vw 75)
-         , marginLeft auto
-         , marginRight auto
-         ] 
+      [ class "page" ]
+      [ h1 
+         [ class "page-title"] 
+         [ text title ]
+      , div [] [view]
       ]
-   [ h1 
-      [ css
-         [ fontFamilies ["Montserrat Underline"]
-         , fontSize (px 128)
-         ]
-      ] 
-      [ text title ]
-   , div [] [view]
-   ]
 
 pageTitle : Route -> String
 pageTitle page =
@@ -106,7 +96,7 @@ parseMarkdown markdownInput =
 
    case result of
       Ok rendered ->
-         div [] <| List.map fromUnstyled rendered
+         div [] rendered
 
       Err error ->
-         text error
+         text ("Error rendering markdown: " ++ error)

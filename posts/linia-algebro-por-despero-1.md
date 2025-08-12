@@ -1,5 +1,5 @@
 ---
-title:  "Linia algebro por Despero (parto 1)"
+title: "Linia algebro por Despero (parto 1)"
 date: 2022-11-04 
 ---
 

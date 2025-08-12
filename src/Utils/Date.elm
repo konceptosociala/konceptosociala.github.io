@@ -1,11 +1,38 @@
 module Utils.Date exposing (..)
+
 import Parser exposing (..)
+import Json.Decode as D
 
 type alias Date =
    { year : Int
    , month : Int
    , day : Int
    }
+
+toString : Date -> String
+toString date 
+   = leadingZeroToString date.year 
+   ++ "-"
+   ++ leadingZeroToString date.month 
+   ++ "-"
+   ++ leadingZeroToString date.day
+
+leadingZeroToString : Int -> String
+leadingZeroToString n =
+   if n < 10 then
+      "0" ++ String.fromInt n
+   else
+      String.fromInt n
+
+decoder : D.Decoder Date
+decoder =
+   D.string
+      |> D.andThen
+         (\str ->
+            case run parse str of
+               Ok date -> D.succeed date
+               Err _ -> D.fail "Cannot parse date"
+         )
 
 compare : Date -> Date -> Order
 compare d1 d2 = 

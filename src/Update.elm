@@ -2,9 +2,9 @@ module Update exposing (..)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Route exposing (parseUrl, Route(..))
+import Route exposing (Route(..))
 import Model exposing (Model)
-import Html.Styled exposing (text)
+import Html exposing (text)
 import Event exposing (Event(..))
 import Url
 import Utils.Utils exposing (pageLayout)
@@ -12,14 +12,16 @@ import Utils.Post as PostModel
 import Parser
 import Page.Post as Post
 import Utils.Utils exposing (parsingErrors)
+import Page.Blog as Blog
+import Model exposing (init)
 
 update : Event -> Model Event -> ( Model Event, Cmd Event )
 update msg model = 
    case msg of
       UrlChange url ->
-         ( { model | route = parseUrl url }
-         , Cmd.none
-         )
+         init ()
+            url
+            model.key
 
       LinkClicked req ->
          case req of 
@@ -56,5 +58,23 @@ update msg model =
                      | currentPage = Just (text "Post not found") 
                      , currentTitle = Just "Post not found"
                   }
+               , Cmd.none
+               )
+
+      PostsIndexLoaded result ->
+         case result of
+            Ok posts ->
+               ( { model
+                   | currentPage = Just (pageLayout "Blog" (Blog.view posts))
+                   , currentTitle = Just "Blog"
+                }
+               , Cmd.none
+               )
+
+            Err _ ->
+               ( { model
+                   | currentPage = Just (text ("Posts index not found or is invalid"))
+                   , currentTitle = Just "Posts index not found or is invalid"
+                }
                , Cmd.none
                )

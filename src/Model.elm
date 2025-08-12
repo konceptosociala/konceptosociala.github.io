@@ -3,20 +3,21 @@ module Model exposing (..)
 import Url exposing (Url)
 import Browser.Navigation as Nav
 import Route exposing (parseUrl, Route(..))
-import Html.Styled exposing (Html)
+import Html exposing (Html)
 import Page.Home as Home
-import Page.Blog as Blog
 import Page.About as About
 import Page.NotFound as NotFound
 import Http
 import Event exposing (Event(..))
 import Utils.Utils exposing (pageLayout)
+import Utils.Post exposing (PostData, postListDecoder)
 
 type alias Model msg =
    { key : Nav.Key
    , route : Route
    , currentPage : Maybe (Html msg)
    , currentTitle : Maybe (String)
+   , blogPosts : Maybe (List PostData)
    }
 
 init : () -> Url -> Nav.Key -> ( Model Event, Cmd Event )
@@ -28,6 +29,7 @@ init _ url key =
          , route = route
          , currentPage = Nothing
          , currentTitle = Nothing
+         , blogPosts = Nothing
          }
    in
    
@@ -41,11 +43,11 @@ init _ url key =
          )
 
       Blog ->
-         (  { model 
-               | currentPage = Just (pageLayout "Blog" Blog.view) 
-               , currentTitle = Just "Blog"
+         ( model
+         , Http.get
+            { url = "../posts/index.json"
+            , expect = Http.expectJson PostsIndexLoaded postListDecoder
             }
-         , Cmd.none
          )
 
       About ->

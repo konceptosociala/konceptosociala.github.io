@@ -1,6 +1,8 @@
 module Page.Home exposing (..)
 
-import Html.Styled exposing (..)
+import Html exposing (..)
+import Html.Attributes exposing (..)
 
 view : Html msg
-view = text "Home"
+view = 
+   a [ href "blog" ] [ text "Blog" ]
