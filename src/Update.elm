@@ -1,4 +1,4 @@
-module Update exposing (..)
+port module Update exposing (..)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
@@ -14,6 +14,10 @@ import Page.Post as Post
 import Utils.Utils exposing (parsingErrors)
 import Page.Blog as Blog
 import Model exposing (init)
+import Task
+import Process
+
+port sendMessage : () -> Cmd msg
 
 update : Event -> Model Event -> ( Model Event, Cmd Event )
 update msg model = 
@@ -39,10 +43,10 @@ update msg model =
                case post of
                   Ok p ->
                      (  { model 
-                           | currentPage = Just (pageLayout p.name (Post.view p)) 
+                           | currentPage = Just (pageLayout model.route p.name (Post.view p)) 
                            , currentTitle = Just p.name
                         }
-                     , Cmd.none
+                     , nextTick DomReady
                      )
 
                   Err errors ->
@@ -65,7 +69,7 @@ update msg model =
          case result of
             Ok posts ->
                ( { model
-                   | currentPage = Just (pageLayout "Blog" (Blog.view posts))
+                   | currentPage = Just (pageLayout model.route "Blog" (Blog.view posts))
                    , currentTitle = Just "Blog"
                 }
                , Cmd.none
@@ -78,3 +82,10 @@ update msg model =
                 }
                , Cmd.none
                )
+
+      DomReady ->
+         ( model, sendMessage () )
+
+nextTick : msg -> Cmd msg
+nextTick msg =
+   Task.perform (\_ -> msg) (Process.sleep 20)

@@ -519,11 +519,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.l.aK === region.j.aK)
+	if (region.l.aL === region.j.aL)
 	{
-		return 'on line ' + region.l.aK;
+		return 'on line ' + region.l.aL;
 	}
-	return 'on lines ' + region.l.aK + ' through ' + region.j.aK;
+	return 'on lines ' + region.l.aL + ' through ' + region.j.aL;
 }
 
 
@@ -2721,7 +2721,7 @@ var _VirtualDom_mapEventRecord = F2(function(func, record)
 	return {
 		T: func(record.T),
 		bM: record.bM,
-		bI: record.bI
+		bJ: record.bJ
 	}
 });
 
@@ -2993,7 +2993,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.bM;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.bI) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.bJ) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -6424,6 +6424,7 @@ var $elm$http$Http$get = function (r) {
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -6435,33 +6436,78 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $author$project$Utils$Utils$pageColumn = function (children) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('col-lg-8'),
+				$elm$html$Html$Attributes$class('col-11'),
+				$elm$html$Html$Attributes$class('mx-auto'),
+				$elm$html$Html$Attributes$class('mt-5')
+			]),
+		children);
+};
+var $author$project$Utils$Utils$row = function (children) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('row')
+			]),
+		children);
+};
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$Utils$Utils$pageLayout = F2(
-	function (title, view) {
-		return A2(
-			$elm$html$Html$div,
+var $author$project$Utils$Utils$pageLayout = F3(
+	function (route, title, view) {
+		return $author$project$Utils$Utils$row(
 			_List_fromArray(
 				[
-					$elm$html$Html$Attributes$class('page')
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$h1,
+					$author$project$Utils$Utils$pageColumn(
 					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$class('page-title')
-						]),
-					_List_fromArray(
-						[
-							$elm$html$Html$text(title)
-						])),
-					A2(
-					$elm$html$Html$div,
-					_List_Nil,
-					_List_fromArray(
-						[view]))
+							function () {
+							if (!route.$) {
+								return $elm$html$Html$text('');
+							} else {
+								return A2(
+									$elm$html$Html$a,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$href('/')
+										]),
+									_List_fromArray(
+										[
+											$elm$html$Html$text('⇤ Back to Home')
+										]));
+							}
+						}(),
+							A2(
+							$elm$html$Html$h1,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('page-title')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text(title)
+								])),
+							A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('mb-5')
+								]),
+							_List_fromArray(
+								[view]))
+						]))
 				]));
 	});
 var $author$project$Route$NotFound = function (a) {
@@ -6769,7 +6815,7 @@ var $elm$json$Json$Decode$andThen = _Json_andThen;
 var $elm$json$Json$Decode$fail = _Json_fail;
 var $author$project$Utils$Date$Date = F3(
 	function (year, month, day) {
-		return {a$: day, a6: month, bk: year};
+		return {a0: day, a7: month, bl: year};
 	});
 var $elm$parser$Parser$Advanced$Bad = F2(
 	function (a, b) {
@@ -7158,13 +7204,6 @@ var $author$project$Utils$Post$postDataDecoder = A4(
 	A2($elm$json$Json$Decode$field, 'date', $author$project$Utils$Date$decoder),
 	A2($elm$json$Json$Decode$field, 'link', $elm$json$Json$Decode$string));
 var $author$project$Utils$Post$postListDecoder = $elm$json$Json$Decode$list($author$project$Utils$Post$postDataDecoder);
-var $elm$html$Html$a = _VirtualDom_node('a');
-var $elm$html$Html$Attributes$href = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'href',
-		_VirtualDom_noJavaScriptUri(url));
-};
 var $author$project$Page$About$view = A2(
 	$elm$html$Html$div,
 	_List_Nil,
@@ -7197,8 +7236,8 @@ var $author$project$Page$NotFound$view = function (page) {
 var $author$project$Model$init = F3(
 	function (_v0, url, key) {
 		var route = $author$project$Route$parseUrl(url);
-		var model = {b6: $elm$core$Maybe$Nothing, dg: $elm$core$Maybe$Nothing, dh: $elm$core$Maybe$Nothing, cv: key, bJ: route};
-		var _v1 = model.bJ;
+		var model = {b6: $elm$core$Maybe$Nothing, dg: $elm$core$Maybe$Nothing, dh: $elm$core$Maybe$Nothing, cv: key, aw: route};
+		var _v1 = model.aw;
 		switch (_v1.$) {
 			case 0:
 				return _Utils_Tuple2(
@@ -7206,7 +7245,7 @@ var $author$project$Model$init = F3(
 						model,
 						{
 							dg: $elm$core$Maybe$Just(
-								A2($author$project$Utils$Utils$pageLayout, 'Koncepto Sociala', $author$project$Page$Home$view)),
+								A3($author$project$Utils$Utils$pageLayout, model.aw, 'Koncepto Sociala', $author$project$Page$Home$view)),
 							dh: $elm$core$Maybe$Just('Koncepto Sociala')
 						}),
 					$elm$core$Platform$Cmd$none);
@@ -7224,7 +7263,7 @@ var $author$project$Model$init = F3(
 						model,
 						{
 							dg: $elm$core$Maybe$Just(
-								A2($author$project$Utils$Utils$pageLayout, 'About', $author$project$Page$About$view)),
+								A3($author$project$Utils$Utils$pageLayout, model.aw, 'About', $author$project$Page$About$view)),
 							dh: $elm$core$Maybe$Just('About')
 						}),
 					$elm$core$Platform$Cmd$none);
@@ -7235,8 +7274,9 @@ var $author$project$Model$init = F3(
 						model,
 						{
 							dg: $elm$core$Maybe$Just(
-								A2(
+								A3(
 									$author$project$Utils$Utils$pageLayout,
+									model.aw,
 									'404 | Not Found',
 									$author$project$Page$NotFound$view(page))),
 							dh: $elm$core$Maybe$Just('404 | Not Found')
@@ -7255,7 +7295,17 @@ var $author$project$Model$init = F3(
 	});
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
+var $author$project$Event$DomReady = {$: 4};
 var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $elm$core$Process$sleep = _Process_sleep;
+var $author$project$Update$nextTick = function (msg) {
+	return A2(
+		$elm$core$Task$perform,
+		function (_v0) {
+			return msg;
+		},
+		$elm$core$Process$sleep(20));
+};
 var $author$project$Utils$Post$Post = F3(
 	function (name, date, content) {
 		return {de: content, di: date, cx: name};
@@ -7484,8 +7534,8 @@ var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('
 var $elm$html$Html$ul = _VirtualDom_node('ul');
 var $elm$core$String$words = _String_words;
 var $dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer = {
-	br: $elm$html$Html$blockquote(_List_Nil),
-	bs: function (_v0) {
+	bs: $elm$html$Html$blockquote(_List_Nil),
+	bt: function (_v0) {
 		var body = _v0.da;
 		var language = _v0.dw;
 		var classes = function () {
@@ -7515,7 +7565,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer = {
 						]))
 				]));
 	},
-	bt: function (content) {
+	bu: function (content) {
 		return A2(
 			$elm$html$Html$code,
 			_List_Nil,
@@ -7524,11 +7574,11 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer = {
 					$elm$html$Html$text(content)
 				]));
 	},
-	bu: function (children) {
+	bv: function (children) {
 		return A2($elm$html$Html$em, _List_Nil, children);
 	},
-	bw: A2($elm$html$Html$br, _List_Nil, _List_Nil),
-	bx: function (_v3) {
+	bx: A2($elm$html$Html$br, _List_Nil, _List_Nil),
+	by: function (_v3) {
 		var level = _v3.cw;
 		var children = _v3.cb;
 		switch (level) {
@@ -7546,8 +7596,8 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer = {
 				return A2($elm$html$Html$h6, _List_Nil, children);
 		}
 	},
-	by: $dillonkearns$elm_markdown$Markdown$Html$oneOf(_List_Nil),
-	bz: function (imageInfo) {
+	bz: $dillonkearns$elm_markdown$Markdown$Html$oneOf(_List_Nil),
+	bA: function (imageInfo) {
 		var _v5 = imageInfo.dV;
 		if (!_v5.$) {
 			var title = _v5.a;
@@ -7556,7 +7606,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer = {
 				_List_fromArray(
 					[
 						$elm$html$Html$Attributes$src(imageInfo.bL),
-						$elm$html$Html$Attributes$alt(imageInfo.bl),
+						$elm$html$Html$Attributes$alt(imageInfo.bm),
 						$elm$html$Html$Attributes$title(title)
 					]),
 				_List_Nil);
@@ -7566,7 +7616,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer = {
 				_List_fromArray(
 					[
 						$elm$html$Html$Attributes$src(imageInfo.bL),
-						$elm$html$Html$Attributes$alt(imageInfo.bl)
+						$elm$html$Html$Attributes$alt(imageInfo.bm)
 					]),
 				_List_Nil);
 		}
@@ -7594,7 +7644,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer = {
 					content);
 			}
 		}),
-	bG: F2(
+	bH: F2(
 		function (startingIndex, items) {
 			return A2(
 				$elm$html$Html$ol,
@@ -7615,7 +7665,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer = {
 					},
 					items));
 		}),
-	bH: $elm$html$Html$p(_List_Nil),
+	bI: $elm$html$Html$p(_List_Nil),
 	bN: function (children) {
 		return A2($elm$html$Html$del, _List_Nil, children);
 	},
@@ -7675,7 +7725,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$defaultHtmlRenderer = {
 						maybeAlignment))));
 		return $elm$html$Html$th(attrs);
 	},
-	bg: $elm$html$Html$tr(_List_Nil),
+	bh: $elm$html$Html$tr(_List_Nil),
 	n: $elm$html$Html$text,
 	bW: A2($elm$html$Html$hr, _List_Nil, _List_Nil),
 	bX: function (items) {
@@ -9475,7 +9525,7 @@ var $dillonkearns$elm_markdown$Markdown$Helpers$containsAmpersand = function (st
 };
 var $elm$regex$Regex$Match = F4(
 	function (match, index, number, submatches) {
-		return {c: index, aL: match, dC: number, bP: submatches};
+		return {c: index, aM: match, dC: number, bP: submatches};
 	});
 var $elm$regex$Regex$fromStringWith = _Regex_fromStringWith;
 var $elm$regex$Regex$fromString = function (string) {
@@ -9513,10 +9563,10 @@ var $dillonkearns$elm_markdown$Markdown$Entity$replaceDecimal = function (match)
 			var v = _v1.a;
 			return $dillonkearns$elm_markdown$Markdown$Entity$validUnicode(v);
 		} else {
-			return match.aL;
+			return match.aM;
 		}
 	} else {
-		return match.aL;
+		return match.aM;
 	}
 };
 var $dillonkearns$elm_markdown$Markdown$Entity$replaceDecimals = A2($elm$regex$Regex$replace, $dillonkearns$elm_markdown$Markdown$Entity$decimalRegex, $dillonkearns$elm_markdown$Markdown$Entity$replaceDecimal);
@@ -9791,10 +9841,10 @@ var $dillonkearns$elm_markdown$Markdown$Entity$replaceEntity = function (match) 
 			return $elm$core$String$fromChar(
 				$elm$core$Char$fromCode(code));
 		} else {
-			return match.aL;
+			return match.aM;
 		}
 	} else {
-		return match.aL;
+		return match.aM;
 	}
 };
 var $dillonkearns$elm_markdown$Markdown$Entity$replaceEntities = A2($elm$regex$Regex$replace, $dillonkearns$elm_markdown$Markdown$Entity$entitiesRegex, $dillonkearns$elm_markdown$Markdown$Entity$replaceEntity);
@@ -9818,7 +9868,7 @@ var $dillonkearns$elm_markdown$Markdown$Helpers$replaceEscapable = A2(
 					'\\'),
 				escapedStr);
 		} else {
-			return regexMatch.aL;
+			return regexMatch.aM;
 		}
 	});
 var $dillonkearns$elm_markdown$Markdown$Entity$hexadecimalRegex = A2(
@@ -9847,7 +9897,7 @@ var $dillonkearns$elm_markdown$Markdown$Entity$replaceHexadecimal = function (ma
 		return $dillonkearns$elm_markdown$Markdown$Entity$validUnicode(
 			$dillonkearns$elm_markdown$Markdown$Entity$hexToInt(first));
 	} else {
-		return match.aL;
+		return match.aM;
 	}
 };
 var $dillonkearns$elm_markdown$Markdown$Entity$replaceHexadecimals = A2($elm$regex$Regex$replace, $dillonkearns$elm_markdown$Markdown$Entity$hexadecimalRegex, $dillonkearns$elm_markdown$Markdown$Entity$replaceHexadecimal);
@@ -10034,7 +10084,7 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$regMatchToAngleBracketLToke
 			0,
 			A2($elm$core$Maybe$map, $elm$core$String$length, maybeBackslashes));
 		return $dillonkearns$elm_markdown$Markdown$Helpers$isEven(backslashesLength) ? $elm$core$Maybe$Just(
-			{c: regMatch.c + backslashesLength, bC: 1, g: $dillonkearns$elm_markdown$Markdown$InlineParser$AngleBracketOpen}) : $elm$core$Maybe$Nothing;
+			{c: regMatch.c + backslashesLength, bD: 1, g: $dillonkearns$elm_markdown$Markdown$InlineParser$AngleBracketOpen}) : $elm$core$Maybe$Nothing;
 	} else {
 		return $elm$core$Maybe$Nothing;
 	}
@@ -10066,7 +10116,7 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$regMatchToAngleBracketRToke
 		return $elm$core$Maybe$Just(
 			{
 				c: regMatch.c + backslashesLength,
-				bC: 1,
+				bD: 1,
 				g: $dillonkearns$elm_markdown$Markdown$Helpers$isEven(backslashesLength) ? $dillonkearns$elm_markdown$Markdown$InlineParser$AngleBracketClose(1) : $dillonkearns$elm_markdown$Markdown$InlineParser$AngleBracketClose(0)
 			});
 	} else {
@@ -10231,11 +10281,11 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$regMatchToEmphasisToken = F
 				return $elm$core$Maybe$Just(
 					{
 						c: index,
-						bC: delimiterLength,
+						bD: delimiterLength,
 						g: A2(
 							$dillonkearns$elm_markdown$Markdown$InlineParser$EmphasisToken,
 							_char,
-							{a4: lFringeRank, bd: rFringeRank})
+							{a5: lFringeRank, be: rFringeRank})
 					});
 			}
 		} else {
@@ -10268,7 +10318,7 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$regMatchToCodeToken = funct
 		return $elm$core$Maybe$Just(
 			{
 				c: regMatch.c + backslashesLength,
-				bC: $elm$core$String$length(backtick),
+				bD: $elm$core$String$length(backtick),
 				g: $dillonkearns$elm_markdown$Markdown$Helpers$isEven(backslashesLength) ? $dillonkearns$elm_markdown$Markdown$InlineParser$CodeToken(1) : $dillonkearns$elm_markdown$Markdown$InlineParser$CodeToken(0)
 			});
 	} else {
@@ -10295,14 +10345,14 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$regMatchToHardBreakToken = 
 				var backslashes = _v0.a.a;
 				var backslashesLength = $elm$core$String$length(backslashes);
 				return (!$dillonkearns$elm_markdown$Markdown$Helpers$isEven(backslashesLength)) ? $elm$core$Maybe$Just(
-					{c: (regMatch.c + backslashesLength) - 1, bC: 2, g: $dillonkearns$elm_markdown$Markdown$InlineParser$HardLineBreakToken}) : $elm$core$Maybe$Nothing;
+					{c: (regMatch.c + backslashesLength) - 1, bD: 2, g: $dillonkearns$elm_markdown$Markdown$InlineParser$HardLineBreakToken}) : $elm$core$Maybe$Nothing;
 			} else {
 				if (_v0.b.b && (!_v0.b.a.$)) {
 					var _v1 = _v0.b;
 					return $elm$core$Maybe$Just(
 						{
 							c: regMatch.c,
-							bC: $elm$core$String$length(regMatch.aL),
+							bD: $elm$core$String$length(regMatch.aM),
 							g: $dillonkearns$elm_markdown$Markdown$InlineParser$HardLineBreakToken
 						});
 				} else {
@@ -10324,15 +10374,15 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$regMatchToSoftHardBreakToke
 				var backslashes = _v0.a.a;
 				var backslashesLength = $elm$core$String$length(backslashes);
 				return $dillonkearns$elm_markdown$Markdown$Helpers$isEven(backslashesLength) ? $elm$core$Maybe$Just(
-					{c: regMatch.c + backslashesLength, bC: 1, g: $dillonkearns$elm_markdown$Markdown$InlineParser$HardLineBreakToken}) : $elm$core$Maybe$Just(
-					{c: (regMatch.c + backslashesLength) - 1, bC: 2, g: $dillonkearns$elm_markdown$Markdown$InlineParser$HardLineBreakToken});
+					{c: regMatch.c + backslashesLength, bD: 1, g: $dillonkearns$elm_markdown$Markdown$InlineParser$HardLineBreakToken}) : $elm$core$Maybe$Just(
+					{c: (regMatch.c + backslashesLength) - 1, bD: 2, g: $dillonkearns$elm_markdown$Markdown$InlineParser$HardLineBreakToken});
 			} else {
 				if (_v0.b.b) {
 					var _v1 = _v0.b;
 					return $elm$core$Maybe$Just(
 						{
 							c: regMatch.c,
-							bC: $elm$core$String$length(regMatch.aL),
+							bD: $elm$core$String$length(regMatch.aM),
 							g: $dillonkearns$elm_markdown$Markdown$InlineParser$HardLineBreakToken
 						});
 				} else {
@@ -10374,7 +10424,7 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$regMatchToLinkImageCloseTok
 			0,
 			A2($elm$core$Maybe$map, $elm$core$String$length, maybeBackslashes));
 		return $dillonkearns$elm_markdown$Markdown$Helpers$isEven(backslashesLength) ? $elm$core$Maybe$Just(
-			{c: regMatch.c + backslashesLength, bC: 1, g: $dillonkearns$elm_markdown$Markdown$InlineParser$SquareBracketClose}) : $elm$core$Maybe$Nothing;
+			{c: regMatch.c + backslashesLength, bD: 1, g: $dillonkearns$elm_markdown$Markdown$InlineParser$SquareBracketClose}) : $elm$core$Maybe$Nothing;
 	} else {
 		return $elm$core$Maybe$Nothing;
 	}
@@ -10412,7 +10462,7 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$regMatchToLinkImageOpenToke
 				return $elm$core$Maybe$Just(
 					{
 						c: index,
-						bC: 1,
+						bD: 1,
 						g: $dillonkearns$elm_markdown$Markdown$InlineParser$LinkOpenToken(0)
 					});
 			} else {
@@ -10421,12 +10471,12 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$regMatchToLinkImageOpenToke
 		} else {
 			if (!maybeImageOpen.$) {
 				return $elm$core$Maybe$Just(
-					{c: index, bC: 2, g: $dillonkearns$elm_markdown$Markdown$InlineParser$ImageOpenToken});
+					{c: index, bD: 2, g: $dillonkearns$elm_markdown$Markdown$InlineParser$ImageOpenToken});
 			} else {
 				return $elm$core$Maybe$Just(
 					{
 						c: index,
-						bC: 1,
+						bD: 1,
 						g: $dillonkearns$elm_markdown$Markdown$InlineParser$LinkOpenToken(0)
 					});
 			}
@@ -10462,7 +10512,7 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$regMatchToStrikethroughToke
 		var length = _v2.a;
 		var meaning = _v2.b;
 		return $elm$core$Maybe$Just(
-			{c: regMatch.c + backslashesLength, bC: length, g: meaning});
+			{c: regMatch.c + backslashesLength, bD: length, g: meaning});
 	} else {
 		return $elm$core$Maybe$Nothing;
 	}
@@ -10580,8 +10630,8 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$encodeUrl = A2(
 		function (match) {
 			return A2(
 				$elm$core$Maybe$withDefault,
-				match.aL,
-				$elm$url$Url$percentDecode(match.aL));
+				match.aM,
+				$elm$url$Url$percentDecode(match.aM));
 		}));
 var $dillonkearns$elm_markdown$Markdown$InlineParser$urlRegex = A2(
 	$elm$core$Maybe$withDefault,
@@ -10676,7 +10726,7 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$refRegexToMatch = F3(
 			}();
 			var regexMatchLength = function () {
 				if (!maybeRegexMatch.$) {
-					var match = maybeRegexMatch.a.aL;
+					var match = maybeRegexMatch.a.aM;
 					return $elm$core$String$length(match);
 				} else {
 					return 0;
@@ -10738,7 +10788,7 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$inlineLinkTypeOrImageTypeRe
 				return _Utils_update(
 					matchModel,
 					{
-						j: matchModel.j + $elm$core$String$length(regexMatch.aL),
+						j: matchModel.j + $elm$core$String$length(regexMatch.aM),
 						p: function () {
 							var _v5 = matchModel.p;
 							if (_v5.$ === 5) {
@@ -10856,7 +10906,7 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$htmlToToken = F2(
 					$elm$parser$Parser$Advanced$succeed(
 						F3(
 							function (startOffset, htmlTag, endOffset) {
-								return {co: htmlTag, bC: endOffset - startOffset};
+								return {co: htmlTag, bD: endOffset - startOffset};
 							})),
 					$elm$parser$Parser$Advanced$getOffset),
 				$dillonkearns$elm_markdown$HtmlParser$html),
@@ -10867,10 +10917,10 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$htmlToToken = F2(
 			A2($elm$core$String$dropLeft, match.l, rawText));
 		if (!parsed.$) {
 			var htmlTag = parsed.a.co;
-			var length = parsed.a.bC;
+			var length = parsed.a.bD;
 			var htmlToken = A2($dillonkearns$elm_markdown$Markdown$InlineParser$HtmlToken, 0, htmlTag);
 			return $elm$core$Maybe$Just(
-				{c: match.l, bC: length, g: htmlToken});
+				{c: match.l, bD: length, g: htmlToken});
 		} else {
 			return $elm$core$Maybe$Nothing;
 		}
@@ -10890,10 +10940,10 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$isCodeTokenPair = F2(
 		if (!_v0.$) {
 			if (!_v0.a) {
 				var _v1 = _v0.a;
-				return _Utils_eq(openToken.bC - 1, closeToken.bC);
+				return _Utils_eq(openToken.bD - 1, closeToken.bD);
 			} else {
 				var _v2 = _v0.a;
-				return _Utils_eq(openToken.bC, closeToken.bC);
+				return _Utils_eq(openToken.bD, closeToken.bD);
 			}
 		} else {
 			return false;
@@ -10920,7 +10970,7 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$isOpenEmphasisToken = F2(
 			if (_v1.$ === 7) {
 				var closeChar = _v1.a;
 				var close = _v1.b;
-				return _Utils_eq(openChar, closeChar) ? ((_Utils_eq(open.a4, open.bd) || _Utils_eq(close.a4, close.bd)) ? ((!(!A2($elm$core$Basics$modBy, 3, closeToken.bC + openToken.bC))) || ((!A2($elm$core$Basics$modBy, 3, closeToken.bC)) && (!A2($elm$core$Basics$modBy, 3, openToken.bC)))) : true) : false;
+				return _Utils_eq(openChar, closeChar) ? ((_Utils_eq(open.a5, open.be) || _Utils_eq(close.a5, close.be)) ? ((!(!A2($elm$core$Basics$modBy, 3, closeToken.bD + openToken.bD))) || ((!A2($elm$core$Basics$modBy, 3, closeToken.bD)) && (!A2($elm$core$Basics$modBy, 3, openToken.bD)))) : true) : false;
 			} else {
 				return false;
 			}
@@ -10935,10 +10985,10 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$isStrikethroughTokenPair = 
 			if (_v1.$ === 9) {
 				if (!_v1.a) {
 					var _v2 = _v1.a;
-					return _Utils_Tuple2(true, openToken.bC - 1);
+					return _Utils_Tuple2(true, openToken.bD - 1);
 				} else {
 					var _v3 = _v1.a;
-					return _Utils_Tuple2(true, openToken.bC);
+					return _Utils_Tuple2(true, openToken.bD);
 				}
 			} else {
 				return _Utils_Tuple2(false, 0);
@@ -10951,10 +11001,10 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$isStrikethroughTokenPair = 
 			if (_v5.$ === 9) {
 				if (!_v5.a) {
 					var _v6 = _v5.a;
-					return _Utils_Tuple2(true, closeToken.bC - 1);
+					return _Utils_Tuple2(true, closeToken.bD - 1);
 				} else {
 					var _v7 = _v5.a;
-					return _Utils_Tuple2(true, closeToken.bC);
+					return _Utils_Tuple2(true, closeToken.bD);
 				}
 			} else {
 				return _Utils_Tuple2(false, 0);
@@ -10967,7 +11017,7 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$isStrikethroughTokenPair = 
 var $dillonkearns$elm_markdown$Markdown$InlineParser$HardLineBreakType = {$: 1};
 var $dillonkearns$elm_markdown$Markdown$InlineParser$tokenToMatch = F2(
 	function (token, type_) {
-		return {j: token.c + token.bC, v: _List_Nil, l: token.c, n: '', B: 0, x: 0, p: type_};
+		return {j: token.c + token.bD, v: _List_Nil, l: token.c, n: '', B: 0, x: 0, p: type_};
 	});
 var $dillonkearns$elm_markdown$Markdown$InlineParser$lineBreakTTM = F2(
 	function (remaining, matches) {
@@ -11192,7 +11242,7 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$codeToMatch = F5(
 				var _v34 = _v33.a;
 				return _Utils_update(
 					openToken,
-					{c: openToken.c + 1, bC: openToken.bC - 1});
+					{c: openToken.c + 1, bD: openToken.bD - 1});
 			} else {
 				return openToken;
 			}
@@ -11220,8 +11270,8 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$emphasisTTM = F5(
 				var _v27 = token.g;
 				if (_v27.$ === 7) {
 					var _char = _v27.a;
-					var leftFringeRank = _v27.b.a4;
-					var rightFringeRank = _v27.b.bd;
+					var leftFringeRank = _v27.b.a5;
+					var rightFringeRank = _v27.b.be;
 					if (_Utils_eq(leftFringeRank, rightFringeRank)) {
 						if ((!(!rightFringeRank)) && ((_char !== '_') || (rightFringeRank === 1))) {
 							var _v28 = A2(
@@ -11342,30 +11392,30 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$emphasisToMatch = F5(
 		var openToken = _v25.a;
 		var innerTokens = _v25.b;
 		var remainTokens = _v25.c;
-		var remainLength = openToken.bC - closeToken.bC;
-		var updt = (!remainLength) ? {a_: closeToken, aM: openToken, ba: remainTokens, bj: tokensTail} : ((remainLength > 0) ? {
-			a_: closeToken,
-			aM: _Utils_update(
+		var remainLength = openToken.bD - closeToken.bD;
+		var updt = (!remainLength) ? {a$: closeToken, aN: openToken, bb: remainTokens, bk: tokensTail} : ((remainLength > 0) ? {
+			a$: closeToken,
+			aN: _Utils_update(
 				openToken,
-				{c: openToken.c + remainLength, bC: closeToken.bC}),
-			ba: A2(
+				{c: openToken.c + remainLength, bD: closeToken.bD}),
+			bb: A2(
 				$elm$core$List$cons,
 				_Utils_update(
 					openToken,
-					{bC: remainLength}),
+					{bD: remainLength}),
 				remainTokens),
-			bj: tokensTail
+			bk: tokensTail
 		} : {
-			a_: _Utils_update(
+			a$: _Utils_update(
 				closeToken,
-				{bC: openToken.bC}),
-			aM: openToken,
-			ba: remainTokens,
-			bj: A2(
+				{bD: openToken.bD}),
+			aN: openToken,
+			bb: remainTokens,
+			bk: A2(
 				$elm$core$List$cons,
 				_Utils_update(
 					closeToken,
-					{c: closeToken.c + openToken.bC, bC: -remainLength}),
+					{c: closeToken.c + openToken.bD, bD: -remainLength}),
 				tokensTail)
 		});
 		var match = A7(
@@ -11375,11 +11425,11 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$emphasisToMatch = F5(
 			function (s) {
 				return s;
 			},
-			$dillonkearns$elm_markdown$Markdown$InlineParser$EmphasisType(updt.aM.bC),
-			updt.aM,
-			updt.a_,
+			$dillonkearns$elm_markdown$Markdown$InlineParser$EmphasisType(updt.aN.bD),
+			updt.aN,
+			updt.a$,
 			$elm$core$List$reverse(innerTokens));
-		return _Utils_Tuple3(updt.bj, match, updt.ba);
+		return _Utils_Tuple3(updt.bk, match, updt.bb);
 	});
 var $dillonkearns$elm_markdown$Markdown$InlineParser$htmlElementTTM = F5(
 	function (remaining, tokens, matches, references, rawText) {
@@ -11672,7 +11722,7 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$strikethroughToMatch = F5(
 				var _v3 = _v2.a;
 				return _Utils_update(
 					openToken,
-					{c: openToken.c + 1, bC: openToken.bC - 1});
+					{c: openToken.c + 1, bD: openToken.bD - 1});
 			} else {
 				return openToken;
 			}
@@ -11684,12 +11734,12 @@ var $dillonkearns$elm_markdown$Markdown$InlineParser$strikethroughToMatch = F5(
 	});
 var $dillonkearns$elm_markdown$Markdown$InlineParser$tokenPairToMatch = F7(
 	function (references, rawText, processText, type_, openToken, closeToken, innerTokens) {
-		var textStart = openToken.c + openToken.bC;
+		var textStart = openToken.c + openToken.bD;
 		var textEnd = closeToken.c;
 		var text = processText(
 			A3($elm$core$String$slice, textStart, textEnd, rawText));
 		var start = openToken.c;
-		var end = closeToken.c + closeToken.bC;
+		var end = closeToken.c + closeToken.bD;
 		var match = {j: end, v: _List_Nil, l: start, n: text, B: textEnd, x: textStart, p: type_};
 		var matches = A2(
 			$elm$core$List$map,
@@ -11932,7 +11982,7 @@ var $dillonkearns$elm_markdown$Markdown$TableParser$parseHeader = F2(
 				$elm$core$List$map2,
 				F2(
 					function (headerCell, alignment) {
-						return {aV: alignment, aq: headerCell};
+						return {aW: alignment, aq: headerCell};
 					}),
 				headers,
 				columnAlignments);
@@ -11969,7 +12019,7 @@ var $dillonkearns$elm_markdown$Markdown$CodeBlock$infoString = function (fenceCh
 				return $elm$core$Maybe$Just(trimmed);
 			}
 		});
-	var _v0 = fenceCharacter.a3;
+	var _v0 = fenceCharacter.a4;
 	if (!_v0) {
 		return A2(
 			$elm$parser$Parser$Advanced$mapChompedString,
@@ -11991,7 +12041,7 @@ var $dillonkearns$elm_markdown$Parser$Token$backtick = A2(
 	$elm$parser$Parser$Advanced$Token,
 	'`',
 	$elm$parser$Parser$Expecting('a \'`\''));
-var $dillonkearns$elm_markdown$Markdown$CodeBlock$backtick = {aY: '`', a3: 0, bi: $dillonkearns$elm_markdown$Parser$Token$backtick};
+var $dillonkearns$elm_markdown$Markdown$CodeBlock$backtick = {aZ: '`', a4: 0, bj: $dillonkearns$elm_markdown$Parser$Token$backtick};
 var $dillonkearns$elm_markdown$Markdown$CodeBlock$colToIndentation = function (_int) {
 	switch (_int) {
 		case 1:
@@ -12019,7 +12069,7 @@ var $dillonkearns$elm_markdown$Markdown$CodeBlock$fenceOfAtLeast = F2(
 			A2(
 				$elm$core$List$repeat,
 				minLength,
-				$elm$parser$Parser$Advanced$token(fenceCharacter.bi)));
+				$elm$parser$Parser$Advanced$token(fenceCharacter.bj)));
 		return A2(
 			$elm$parser$Parser$Advanced$mapChompedString,
 			F2(
@@ -12032,14 +12082,14 @@ var $dillonkearns$elm_markdown$Markdown$CodeBlock$fenceOfAtLeast = F2(
 				$elm$parser$Parser$Advanced$ignorer,
 				builtTokens,
 				$elm$parser$Parser$Advanced$chompWhile(
-					$elm$core$Basics$eq(fenceCharacter.aY))));
+					$elm$core$Basics$eq(fenceCharacter.aZ))));
 	});
 var $dillonkearns$elm_markdown$Markdown$CodeBlock$Tilde = 1;
 var $dillonkearns$elm_markdown$Parser$Token$tilde = A2(
 	$elm$parser$Parser$Advanced$Token,
 	'~',
 	$elm$parser$Parser$Expecting('a `~`'));
-var $dillonkearns$elm_markdown$Markdown$CodeBlock$tilde = {aY: '~', a3: 1, bi: $dillonkearns$elm_markdown$Parser$Token$tilde};
+var $dillonkearns$elm_markdown$Markdown$CodeBlock$tilde = {aZ: '~', a4: 1, bj: $dillonkearns$elm_markdown$Parser$Token$tilde};
 var $dillonkearns$elm_markdown$Whitespace$upToThreeSpaces = $elm$parser$Parser$Advanced$oneOf(
 	_List_fromArray(
 		[
@@ -12073,7 +12123,7 @@ var $dillonkearns$elm_markdown$Markdown$CodeBlock$openingFence = A2(
 					function (indent, _v0) {
 						var character = _v0.a;
 						var length = _v0.b;
-						return {aZ: character, bA: indent, bC: length};
+						return {a_: character, bB: indent, bD: length};
 					})),
 			$dillonkearns$elm_markdown$Whitespace$upToThreeSpaces),
 		A2($elm$parser$Parser$Advanced$andThen, $dillonkearns$elm_markdown$Markdown$CodeBlock$colToIndentation, $elm$parser$Parser$Advanced$getCol)),
@@ -12142,7 +12192,7 @@ var $dillonkearns$elm_markdown$Markdown$CodeBlock$remainingBlockHelp = function 
 					$elm$parser$Parser$Advanced$ignorer,
 					$elm$parser$Parser$Advanced$succeed(
 						$elm$parser$Parser$Advanced$Done(body)),
-					A2($dillonkearns$elm_markdown$Markdown$CodeBlock$closingFence, fence.bC, fence.aZ))),
+					A2($dillonkearns$elm_markdown$Markdown$CodeBlock$closingFence, fence.bD, fence.a_))),
 				A2(
 				$elm$parser$Parser$Advanced$keeper,
 				A2(
@@ -12159,7 +12209,7 @@ var $dillonkearns$elm_markdown$Markdown$CodeBlock$remainingBlockHelp = function 
 												body,
 												A3($elm$core$String$slice, start, end, source))));
 								})),
-						$dillonkearns$elm_markdown$Markdown$CodeBlock$codeBlockLine(fence.bA)),
+						$dillonkearns$elm_markdown$Markdown$CodeBlock$codeBlockLine(fence.bB)),
 					$elm$parser$Parser$Advanced$getOffset),
 				$elm$parser$Parser$Advanced$getSource)
 			]));
@@ -12180,7 +12230,7 @@ var $dillonkearns$elm_markdown$Markdown$CodeBlock$parser = A2(
 				$elm$parser$Parser$Advanced$succeed($dillonkearns$elm_markdown$Markdown$CodeBlock$CodeBlock),
 				A2(
 					$elm$parser$Parser$Advanced$ignorer,
-					$dillonkearns$elm_markdown$Markdown$CodeBlock$infoString(fence.aZ),
+					$dillonkearns$elm_markdown$Markdown$CodeBlock$infoString(fence.a_),
 					$dillonkearns$elm_markdown$Helpers$lineEndOrEnd)),
 			$dillonkearns$elm_markdown$Markdown$CodeBlock$remainingBlock(fence));
 	},
@@ -14434,12 +14484,12 @@ var $dillonkearns$elm_markdown$Markdown$Parser$parseHeaderInlines = F2(
 			$elm$core$List$map,
 			function (_v24) {
 				var label = _v24.aq;
-				var alignment = _v24.aV;
+				var alignment = _v24.aW;
 				return A3(
 					$dillonkearns$elm_markdown$Markdown$Parser$parseRawInline,
 					linkReferences,
 					function (parsedHeaderLabel) {
-						return {aV: alignment, aq: parsedHeaderLabel};
+						return {aW: alignment, aq: parsedHeaderLabel};
 					},
 					label);
 			},
@@ -15558,7 +15608,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderHelperSingle = function (
 					A2(
 						$elm$core$Result$map,
 						function (children) {
-							return renderer.bx(
+							return renderer.by(
 								{
 									cb: children,
 									cw: level,
@@ -15571,7 +15621,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderHelperSingle = function (
 				return $elm$core$Maybe$Just(
 					A2(
 						$elm$core$Result$map,
-						renderer.bH,
+						renderer.bI,
 						A2($dillonkearns$elm_markdown$Markdown$Renderer$renderStyled, renderer, content)));
 			case 0:
 				var html = block.a;
@@ -15644,7 +15694,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderHelperSingle = function (
 						$elm$core$Result$map,
 						function (listItems) {
 							return A2(
-								renderer.bG,
+								renderer.bH,
 								startingIndex,
 								A2(
 									$elm$core$List$map,
@@ -15683,7 +15733,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderHelperSingle = function (
 				var codeBlock = block.a;
 				return $elm$core$Maybe$Just(
 					$elm$core$Result$Ok(
-						renderer.bs(codeBlock)));
+						renderer.bt(codeBlock)));
 			case 8:
 				return $elm$core$Maybe$Just(
 					$elm$core$Result$Ok(renderer.bW));
@@ -15692,7 +15742,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderHelperSingle = function (
 				return $elm$core$Maybe$Just(
 					A2(
 						$elm$core$Result$map,
-						renderer.br,
+						renderer.bs,
 						$dillonkearns$elm_markdown$Markdown$Renderer$combineResults(
 							A2($dillonkearns$elm_markdown$Markdown$Renderer$renderHelper, renderer, nestedBlocks))));
 			default:
@@ -15703,7 +15753,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderHelperSingle = function (
 						$elm$core$List$map,
 						function (_v11) {
 							var label = _v11.aq;
-							var alignment = _v11.aV;
+							var alignment = _v11.aW;
 							return A2(
 								$elm$core$Result$map,
 								$elm$core$Tuple$pair(alignment),
@@ -15715,7 +15765,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderHelperSingle = function (
 					function (listListView) {
 						return renderer.bT(
 							$elm$core$List$singleton(
-								renderer.bg(
+								renderer.bh(
 									A2(
 										$elm$core$List$map,
 										function (_v10) {
@@ -15736,7 +15786,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderHelperSingle = function (
 					return A2(
 						$elm$core$Maybe$andThen,
 						function ($) {
-							return $.aV;
+							return $.aW;
 						},
 						$elm$core$List$head(
 							A2($elm$core$List$drop, columnIndex, header)));
@@ -15744,7 +15794,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderHelperSingle = function (
 				var renderRow = function (cells) {
 					return A2(
 						$elm$core$Result$map,
-						renderer.bg,
+						renderer.bh,
 						A2(
 							$elm$core$Result$map,
 							$elm$core$List$indexedMap(
@@ -15786,7 +15836,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderHtmlNode = F4(
 			tag,
 			attributes,
 			children,
-			renderer.by,
+			renderer.bz,
 			A2($dillonkearns$elm_markdown$Markdown$Renderer$renderHelper, renderer, children));
 	});
 var $dillonkearns$elm_markdown$Markdown$Renderer$renderSingleInline = F2(
@@ -15804,7 +15854,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderSingleInline = F2(
 				return $elm$core$Maybe$Just(
 					A2(
 						$elm$core$Result$map,
-						renderer.bu,
+						renderer.bv,
 						A2($dillonkearns$elm_markdown$Markdown$Renderer$renderStyled, renderer, innerInlines)));
 			case 5:
 				var innerInlines = inline.a;
@@ -15819,9 +15869,9 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderSingleInline = F2(
 				var children = inline.c;
 				return $elm$core$Maybe$Just(
 					$elm$core$Result$Ok(
-						renderer.bz(
+						renderer.bA(
 							{
-								bl: $dillonkearns$elm_markdown$Markdown$Block$extractInlineText(children),
+								bm: $dillonkearns$elm_markdown$Markdown$Block$extractInlineText(children),
 								bL: src,
 								dV: title
 							})));
@@ -15834,7 +15884,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderSingleInline = F2(
 				var string = inline.a;
 				return $elm$core$Maybe$Just(
 					$elm$core$Result$Ok(
-						renderer.bt(string)));
+						renderer.bu(string)));
 			case 1:
 				var destination = inline.a;
 				var title = inline.b;
@@ -15852,7 +15902,7 @@ var $dillonkearns$elm_markdown$Markdown$Renderer$renderSingleInline = F2(
 						A2($dillonkearns$elm_markdown$Markdown$Renderer$renderStyled, renderer, inlines)));
 			case 8:
 				return $elm$core$Maybe$Just(
-					$elm$core$Result$Ok(renderer.bw));
+					$elm$core$Result$Ok(renderer.bx));
 			default:
 				var html = inline.a;
 				if (!html.$) {
@@ -16019,6 +16069,12 @@ var $author$project$Utils$Utils$parsingErrors = function (errors) {
 		A2($elm$core$List$map, $author$project$Utils$Utils$deadendToString, errors));
 };
 var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
+var $elm$json$Json$Encode$null = _Json_encodeNull;
+var $author$project$Update$sendMessage = _Platform_outgoingPort(
+	'sendMessage',
+	function ($) {
+		return $elm$json$Json$Encode$null;
+	});
 var $elm$url$Url$addPort = F2(
 	function (maybePort, starter) {
 		if (maybePort.$ === 1) {
@@ -16065,11 +16121,11 @@ var $elm$url$Url$toString = function (url) {
 };
 var $author$project$Utils$Date$compare = F2(
 	function (d1, d2) {
-		var _v0 = A2($elm$core$Basics$compare, d1.bk, d2.bk);
+		var _v0 = A2($elm$core$Basics$compare, d1.bl, d2.bl);
 		if (_v0 === 1) {
-			var _v1 = A2($elm$core$Basics$compare, d1.a6, d2.a6);
+			var _v1 = A2($elm$core$Basics$compare, d1.a7, d2.a7);
 			if (_v1 === 1) {
-				return A2($elm$core$Basics$compare, d1.a$, d2.a$);
+				return A2($elm$core$Basics$compare, d1.a0, d2.a0);
 			} else {
 				var other = _v1;
 				return other;
@@ -16088,7 +16144,7 @@ var $author$project$Utils$Date$leadingZeroToString = function (n) {
 	return (n < 10) ? ('0' + $elm$core$String$fromInt(n)) : $elm$core$String$fromInt(n);
 };
 var $author$project$Utils$Date$toString = function (date) {
-	return $author$project$Utils$Date$leadingZeroToString(date.bk) + ('-' + ($author$project$Utils$Date$leadingZeroToString(date.a6) + ('-' + $author$project$Utils$Date$leadingZeroToString(date.a$))));
+	return $author$project$Utils$Date$leadingZeroToString(date.bl) + ('-' + ($author$project$Utils$Date$leadingZeroToString(date.a7) + ('-' + $author$project$Utils$Date$leadingZeroToString(date.a0))));
 };
 var $author$project$Page$Blog$viewPost = function (post) {
 	return A2(
@@ -16190,13 +16246,14 @@ var $author$project$Update$update = F2(
 								model,
 								{
 									dg: $elm$core$Maybe$Just(
-										A2(
+										A3(
 											$author$project$Utils$Utils$pageLayout,
+											model.aw,
 											p.cx,
 											$author$project$Page$Post$view(p))),
 									dh: $elm$core$Maybe$Just(p.cx)
 								}),
-							$elm$core$Platform$Cmd$none);
+							$author$project$Update$nextTick($author$project$Event$DomReady));
 					} else {
 						var errors = post.a;
 						return _Utils_Tuple2(
@@ -16221,7 +16278,7 @@ var $author$project$Update$update = F2(
 							}),
 						$elm$core$Platform$Cmd$none);
 				}
-			default:
+			case 3:
 				var result = msg.a;
 				if (!result.$) {
 					var posts = result.a;
@@ -16230,8 +16287,9 @@ var $author$project$Update$update = F2(
 							model,
 							{
 								dg: $elm$core$Maybe$Just(
-									A2(
+									A3(
 										$author$project$Utils$Utils$pageLayout,
+										model.aw,
 										'Blog',
 										$author$project$Page$Blog$view(posts))),
 								dh: $elm$core$Maybe$Just('Blog')
@@ -16248,6 +16306,10 @@ var $author$project$Update$update = F2(
 							}),
 						$elm$core$Platform$Cmd$none);
 				}
+			default:
+				return _Utils_Tuple2(
+					model,
+					$author$project$Update$sendMessage(0));
 		}
 	});
 var $author$project$Main$main = $elm$browser$Browser$application(

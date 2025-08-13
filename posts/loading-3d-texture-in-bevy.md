@@ -8,7 +8,7 @@ in Bevy (as of version 0.15) only supports 2D image loading for now, so we need 
 implement a custom 3D image asset loader. For our tutorial we will use `png` and `jpeg` raster image
 types, but you can also try to implement importing of raw MagicaVoxel data, e.g. using `dot_vox` crate.
 
-### Implementing Image3dLoader
+## Implementing Image3dLoader
 
 First, we'll define our voxel texture format, Bevy plugin and loader struct itself:
 
@@ -36,9 +36,10 @@ pub struct Image3dLoader;
 To store a 3D image in 2D `png` and `jpeg` formats, we will store our Z coordinate as layers,
 aligned by columns and rows like this:
 
-| ![slice](/assets/blog/voxel-ray-tracing/slice.jpg) | 
-|:--:| 
-| 15x3 image slice | 
+
+| ![slice](/assets/blog/voxel-ray-tracing/slice.jpg) |
+|----------------------------------------------------|
+| 15x3 image slice                                   |
 
 So our loader settings will look like this:
 
@@ -205,9 +206,7 @@ Now we need to store our 3D data, retrieved from row-column aligned 2D image, to
 because all data is transfered to GPU bit-by-bit. This may sound complicated, but we can calculate each
 next pixel, pushed to 1d array, with a following simple formula:
 
-$$ P(x, y, c, r) = \begin{pmatrix}
-x + c \times w \\ y + r \times h
-\end{pmatrix}, $$ 
+![formula](/assets/blog/voxel-ray-tracing/formula.svg)
 
 where `c` and `r` are current column and row accordingly, `x` and `y` are current tile coordinates and
 `w` and `h` are single tile width and height. The algorithm will look like this:
@@ -281,6 +280,6 @@ fn system(asset_server: Res<AssetServer>) {
 }
 ```
 
-### Conclusion
+## Conclusion
 
 In this post, we explored how to implement a custom 3D texture loader for Bevy by leveraging the asset pipeline and extending it to support 3D data stored in standard 2D image formats. By organizing our 3D data as tiled slices and parsing loader settings from filenames, we can efficiently import and use 3D textures in our Bevy projects. This approach opens up new possibilities for voxel rendering, volumetric effects, and custom texture workflows, even before native 3D texture support lands in Bevy. Happy experimenting!

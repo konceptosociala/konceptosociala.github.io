@@ -8,15 +8,38 @@ import Css exposing (..)
 import Parser exposing (DeadEnd, Problem)
 import Html.Attributes exposing (..)
 
-pageLayout : String -> Html msg -> Html msg
-pageLayout title view = 
-   div 
-      [ class "page" ]
-      [ h1 
-         [ class "page-title"] 
-         [ text title ]
-      , div [] [view]
+pageLayout : Route -> String -> Html msg -> Html msg
+pageLayout route title view = 
+   row
+      [ pageColumn
+         [ case route of
+            Home -> 
+               text ""
+
+            _ -> 
+               a [ href "/" ] [ text "⇤ Back to Home" ]
+         , h1 
+            [ class "page-title" ] 
+            [ text title ]
+         , div 
+            [ class "mb-5" ] 
+            [view]
+         ]
       ]
+
+row : List (Html msg) -> Html msg
+row children =
+   div [ class "row"] children
+
+pageColumn : List (Html msg) -> Html msg
+pageColumn children =
+   div 
+      [ class "col-lg-8"
+      , class "col-11"
+      , class "mx-auto"
+      , class "mt-5"
+      ]
+      children
 
 pageTitle : Route -> String
 pageTitle page =

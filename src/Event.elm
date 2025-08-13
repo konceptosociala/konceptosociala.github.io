@@ -11,3 +11,4 @@ type Event
    | LinkClicked UrlRequest
    | PostLoaded (Result Http.Error String)
    | PostsIndexLoaded (Result Http.Error (List PostData))
+   | DomReady

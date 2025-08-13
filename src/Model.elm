@@ -36,7 +36,7 @@ init _ url key =
    case model.route of
       Home ->
          (  { model 
-               | currentPage = Just (pageLayout "Koncepto Sociala" Home.view) 
+               | currentPage = Just (pageLayout model.route "Koncepto Sociala" Home.view) 
                , currentTitle = Just "Koncepto Sociala"
             }
          , Cmd.none
@@ -52,7 +52,7 @@ init _ url key =
 
       About ->
          (  { model 
-               | currentPage = Just (pageLayout "About" About.view) 
+               | currentPage = Just (pageLayout model.route "About" About.view) 
                , currentTitle = Just "About"
             }
          , Cmd.none
@@ -60,7 +60,7 @@ init _ url key =
 
       NotFound page ->
          (  { model 
-               | currentPage = Just (pageLayout "404 | Not Found" (NotFound.view page)) 
+               | currentPage = Just (pageLayout model.route "404 | Not Found" (NotFound.view page)) 
                , currentTitle = Just "404 | Not Found"
             }
          , Cmd.none
