@@ -23,9 +23,7 @@ update : Event -> Model Event -> ( Model Event, Cmd Event )
 update msg model = 
    case msg of
       UrlChange url ->
-         init ()
-            url
-            model.key
+         init () url model.key
 
       LinkClicked req ->
          case req of 
