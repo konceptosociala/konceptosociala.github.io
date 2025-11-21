@@ -9,20 +9,18 @@ of functional programming, or at least read [the official Elm guide](https://gui
 I've been remaking my techy blog on GitHub Pages several times: I switched themes for Jekyll
 static website generator, then moved from Jekyll to Zola, [wrote my own Zola theme](https://github.com/konceptosociala/socio/), returned to Jekyll back with a simple no-style design, but it was really **boring**.
 I still write my blog posts in plain old Markdown, as I did before, but I wanted to try something new and
-quite captivating; however, writing my own Jekyll/Zola theme from scratch seemed like crap, because, you know, it's
-still `HTML/CSS/JS`, which we all "love" so much .__.
+quite captivating; however, writing my own Jekyll/Zola theme from scratch seemed like unsound, because it's still `HTML/CSS/JS`, which we all "love" so much.
 
 About a year ago I got acquainted with Elm. Then it seemed to me like an another one "compile-to-JS" stuff, with a
 weird syntax, but still well-known and cool MVP paradigm, like in Flutter, Relm and other declarative UI frameworks.
 And now in 2025, when I got to used to Haskell syntax as well as a functional programming paradigm, I clearly see 
-Elm as a simplified version of Haskell (what it really is), developed for web frontend. And now this website, at least as
-of the 21st of August, 2025, is completely written in Elm, and I'll show you how exactly.
+Elm as a simplified version of Haskell (what it really is), developed for web frontend. And now this website, at least as of the 21st of August, 2025, is completely written in Elm, and I'll show you how exactly.
 
 ## Why?
 
 You should use Elm for building a website for several reasons:
 
-1. Strict static types: no `null`, `undefined`, `[] + {} - " "` and other undebuggable gibberish - only strong
+1. Strict static types: no `null`, `undefined`, `[] + {} - " "` and other undebuggable stuff - only strong
    and concrete data types. 
 2. Cool functional features, like immutability, pattern matching, 
    [ADTs](https://en.wikipedia.org/wiki/Algebraic_data_type) etc.

@@ -6481,11 +6481,12 @@ var $author$project$Utils$Utils$pageLayout = F3(
 									$elm$html$Html$a,
 									_List_fromArray(
 										[
-											$elm$html$Html$Attributes$href('/')
+											$elm$html$Html$Attributes$href('/'),
+											$elm$html$Html$Attributes$class('blog-post-link')
 										]),
 									_List_fromArray(
 										[
-											$elm$html$Html$text('⇤ Back to Home')
+											$elm$html$Html$text('⟵ Back to Home')
 										]));
 							}
 						}(),
@@ -7220,70 +7221,55 @@ var $author$project$Page$About$view = A2(
 					$elm$html$Html$text('Goto shit')
 				]))
 		]));
-var $elm$html$Html$br = _VirtualDom_node('br');
-var $elm$virtual_dom$VirtualDom$attribute = F2(
-	function (key, value) {
-		return A2(
-			_VirtualDom_attribute,
-			_VirtualDom_noOnOrFormAction(key),
-			_VirtualDom_noJavaScriptOrHtmlUri(value));
-	});
-var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
-var $author$project$Page$Home$frameborder = function (n) {
-	return A2(
-		$elm$html$Html$Attributes$attribute,
-		'frameborder',
-		$elm$core$String$fromInt(n));
-};
-var $elm$html$Html$Attributes$height = function (n) {
-	return A2(
-		_VirtualDom_attribute,
-		'height',
-		$elm$core$String$fromInt(n));
-};
-var $elm$html$Html$iframe = _VirtualDom_node('iframe');
-var $author$project$Page$Home$scrolling = function (value) {
-	return A2($elm$html$Html$Attributes$attribute, 'scrolling', value);
-};
-var $elm$html$Html$Attributes$src = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'src',
-		_VirtualDom_noJavaScriptOrHtmlUri(url));
-};
-var $elm$html$Html$Attributes$width = function (n) {
-	return A2(
-		_VirtualDom_attribute,
-		'width',
-		$elm$core$String$fromInt(n));
-};
 var $author$project$Page$Home$view = A2(
 	$elm$html$Html$div,
 	_List_Nil,
 	_List_fromArray(
 		[
 			A2(
-			$elm$html$Html$a,
+			$elm$html$Html$div,
 			_List_fromArray(
 				[
-					$elm$html$Html$Attributes$href('blog')
+					$elm$html$Html$Attributes$class('nbar'),
+					$elm$html$Html$Attributes$class('flex-sm-column'),
+					$elm$html$Html$Attributes$class('flex-md-row'),
+					$elm$html$Html$Attributes$class('flex-lg-row'),
+					$elm$html$Html$Attributes$class('flex-column')
 				]),
 			_List_fromArray(
 				[
-					$elm$html$Html$text('Blog')
-				])),
-			A2($elm$html$Html$br, _List_Nil, _List_Nil),
-			A2(
-			$elm$html$Html$iframe,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$width(110),
-					$elm$html$Html$Attributes$height(200),
-					$elm$html$Html$Attributes$src('https://www.myinstants.com/instant/khui-griu-8473/embed/'),
-					$author$project$Page$Home$frameborder(0),
-					$author$project$Page$Home$scrolling('no')
-				]),
-			_List_Nil)
+					A2(
+					$elm$html$Html$a,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('blog-link'),
+							$elm$html$Html$Attributes$href('blog')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('Blog')
+						])),
+					A2(
+					$elm$html$Html$a,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$href('https://github.com/konceptosociala/')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('GitHub')
+						])),
+					A2(
+					$elm$html$Html$a,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$href('https://soundcloud.com/janesnote')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('SoundCloud')
+						]))
+				]))
 		]));
 var $author$project$Page$NotFound$view = function (page) {
 	return $elm$html$Html$text('Page `' + (page + '` not found'));
@@ -7428,6 +7414,7 @@ var $elm$core$Result$andThen = F2(
 var $elm$html$Html$Attributes$align = $elm$html$Html$Attributes$stringProperty('align');
 var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
 var $elm$html$Html$blockquote = _VirtualDom_node('blockquote');
+var $elm$html$Html$br = _VirtualDom_node('br');
 var $elm$json$Json$Encode$bool = _Json_wrap;
 var $elm$html$Html$Attributes$boolProperty = F2(
 	function (key, bool) {
@@ -7563,6 +7550,12 @@ var $elm$html$Html$pre = _VirtualDom_node('pre');
 var $elm$core$List$singleton = function (value) {
 	return _List_fromArray(
 		[value]);
+};
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
 var $elm$html$Html$Attributes$start = function (n) {
 	return A2(
@@ -16197,7 +16190,11 @@ var $author$project$Utils$Date$toString = function (date) {
 var $author$project$Page$Blog$viewPost = function (post) {
 	return A2(
 		$elm$html$Html$li,
-		_List_Nil,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('text-light'),
+				$elm$html$Html$Attributes$class('blog-post-link')
+			]),
 		_List_fromArray(
 			[
 				$elm$html$Html$text(
@@ -16207,7 +16204,8 @@ var $author$project$Page$Blog$viewPost = function (post) {
 				$elm$html$Html$a,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$href('/post/' + post.dx)
+						$elm$html$Html$Attributes$href('/post/' + post.dx),
+						$elm$html$Html$Attributes$class('blog-post-link')
 					]),
 				_List_fromArray(
 					[

@@ -17,7 +17,7 @@ pageLayout route title view =
                text ""
 
             _ -> 
-               a [ href "/" ] [ text "⇤ Back to Home" ]
+               a [ href "/", class "blog-post-link" ] [ text "⟵ Back to Home" ]
          , h1 
             [ class "page-title" ] 
             [ text title ]
