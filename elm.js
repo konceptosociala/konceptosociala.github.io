@@ -7254,7 +7254,13 @@ var $author$project$Utils$Utils$homepageLabel = function (title) {
 		$elm$html$Html$h1,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class('text-light mt-5 display-4')
+				$elm$html$Html$Attributes$class('text-light'),
+				$elm$html$Html$Attributes$class('display-4'),
+				$elm$html$Html$Attributes$class('mt-5'),
+				$elm$html$Html$Attributes$class('text-center'),
+				$elm$html$Html$Attributes$class('text-lg-start'),
+				$elm$html$Html$Attributes$class('text-md-start'),
+				$elm$html$Html$Attributes$class('text-sm-center')
 			]),
 		_List_fromArray(
 			[

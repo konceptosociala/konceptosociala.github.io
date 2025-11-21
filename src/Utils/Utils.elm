@@ -15,7 +15,17 @@ copyright name year =
       [ text (name ++ " © " ++ String.fromInt year) ]
 
 homepageLabel : String -> Html msg
-homepageLabel title = h1 [ class "text-light mt-5 display-4" ] [ text title ]
+homepageLabel title = 
+   h1 
+      [ class "text-light"
+      , class "display-4"
+      , class "mt-5"
+      , class "text-center"
+      , class "text-lg-start"
+      , class "text-md-start"
+      , class "text-sm-center"
+      ] 
+      [ text title ]
 
 subLabel : String -> Html msg
 subLabel title = h3 [ class "text-light ms-2 mb-3" ] [ text title ]
