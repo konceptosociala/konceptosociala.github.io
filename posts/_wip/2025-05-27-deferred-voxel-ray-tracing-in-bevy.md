@@ -7,7 +7,7 @@ permalink: /blog/deferred-voxel-ray-tracing-in-bevy
 Modern computers, especially their GPUs, can process more and more data in less time, 
 which opens doors for new possibilities in computer graphics. However, most games and 
 graphics applications still use a performant, but not very physically accurate way to 
-render objects on a scene - rasterization, instead of more resource-expensive ray 
+render objects on a scene — rasterization, instead of more resource-expensive ray 
 tracing technology. 
 
 Rasterization is a process of transformation of vector data (mostly triangles) into 

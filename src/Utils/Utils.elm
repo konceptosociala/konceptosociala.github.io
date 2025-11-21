@@ -1,4 +1,4 @@
-module Utils.Utils exposing (pageLayout, pageTitle, parsingErrors, parseMarkdown)
+module Utils.Utils exposing (..)
 
 import Html exposing (..)
 import Route exposing (Route(..))
@@ -7,6 +7,74 @@ import Markdown.Renderer
 import Css exposing (..)
 import Parser exposing (DeadEnd, Problem)
 import Html.Attributes exposing (..)
+
+copyright : String -> Int -> Html msg
+copyright name year =
+   div 
+      [ class "text-center lead text-light mt-5 mb-3" ]
+      [ text (name ++ " © " ++ String.fromInt year) ]
+
+homepageLabel : String -> Html msg
+homepageLabel title = h1 [ class "text-light mt-5 display-4" ] [ text title ]
+
+subLabel : String -> Html msg
+subLabel title = h3 [ class "text-light ms-2 mb-3" ] [ text title ]
+
+newline : Html msg
+newline = br [] []
+
+containerFluid : List (Html msg) -> Html msg
+containerFluid children =
+   div [ class "container-fluid" ] children
+
+icons : List (Html msg) -> Html msg
+icons children =
+   div 
+      [ class "d-flex flex-wrap" 
+      , class "justify-content-center"
+      , class "justify-content-md-start"
+      , class "justify-content-lg-start"
+      , class "justify-content-sm-center"
+      ] 
+      children
+
+icon : String -> String -> Html msg
+icon name tooltip =
+   i [ class ("devicon devicon-" ++ name), dataTip tooltip ] []
+
+dataTip : String -> Attribute msg
+dataTip tip =
+   attribute "data-tip" tip
+
+frameborder : Int -> Attribute msg
+frameborder n =
+   attribute "frameborder" (String.fromInt n)
+
+scrolling : String -> Attribute msg
+scrolling value =
+   attribute "scrolling" value
+
+navlink : String -> String -> Html msg
+navlink label url =
+   a [ href url] [ text label ]
+
+navbar : (List (Html msg)) -> Html msg
+navbar links =
+   div 
+      [ class "nbar"
+      , class "flex-sm-column" 
+      , class "flex-md-row"
+      , class "flex-lg-row"
+      , class "flex-column"
+      ]
+      links
+
+alsoTry : String -> String -> Html msg
+alsoTry name url =
+   i [ class "also-try" ] 
+      [ text "also try "
+      , a [ href url ] [ text name ]
+      ]
 
 pageLayout : Route -> String -> Html msg -> Html msg
 pageLayout route title view = 
@@ -17,7 +85,12 @@ pageLayout route title view =
                text ""
 
             _ -> 
-               a [ href "/", class "blog-post-link" ] [ text "⟵ Back to Home" ]
+               a 
+                  [ href "/"
+                  , class "blog-post-link" 
+                  , class "no-print"
+                  ] 
+                  [ text "⟵ Back to Home" ]
          , h1 
             [ class "page-title" ] 
             [ text title ]
@@ -45,7 +118,6 @@ pageTitle : Route -> String
 pageTitle page =
    case page of
       Home -> "Home"
-      About -> "About"
       Blog -> "Blog"
       Post _ -> "Post"
       NotFound _ -> "404 | Page Not Found"

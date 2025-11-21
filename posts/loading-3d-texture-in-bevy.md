@@ -5,7 +5,7 @@ date: 2025-05-27
 
 To load an image into our app Bevy provides us with a custom `Image` type. However, `AssetServer`
 in Bevy (as of version 0.15) only supports 2D image loading for now, so we need to perhaps
-implement a custom 3D image asset loader. For our tutorial we will use `png` and `jpeg` raster image
+implement a custom 3D image asset loader. For our tutorial we will use png and jpeg raster image
 types, but you can also try to implement importing of raw MagicaVoxel data, e.g. using `dot_vox` crate.
 
 ## Implementing Image3dLoader
@@ -33,15 +33,7 @@ impl Plugin for Image3dPlugin {
 pub struct Image3dLoader;
 ```
 
-To store a 3D image in 2D `png` and `jpeg` formats, we will store our Z coordinate as layers,
-aligned by columns and rows like this:
-
-
-| ![slice](/assets/blog/voxel-ray-tracing/slice.jpg) |
-|----------------------------------------------------|
-| 15x3 image slice                                   |
-
-So our loader settings will look like this:
+And our loader settings will look like this:
 
 ```rust
 #[derive(Serialize, Deserialize, Debug)]
@@ -53,7 +45,7 @@ pub struct Image3dLoaderSettings {
 ```
 
 It's important to note, that Bevy `AssetServer` supports only 1 loader per file extension
-(or a bundle of extensions), but we need to use `png` and `jpeg` formats, which are already
+(or a bundle of extensions), but we need to use png and jpeg formats, which are already
 bound by default loader. The easiest approach is to add an extension prefix, e.g. `.3d`.
 
 We'd also like to define image column and row count in a filename for quick import, like 

@@ -5,7 +5,6 @@ import Url
 
 type Route
    = Home
-   | About
    | Blog
    | Post String
    | NotFound String
@@ -13,7 +12,6 @@ type Route
 routeParser : Parser (Route -> a) a
 routeParser = oneOf
    [ map Home top
-   , map About (s "about")
    , map Blog (s "blog")
    , map Post (s "post" </> string)
    ]

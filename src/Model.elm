@@ -5,12 +5,13 @@ import Browser.Navigation as Nav
 import Route exposing (parseUrl, Route(..))
 import Html exposing (Html)
 import Page.Home as Home
-import Page.About as About
 import Page.NotFound as NotFound
 import Http
 import Event exposing (Event(..))
 import Utils.Utils exposing (pageLayout)
 import Utils.Post exposing (PostData, postListDecoder)
+
+type alias Flags = { year : Int }
 
 type alias Model msg =
    { key : Nav.Key
@@ -18,25 +19,26 @@ type alias Model msg =
    , currentPage : Maybe (Html msg)
    , currentTitle : Maybe (String)
    , blogPosts : Maybe (List PostData)
+   , year : Int
    }
 
-init : () -> Url -> Nav.Key -> ( Model Event, Cmd Event )
-init _ url key = 
-   let
-      route = parseUrl url
-      model =
+init : Flags -> Url -> Nav.Key -> ( Model Event, Cmd Event )
+init flags url key = 
+   let route = parseUrl url
+       model =
          { key = key
          , route = route
          , currentPage = Nothing
          , currentTitle = Nothing
          , blogPosts = Nothing
+         , year = flags.year
          }
    in
    
    case model.route of
       Home ->
          (  { model 
-               | currentPage = Just (pageLayout model.route "Koncepto Sociala" Home.view) 
+               | currentPage = Just (pageLayout model.route "Koncepto Sociala" (Home.view model.year)) 
                , currentTitle = Just "Koncepto Sociala"
             }
          , Cmd.none
@@ -48,14 +50,6 @@ init _ url key =
             { url = "../posts/index.json"
             , expect = Http.expectJson PostsIndexLoaded postListDecoder
             }
-         )
-
-      About ->
-         (  { model 
-               | currentPage = Just (pageLayout model.route "About" About.view) 
-               , currentTitle = Just "About"
-            }
-         , Cmd.none
          )
 
       NotFound page ->
@@ -70,6 +64,6 @@ init _ url key =
          ( model
          , Http.get
             { url = "../posts/" ++ id ++ ".md"
-            , expect = Http.expectString PostLoaded
+            , expect = Http.expectString <| PostLoaded id
             }
          )

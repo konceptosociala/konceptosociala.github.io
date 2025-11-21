@@ -8,6 +8,7 @@ import Utils.Date as Date
 view : Post msg -> Html msg
 view post =
    div [ class "post" ]
-      [ p   [ class "post-date" ] [ text (Date.toString post.date) ]
+      [ p [ class "service-text", class "print-only" ] [ text "by Oleksandr Hnutov" ]
+      , p [ class "post-date" ] [ text (Date.toString post.date) ]
       , div [ class "post-content" ] [ post.content ]
       ]

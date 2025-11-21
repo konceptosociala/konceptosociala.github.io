@@ -17,7 +17,7 @@ view posts =
 viewPost : PostData -> Html msg
 viewPost post =
    li [ class "text-light", class "blog-post-link" ] 
-   [ text (Date.toString post.date)
-   , text " - "
-   , a [ href ("/post/" ++ post.link), class "blog-post-link" ] [ text post.title ]
-   ]
+      [ text (Date.toString post.date)
+      , text " - "
+      , a [ href ("/post/" ++ post.link), class "blog-post-link" ] [ text post.title ]
+      ]

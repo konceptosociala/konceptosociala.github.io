@@ -2,28 +2,51 @@ module Page.Home exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Utils.Utils exposing (..)
 
-view : Html msg
-view = 
-   div
-   []
-   [ div 
-      [ class "nbar"
-      , class "flex-sm-column" 
-      , class "flex-md-row"
-      , class "flex-lg-row"
-      , class "flex-column"
+view : Int -> Html msg
+view year = div []
+   [ alsoTry "jujumba.cc" "https://jujumba.cc/"
+   , navbar
+      [ navlink "Blog"        "blog"
+      , navlink "GitHub"      "https://github.com/konceptosociala/"
+      , navlink "SoundCloud"  "https://soundcloud.com/janesnote"
       ]
-      [ a [ class "blog-link", href "blog" ] [ text "Blog" ]
-      , a [ href "https://github.com/konceptosociala/" ] [ text "GitHub" ]
-      , a [ href "https://soundcloud.com/janesnote" ] [ text "SoundCloud" ]
+   , containerFluid
+      [ homepageLabel "My favorite programming languages"
+      , newline
+      , icons
+         [ icon "haskell-plain"  "Haskell"
+         , icon "rust-plain"     "Rust"
+         , icon "elm-plain"      "Elm"
+         , icon "csharp-plain"   "C#"
+         , icon "dart-plain"     "Dart"
+         , icon "java-plain"     "Java"
+         ]
+      , homepageLabel "Technologies I use"
+      , newline
+      , subLabel "Frontend Development:"
+      , icons
+         [ icon "flutter-plain"    "Flutter"
+         , icon "elm-plain"        "Elm"
+         , icon "bootstrap-plain"  "Bootstrap"
+         , icon "css3-plain"       "CSS3"
+         ]
+      , subLabel "Game Development & Graphics:"
+      , icons
+         [ icon "godot-plain"       "Godot"
+         , icon "bevyengine-plain"  "Bevy"
+         , icon "webgpu-plain"      "WGPU"
+         , icon "libgdx-plain"      "LibGDX"
+         , icon "opengl-plain"      "OpenGL"
+         ]
+      , subLabel "Other Tools:"
+      , icons
+         [ icon "linux-plain"       "GNU/Linux"
+         , icon "blender-original"  "Blender"
+         , icon "git-plain"         "Git"
+         , icon "latex-plain"       "LaTeX"
+         ]
+      , copyright "Koncepto Sociala" year
       ]
    ]
-
-frameborder : Int -> Attribute msg
-frameborder n =
-   attribute "frameborder" (String.fromInt n)
-
-scrolling : String -> Attribute msg
-scrolling value =
-   attribute "scrolling" value

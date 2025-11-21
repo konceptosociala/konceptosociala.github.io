@@ -16,6 +16,7 @@ import Page.Blog as Blog
 import Model exposing (init)
 import Task
 import Process
+import Page.NotFound as NotFound
 
 port sendMessage : () -> Cmd msg
 
@@ -23,7 +24,7 @@ update : Event -> Model Event -> ( Model Event, Cmd Event )
 update msg model = 
    case msg of
       UrlChange url ->
-         init () url model.key
+         init ({year = model.year}) url model.key
 
       LinkClicked req ->
          case req of 
@@ -33,7 +34,7 @@ update msg model =
             Internal url ->
                ( model, Nav.pushUrl model.key (Url.toString url) )               
 
-      PostLoaded result ->
+      PostLoaded id result ->
          case result of
             Ok content ->
                let post = Parser.run PostModel.parse content in
@@ -57,8 +58,8 @@ update msg model =
 
             Err _ ->
                ( { model 
-                     | currentPage = Just (text "Post not found") 
-                     , currentTitle = Just "Post not found"
+                     | currentPage = Just (pageLayout model.route "404 | Not Found" (NotFound.view <| "post/"++id)) 
+                     , currentTitle = Just "404 | Not Found"
                   }
                , Cmd.none
                )

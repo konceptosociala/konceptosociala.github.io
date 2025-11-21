@@ -9,6 +9,6 @@ import Utils.Post exposing (PostData)
 type Event
    = UrlChange Url
    | LinkClicked UrlRequest
-   | PostLoaded (Result Http.Error String)
+   | PostLoaded String (Result Http.Error String)
    | PostsIndexLoaded (Result Http.Error (List PostData))
    | DomReady

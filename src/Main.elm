@@ -4,10 +4,12 @@ import Browser
 import Model exposing (Model, init)
 import Event exposing (Event(..))
 import Route exposing (Route(..))
-import Html exposing (text)
+import Html exposing (..)
+import Html.Attributes exposing (..)
 import Update exposing (update)
+import Model exposing (Flags)
 
-main : Program () (Model Event) Event
+main : Program Flags (Model Event) Event
 main =
    Browser.application
       { init = init
@@ -25,7 +27,7 @@ main =
                   [ pageView ]
                   
                Nothing ->
-                  [ text "Loading..." ]
+                  [ p [ class "service-text" ] [ text "Loading..." ] ]
          }
       , update = update
       , subscriptions = always Sub.none
