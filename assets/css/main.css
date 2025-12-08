@@ -275,4 +275,15 @@ pre code * {
         border: none !important;
         padding: 0 !important;
     }
+
+    .post-content pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-x: visible;
+    }
+
+    .post-content pre code {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
 }
