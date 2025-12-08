@@ -459,3 +459,8 @@ TaskEither<LoginError, String> fetchGitHubUser(String token) => TaskEither
 The MVU pattern offers a refreshing alternative to the traditional, often tangled approaches to state management in Flutter. By centralizing state in an immutable model and routing every change through explicit messages and an `update` function, MVU dramatically simplifies reasoning about how an application behaves. Instead of chasing `setState` calls or synchronizing multiple widget states, you work with a predictable, linear data flow that scales naturally as your project grows.
 
 Introducing functional ideas like `Task`, `Option`, and `Either` further strengthens this foundation. Side effects become explicit, async workflows become easier to follow, and error handling becomes intentional rather than accidental. These tools let you write code that not only works but clearly communicates what it does and why.
+
+Also in this tutorial we used `freezed` and `fpdart` packages, however they are much more powerful than presented here, so you're welcome to visit their homepages for more info:
+
+* [fpdart](https://pub.dev/packages/fpdart)
+* [freezed](https://pub.dev/packages/freezed)
