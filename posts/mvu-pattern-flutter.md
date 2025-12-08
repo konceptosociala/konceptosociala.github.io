@@ -460,7 +460,7 @@ The MVU pattern offers a refreshing alternative to the traditional, often tangle
 
 Introducing functional ideas like `Task`, `Option`, and `Either` further strengthens this foundation. Side effects become explicit, async workflows become easier to follow, and error handling becomes intentional rather than accidental. These tools let you write code that not only works but clearly communicates what it does and why.
 
-Also in this tutorial we used `freezed` and `fpdart` packages, however they are much more powerful than presented here, so you're welcome to visit their homepages for more info:
+Also, in this tutorial we used `freezed` and `fpdart` packages, however they are much more powerful than presented here, so you're welcome to visit their homepages for more info:
 
 * [fpdart](https://pub.dev/packages/fpdart)
 * [freezed](https://pub.dev/packages/freezed)
