@@ -1,5 +1,6 @@
 [
   { "title": "Loading 3D texture in Bevy", "date": "2025-05-27", "link": "loading-3d-texture-in-bevy" },
   { "title": "Making a Static Blog in Elm: Why and How?", "date": "2025-08-21", "link": "making-a-static-blog-in-elm" },
-  { "title": "MVU Pattern and Functional Approach in Flutter", "date": "2025-12-08", "link": "mvu-pattern-flutter" }
+  { "title": "MVU Pattern and Functional Approach in Flutter", "date": "2025-12-08", "link": "mvu-pattern-flutter" },
+  { "title": "Норма", "date": "2025-12-27", "link": "норма" }
 ]

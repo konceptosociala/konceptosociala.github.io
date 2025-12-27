@@ -17,6 +17,12 @@ html, body {
     background-color: var(--superblack);
 }
 
+hr {
+    border: none;
+    border-top: 2px solid var(--superlight);
+    margin: 2rem 0;
+}
+
 * {
     font-family: "Computer Modern Serif", serif;
     box-sizing: border-box;
