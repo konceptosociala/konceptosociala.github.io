@@ -5,6 +5,7 @@ import Browser.Navigation as Nav
 import Route exposing (parseUrl, Route(..))
 import Html exposing (Html)
 import Page.Home as Home
+import Page.Projects as Projects
 import Page.NotFound as NotFound
 import Http
 import Event exposing (Event(..))
@@ -40,6 +41,14 @@ init flags url key =
          (  { model 
                | currentPage = Just (pageLayout model.route "Koncepto Sociala" (Home.view model.year)) 
                , currentTitle = Just "Koncepto Sociala"
+            }
+         , Cmd.none
+         )
+
+      Projects ->
+         (  { model 
+               | currentPage = Just (pageLayout model.route "Projects" (Projects.view)) 
+               , currentTitle = Just "Projects"
             }
          , Cmd.none
          )

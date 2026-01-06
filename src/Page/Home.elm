@@ -9,6 +9,7 @@ view year = div []
    [ alsoTry "jujumba.cc" "https://jujumba.cc/"
    , navbar
       [ navlink "Blog"        "blog"
+      , navlink "Projects"    "projects"
       , navlink "GitHub"      "https://github.com/konceptosociala/"
       , navlink "SoundCloud"  "https://soundcloud.com/janesnote"
       ]

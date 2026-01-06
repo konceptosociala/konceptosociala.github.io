@@ -6,12 +6,14 @@ import Url
 type Route
    = Home
    | Blog
+   | Projects
    | Post String
    | NotFound String
 
 routeParser : Parser (Route -> a) a
 routeParser = oneOf
    [ map Home top
+   , map Projects (s "projects")
    , map Blog (s "blog")
    , map Post (s "post" </> string)
    ]

@@ -27,6 +27,43 @@ homepageLabel title =
       ] 
       [ text title ]
 
+
+project : String -> String -> List String -> String -> String -> Html msg
+project title description techs link imageSrcName = 
+   div
+      [ class "col-lg-4 col-md-6 col-sm-12 p-3 py-3 d-flex"]
+      [ div 
+         [ class "card"
+         , class "text-light bg-transparent" 
+         , class "border border-white"
+         , class "w-100"
+         ]
+         [ img [ src ("assets/img/projects/" ++ imageSrcName ++ ".svg"), class "card-img-top border-bottom" ] []
+         , div [ class "card-body d-flex flex-column" ]
+            [ h1 [ class "card-title" ] 
+               <| text title ::
+                  ( techs 
+                     |> List.map (\tech -> 
+                        span 
+                           [ class "ms-2 badge text-bg-light rounded-pill font-monospace"
+                           , style "font-size" "12px" 
+                           , style "vertical-align" "middle"
+                           ] 
+                           [ text tech ])
+                  )
+            , hr [ class "mt-0 mb-2" ] []
+            , p [ class "card-text lead flex-grow-1" ] [ text description ]
+            , a 
+               [ href link
+               , Html.Attributes.target "_blank"
+               , class "btn btn-outline-light font-monospace" 
+               , class "mx-5"
+               ] 
+               [ text "Project page" ]
+            ]
+         ]
+      ]
+
 subLabel : String -> Html msg
 subLabel title = h3 [ class "text-light ms-2 mb-3" ] [ text title ]
 
@@ -129,6 +166,7 @@ pageTitle page =
    case page of
       Home -> "Home"
       Blog -> "Blog"
+      Projects -> "Projects"
       Post _ -> "Post"
       NotFound _ -> "404 | Page Not Found"
 
