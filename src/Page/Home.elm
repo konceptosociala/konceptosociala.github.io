@@ -48,6 +48,6 @@ view year = div []
          , icon "git-plain"         "Git"
          , icon "latex-plain"       "LaTeX"
          ]
-      , copyright "Koncepto Sociala" year
+      , copyleft "Koncepto Sociala" year
       ]
    ]

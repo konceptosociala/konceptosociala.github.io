@@ -8,11 +8,11 @@ import Css exposing (..)
 import Parser exposing (DeadEnd, Problem)
 import Html.Attributes exposing (..)
 
-copyright : String -> Int -> Html msg
-copyright name year =
+copyleft : String -> Int -> Html msg
+copyleft name year =
    div 
       [ class "text-center lead text-light mt-5 mb-3" ]
-      [ text (name ++ " © " ++ String.fromInt year) ]
+      [ text (name ++ " 🄯 " ++ String.fromInt year) ]
 
 homepageLabel : String -> Html msg
 homepageLabel title = 
@@ -56,7 +56,7 @@ project title description techs link imageSrcName =
             , a 
                [ href link
                , Html.Attributes.target "_blank"
-               , class "btn btn-outline-light font-monospace" 
+               , class "btn btn-outline-light font-monospace text-light" 
                , class "mx-5"
                ] 
                [ text "Project page" ]

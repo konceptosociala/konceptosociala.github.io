@@ -3,18 +3,48 @@
 @import url("https://cdn.jsdelivr.net/gh/vsalvino/computer-modern@main/fonts/typewriter.css");
 
 :root {
-    --superblue: rgb(199, 140, 255);
-    --superlight: #f8f9fa;
-    --superdark: #1c1d21;
-    --superblack: #101214;
-    --superlightgray: #7b7b7b;
-    --supergray: #4d4d4d;
+    --gruvbox-bg0-hard: #1d2021;
+    --gruvbox-bg0: #282828;
+    --gruvbox-bg1: #3c3836;
+    --gruvbox-bg2: #504945;
+    --gruvbox-bg3: #665c54;
+    --gruvbox-fg0: #fbf1c7;
+    --gruvbox-fg1: #ebdbb2;
+    --gruvbox-fg2: #d5c4a1;
+    --gruvbox-fg3: #bdae93;
+    --gruvbox-fg4: #a89984;
+    --gruvbox-red: #fb4934;
+    --gruvbox-green: #b8bb26;
+    --gruvbox-yellow: #fabd2f;
+    --gruvbox-blue: #83a598;
+    --gruvbox-purple: #d3869b;
+    --gruvbox-aqua: #8ec07c;
+    --gruvbox-orange: #fe8019;
+    
+    --superblue: var(--gruvbox-aqua);
+    --superlight: var(--gruvbox-fg0);
+    --superdark: var(--gruvbox-bg0);
+    --superblack: var(--gruvbox-bg0-hard);
+    --superlightgray: var(--gruvbox-fg3);
+    --supergray: var(--gruvbox-bg3);
 }
 
 html, body {
     overflow-x: hidden;
     max-width: 100%;
     background-color: var(--superblack);
+}
+
+.text-light {
+    color: var(--superlight) !important;
+}
+
+.text-bg-light {
+    background-color: var(--superlight) !important;
+}
+
+.border-white, .border-bottom, .btn-outline-light {
+    border-color: var(--superlight) !important;
 }
 
 hr {
@@ -47,7 +77,7 @@ a:hover {
 }
 
 code {
-    color: #9ccfd8;
+    color: var(--gruvbox-orange);
     font-family: "Computer Modern Typewriter", monospace;
 }
 
@@ -95,6 +125,10 @@ pre code * {
     margin-right: auto;
     display: block;
     max-width: 100%;
+}
+
+img[src$=".svg"] {
+    filter: brightness(0.85) sepia(0.35) hue-rotate(5deg) saturate(0.8) contrast(1.1);
 }
 
 .post-content table {
@@ -224,7 +258,7 @@ pre code * {
     font-size: 96px;
     margin: 16px;
     margin-bottom: 36px;
-    color: var(--superlight);
+    color: var(--gruvbox-fg2);
     cursor: pointer;
     position: relative;
     transition: color 0.1s ease;
@@ -241,7 +275,7 @@ pre code * {
     left: 50%;
     transform: translateX(-50%) translateY(155px);
     background: var(--superdark);
-    color: white;
+    color: var(--superlight);
     padding: 6px 10px;
     border-radius: 6px;
     white-space: nowrap;
