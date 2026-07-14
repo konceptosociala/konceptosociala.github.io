@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}{{ page.title }} - {{ config.title }}{% endblock title %}
+
+{% block nav_tutorials %}active{% endblock nav_tutorials %}
+
+{% block subnav %}
+<div class="subnav py-2">
+  <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <a href="{{ get_url(path="tutorials") }}" class="subnav-back"><i class="ph ph-arrow-left"></i> BACK TO CODEX</a>
+    <span class="subnav-title"><i class="ph ph-book-open-text me-1"></i>THE CODEX</span>
+  </div>
+</div>
+{% endblock subnav %}
+
+{% block content %}
+
+<article class="mx-auto" style="max-width: 760px;">
+  <div class="pixel-panel-wrap mb-4">
+    <div class="entry-card pixel-panel p-4 p-md-5">
+      <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+        {% if page.taxonomies.language %}
+        <span class="tag-chip {{ macros::lang_class(lang=page.taxonomies.language[0]) }}">{{ page.taxonomies.language[0] | upper }}</span>
+        {% endif %}
+        <span class="entry-meta">{{ page.date | date(format="%b %d, %Y") | upper }}</span>
+      </div>
+      <h1 class="entry-title mb-3" style="font-size: 2rem;">{{ page.title }}</h1>
+      <span class="entry-meta d-block mb-4"><i class="ph ph-clock"></i> {{ page.extra.read_time | default(value=5) }} min read</span>
+      <div class="post-body">
+        {{ page.content | safe }}
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between flex-wrap gap-3">
+    {% if page.lower %}
+    <a href="{{ page.lower.permalink }}" class="rpg-post-nav-link"><i class="ph ph-arrow-left"></i> {{ page.lower.title }}</a>
+    {% else %}
+    <span></span>
+    {% endif %}
+    {% if page.higher %}
+    <a href="{{ page.higher.permalink }}" class="rpg-post-nav-link text-end">{{ page.higher.title }} <i class="ph ph-arrow-right"></i></a>
+    {% endif %}
+  </div>
+</article>
+
+{% endblock content %}

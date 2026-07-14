@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ taxonomy.name | upper }} - {{ config.title }}{% endblock title %}
+
+{% block subnav %}
+<div class="subnav py-2">
+  <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <a href="{{ get_url(path="/") }}" class="subnav-back"><i class="ph ph-arrow-left"></i> BACK TO HUB</a>
+    <span class="subnav-title">{{ taxonomy.name | upper }}</span>
+  </div>
+</div>
+{% endblock subnav %}
+
+{% block content %}
+<div class="mb-4">
+  <p class="section-eyebrow mb-1">browse by {{ taxonomy.name }}</p>
+</div>
+<div class="d-flex flex-wrap gap-2">
+  {% for term in terms %}
+  <a href="{{ term.permalink }}" class="filter-chip text-decoration-none">{{ term.name | upper }} ({{ term.pages | length }})</a>
+  {% endfor %}
+</div>
+{% endblock content %}

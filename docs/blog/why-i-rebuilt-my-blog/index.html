@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://example.com/style/style.css">
+<title>What I have made during the summer - Koncepto Sociala</title>
+</head>
+<body>
+
+<header class="d-flex flex-row flex-wrap justify-content-center align-items-center py-5 px-2">
+  <a href="/"><img class="img-thumbnail rounded-circle mx-4" width="256" src="https://example.com/img/avatarka.jpeg"></a>
+  <div class="d-flex flex-column align-items-center">
+    <h1 class="display-1 mt-5 mb-0 text-center">Koncepto Sociala</h1>
+    <h2 class="mb-4 text-center">Little blog for programming and life <u><i>prikols</i></u><img class="ms-2" src="https://example.com/img/dwarf_violet.svg" height="50"></h2>
+    <div class="d-flex mb-3 justify-content-center gap-2 flex-wrap">
+      <a href="https://example.com/blog" class="btn btn-outline-light nav-pill active rounded-pill px-3 py-1"><i class="ph ph-newspaper me-1"></i>blog</a>
+      <a href="https://example.com/tutorials" class="btn btn-outline-light nav-pill  rounded-pill px-3 py-1"><i class="ph ph-book-open-text me-1"></i>tutorials</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;konceptosociala" target="_blank" class="btn btn-outline-light nav-pill rounded-pill px-3 py-1"><i class="ph ph-github-logo me-1"></i>github</a>
+    </div>
+  </div>
+</header>
+<section class="header-section-gradient"></section>
+
+
+<div class="subnav py-2">
+  <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <a href="https://example.com/blog" class="subnav-back"><i class="ph ph-arrow-left"></i> BACK TO CHRONICLE</a>
+    <span class="subnav-title"><i class="ph ph-newspaper me-1"></i>THE CHRONICLE</span>
+  </div>
+</div>
+
+
+<main>
+  <div class="container py-5">
+    
+
+<article class="mx-auto" style="max-width: 760px;">
+  <div class="pixel-panel-wrap mb-4">
+    <div class="entry-card pixel-panel p-4 p-md-5">
+      <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+        
+        <span class="tag-chip tag-devlog">DEVLOG</span>
+        
+        <span class="entry-meta">JUL 12, 2026</span>
+      </div>
+      <h1 class="entry-title mb-3" style="font-size: 2rem;">What I have made during the summer</h1>
+      <span class="entry-meta d-block mb-4"><i class="ph ph-clock"></i> 4 min read</span>
+      <div class="post-body">
+        <p><strong>Xide (Java, Kotlin)</strong>: I've decided to replace RSyntaxTextArea completely (it takes much more time, but I guess it worth it), because it was primarily developed for conservative old school IDEs like eclipse, not really suitable for LSPs or tree sitter, so I am making editor from scratch, using Piece Table optimization. The next step will be text selection and syntax highlighting. I also added Kotlin support to my project and now all the plugins are or will be written in Kotlin. I am also still fighting with the style, I think that the previous version is too dark for every monitor, so I am sticking to GitHub Dark FlatLaf theme, looks nice (but not for ever :))</p>
+<p><strong>XastC (Haskell)</strong>: Xast programming language compiler, now I am on semantic analysis stage – name resolution, import resolution, Hindley Milner type inference are implemented almost, but the hardest part is going further – many optimizations (CoW, unique types, compile time expressions, and so on, and so on....) as well as desugaring and maybe even more syntax sugar to make the language usable for big projects. Semantics are still in development.</p>
+<p><strong>XastGE (Rust)</strong>: I fully replaced my half-OOP libGDX-like architecture with World storage, with fully ECS based approach - Flecs modules, systems and sometimes compiled queries. I also added simple UI (text rendering with automatic layout and tweening hover animations) and C Flecs shared .so plugins support, so I could later write my game logic in Xast, compiling it to C and using it as plugins for my engine. Now it is being developed and scaled much more naturally and easily!</p>
+<p><strong>Carol (former Java, now Vala)</strong>: Yes, it is really strange idea to fully migrate from feature rich and big ecosystem language like Java, with libGDX framework to a language, which was made for GTK (Linux GUI toolkit) apps and has literally no game engines and frameworks... But it is really fun, because this language looks a lot like Java/C#, but is compiled to C, so, without GC (but sometimes with reference counting), VM, very fast compilation and near C performance. And it just looks fun. And also libGDX just broke my X11 WM because of, idk really what, but maybe old LWJGL version, used because of Nifty GUI (cool lib though). But nevertheless, I am not sure, when I'll continue developing this concrete game (I almost fully transferred it from Java to Vala), because I don't really know, what it must become, and what the story should be about, so... We'll see :)</p>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between flex-wrap gap-3">
+    
+    <span></span>
+    
+    
+  </div>
+</article>
+
+
+  </div>
+</main>
+
+<footer class="py-4 text-center">
+  <div class="container">
+    <p class="mb-2">KONCEPTO SOCIALA (c) 2026</p>
+    <div class="d-flex justify-content-center gap-3">
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;konceptosociala" target="_blank"><i class="ph ph-github-logo fs-5"></i></a>
+      <a href="https://example.com/atom.xml"><i class="ph ph-rss fs-5"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

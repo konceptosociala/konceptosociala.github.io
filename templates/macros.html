@@ -1,0 +1,47 @@
+{% macro lang_class(lang) %}{% if lang == "rust" %}tag-lang-rust{% elif lang == "java" %}tag-lang-java{% elif lang == "dart" %}tag-lang-dart{% elif lang == "haskell" %}tag-lang-haskell{% elif lang == "javascript" or lang == "js" %}tag-lang-js{% elif lang == "elm" %}tag-lang-elm{% elif lang == "python" %}tag-lang-python{% elif lang == "docker" %}tag-lang-docker{% elif lang == "git" %}tag-lang-git{% elif lang == "css" %}tag-lang-css{% elif lang == "kubernetes" or lang == "k8s" %}tag-lang-k8s{% elif lang == "go" or lang == "golang" %}tag-lang-go{% else %}tag-lang-default{% endif %}{% endmacro lang_class %}
+
+{% macro mood_class(mood) %}{% if mood == "devlog" %}tag-devlog{% elif mood == "lifestyle" %}tag-lifestyle{% elif mood == "rant" %}tag-rant{% else %}tag-devlog{% endif %}{% endmacro mood_class %}
+
+{% macro blog_card(page) %}
+<div class="col-md-6 col-lg-4">
+  <div class="entry-card-wrap h-100">
+    <div class="pixel-panel-wrap h-100">
+      <div class="entry-card pixel-panel h-100 d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          {% if page.taxonomies.tags %}
+          <span class="tag-chip {{ macros::mood_class(mood=page.taxonomies.tags[0]) }}">{{ page.taxonomies.tags[0] | upper }}</span>
+          {% else %}
+          <span></span>
+          {% endif %}
+          <span class="entry-meta">{{ page.date | date(format="%b %d") | upper }}</span>
+        </div>
+        <h4 class="entry-title fs-5 mb-2"><a href="{{ page.permalink }}">{{ page.title }}</a></h4>
+        <p class="entry-excerpt small flex-grow-1">{{ page.description }}</p>
+        <span class="entry-meta mt-3"><i class="ph ph-clock"></i> {{ page.extra.read_time | default(value=5) }} min read</span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro blog_card %}
+
+{% macro tutorial_card(page) %}
+<div class="col-md-6 col-lg-4">
+  <div class="entry-card-wrap h-100">
+    <div class="pixel-panel-wrap h-100">
+      <div class="entry-card pixel-panel h-100 d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          {% if page.taxonomies.language %}
+          <span class="tag-chip {{ macros::lang_class(lang=page.taxonomies.language[0]) }}">{{ page.taxonomies.language[0] | upper }}</span>
+          {% else %}
+          <span></span>
+          {% endif %}
+          <span class="entry-meta">{{ page.date | date(format="%b %d") | upper }}</span>
+        </div>
+        <h4 class="entry-title fs-5 mb-2"><a href="{{ page.permalink }}">{{ page.title }}</a></h4>
+        <p class="entry-excerpt small flex-grow-1">{{ page.description }}</p>
+        <span class="entry-meta mt-3"><i class="ph ph-clock"></i> {{ page.extra.read_time | default(value=5) }} min read</span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro tutorial_card %}

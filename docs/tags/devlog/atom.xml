@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Koncepto Sociala - devlog</title>
+    <subtitle>Little blog for programming and life</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://example.com/tags/devlog/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://example.com"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2026-07-12T00:00:00+00:00</updated>
+    <id>https://example.com/tags/devlog/atom.xml</id>
+    <entry xml:lang="en">
+        <title>What I have made during the summer</title>
+        <published>2026-07-12T00:00:00+00:00</published>
+        <updated>2026-07-12T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://example.com/blog/why-i-rebuilt-my-blog/"/>
+        <id>https://example.com/blog/why-i-rebuilt-my-blog/</id>
+        
+        <content type="html" xml:base="https://example.com/blog/why-i-rebuilt-my-blog/">&lt;p&gt;&lt;strong&gt;Xide (Java, Kotlin)&lt;&#x2F;strong&gt;: I&#x27;ve decided to replace RSyntaxTextArea completely (it takes much more time, but I guess it worth it), because it was primarily developed for conservative old school IDEs like eclipse, not really suitable for LSPs or tree sitter, so I am making editor from scratch, using Piece Table optimization. The next step will be text selection and syntax highlighting. I also added Kotlin support to my project and now all the plugins are or will be written in Kotlin. I am also still fighting with the style, I think that the previous version is too dark for every monitor, so I am sticking to GitHub Dark FlatLaf theme, looks nice (but not for ever :))&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;XastC (Haskell)&lt;&#x2F;strong&gt;: Xast programming language compiler, now I am on semantic analysis stage – name resolution, import resolution, Hindley Milner type inference are implemented almost, but the hardest part is going further – many optimizations (CoW, unique types, compile time expressions, and so on, and so on....) as well as desugaring and maybe even more syntax sugar to make the language usable for big projects. Semantics are still in development.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;XastGE (Rust)&lt;&#x2F;strong&gt;: I fully replaced my half-OOP libGDX-like architecture with World storage, with fully ECS based approach - Flecs modules, systems and sometimes compiled queries. I also added simple UI (text rendering with automatic layout and tweening hover animations) and C Flecs shared .so plugins support, so I could later write my game logic in Xast, compiling it to C and using it as plugins for my engine. Now it is being developed and scaled much more naturally and easily!&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Carol (former Java, now Vala)&lt;&#x2F;strong&gt;: Yes, it is really strange idea to fully migrate from feature rich and big ecosystem language like Java, with libGDX framework to a language, which was made for GTK (Linux GUI toolkit) apps and has literally no game engines and frameworks... But it is really fun, because this language looks a lot like Java&#x2F;C#, but is compiled to C, so, without GC (but sometimes with reference counting), VM, very fast compilation and near C performance. And it just looks fun. And also libGDX just broke my X11 WM because of, idk really what, but maybe old LWJGL version, used because of Nifty GUI (cool lib though). But nevertheless, I am not sure, when I&#x27;ll continue developing this concrete game (I almost fully transferred it from Java to Vala), because I don&#x27;t really know, what it must become, and what the story should be about, so... We&#x27;ll see :)&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

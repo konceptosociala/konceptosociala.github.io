@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://example.com/style/style.css">
+<title>MVU Pattern and Functional Approach in Flutter - Koncepto Sociala</title>
+</head>
+<body>
+
+<header class="d-flex flex-row flex-wrap justify-content-center align-items-center py-5 px-2">
+  <a href="/"><img class="img-thumbnail rounded-circle mx-4" width="256" src="https://example.com/img/avatarka.jpeg"></a>
+  <div class="d-flex flex-column align-items-center">
+    <h1 class="display-1 mt-5 mb-0 text-center">Koncepto Sociala</h1>
+    <h2 class="mb-4 text-center">Little blog for programming and life <u><i>prikols</i></u><img class="ms-2" src="https://example.com/img/dwarf_violet.svg" height="50"></h2>
+    <div class="d-flex mb-3 justify-content-center gap-2 flex-wrap">
+      <a href="https://example.com/blog" class="btn btn-outline-light nav-pill  rounded-pill px-3 py-1"><i class="ph ph-newspaper me-1"></i>blog</a>
+      <a href="https://example.com/tutorials" class="btn btn-outline-light nav-pill active rounded-pill px-3 py-1"><i class="ph ph-book-open-text me-1"></i>tutorials</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;konceptosociala" target="_blank" class="btn btn-outline-light nav-pill rounded-pill px-3 py-1"><i class="ph ph-github-logo me-1"></i>github</a>
+    </div>
+  </div>
+</header>
+<section class="header-section-gradient"></section>
+
+
+<div class="subnav py-2">
+  <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <a href="https://example.com/tutorials" class="subnav-back"><i class="ph ph-arrow-left"></i> BACK TO CODEX</a>
+    <span class="subnav-title"><i class="ph ph-book-open-text me-1"></i>THE CODEX</span>
+  </div>
+</div>
+
+
+<main>
+  <div class="container py-5">
+    
+
+<article class="mx-auto" style="max-width: 760px;">
+  <div class="pixel-panel-wrap mb-4">
+    <div class="entry-card pixel-panel p-4 p-md-5">
+      <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+        
+        <span class="tag-chip tag-lang-dart">DART</span>
+        
+        <span class="entry-meta">DEC 08, 2025</span>
+      </div>
+      <h1 class="entry-title mb-3" style="font-size: 2rem;">MVU Pattern and Functional Approach in Flutter</h1>
+      <span class="entry-meta d-block mb-4"><i class="ph ph-clock"></i> 12 min read</span>
+      <div class="post-body">
+        <p>When learning Flutter, its view-state management is straightforward at first glance: you create your own widget classes and use anonymous functions as callbacks directly in the view, where you use built-in <code>setState(...)</code> function to change a state inside this widget. But as the project grows, you can face some problems using this approach:</p>
+<ol>
+<li>
+<p><strong>Synchronization of state and presentation</strong>. When you change some value in one place, which should change a presentation (view) in another place, when your widget depends on another widget's state, when and how should you call your <code>setState(...)</code>?</p>
+</li>
+<li>
+<p><strong>Correct event handling</strong>. When some event happens in one widget, how would you handle execution of the next one? And moreover, if the next event should happen in another widget, and even more is <code>async</code>, how will you preserve the execution order?</p>
+</li>
+<li>
+<p><strong>Multiple widgets — multiple states</strong>. If one widget's state depends on another one, for example, some page's state depends on the root widget's state or even on another page, how will you synchronize it? Borrowing mutable references of a widget state or a part of it is the most common approach in Flutter, because objects are passed by mutable references there. For example, borrowing <code>Post</code>s from some <code>Blog</code> page for each <code>PostPreview</code> widget, so every <code>PostPreview</code> will contain a reference to its corresponding post. But it's really error-prone in big projects with a lot of widgets and states, see the points above.</p>
+</li>
+</ol>
+<p>It is not the only Flutter's problem, a lot of frameworks, which are worse designed, are even harder to handle. However, there is a quite simple solution, which would work well even on big projects and is well presented in the Elm framework and programming language — <strong>MVU pattern</strong>, along with some functional approach, which will make your project even less error-prone.</p>
+<h2 id="what-is-mvu">What is MVU?</h2>
+<p><strong>MVU</strong> (acronym for <strong>Model-View-Update</strong>) is a simple pattern which uses the simple algorithm:</p>
+<ol>
+<li>
+<p>We have an initial <strong>model</strong>, a global collection of data, used in our application, which we initialize at the beginning of the program. If its structure becomes too big, we can split it into modules, as it's done in Elm.</p>
+</li>
+<li>
+<p>We have our <strong>view</strong> — a root widget, which is built from smaller widgets which we can interact with.</p>
+</li>
+<li>
+<p>When we interact with our view, e.g. clicking button, writing text etc., we send some <code>Msg</code> — "tagged union"-based event data structure, which is then processed in a special <code>update</code> function, that will return a new version of our model and build a new view with respect to the new model.</p>
+</li>
+</ol>
+<p><img src="/img/blog/mvu-flutter/img1.svg" alt="MVU demonstration" /></p>
+<p>Advantages of this approach are obvious: we don't care about state management at all, we just send a specific <code>Msg</code> for each specific action and process it in an <code>update</code> function, changing the model, which automatically updates the view as needed.</p>
+<p>And the most pleasant is the thing, that we can easily implement it in Flutter, without difficult project architecture, and I'll show you how. Let's go!</p>
+<h2 id="simple-and-pure-counter-project">Simple and <em>pure</em> counter project</h2>
+<p>Like most UI frameworks tutorials, and especially MVU-based ones, we will start with a simple counter project. I call it <em>pure</em>, because for now our application logic will not contain any side effects and will only affect the inner state of a program: increment/decrement a number.</p>
+<p>Firstly, we need to create our main <code>MVU</code> widget, which will be a skeleton for our program. Let's create some auxiliary types and an <code>MVU</code> class:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span style="color: #FB4934;">typedef</span><span> Update&lt;M, Msg&gt;</span><span style="color: #8EC07C;"> =</span><span> M Function(M model</span><span style="color: #A89984;">,</span><span> Msg msg)</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">typedef</span><span> View&lt;M, Msg&gt;</span><span style="color: #8EC07C;"> =</span><span> Widget Function(</span></span>
+<span class="giallo-l"><span>  M model</span><span style="color: #A89984;">,</span><span> </span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  void</span><span> Function(Msg msg) dispatch</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>)</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">class</span><span> MVU&lt;M, Msg&gt;</span><span style="color: #FB4934;"> extends</span><span> StatefulWidget {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  final</span><span> M initialModel</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  final</span><span> Update&lt;M, Msg&gt; update</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  final</span><span> View&lt;M, Msg&gt; view</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FE8019;">  const</span><span> MVU({</span></span>
+<span class="giallo-l"><span style="color: #83A598;">    super</span><span style="color: #A89984;">.</span><span>key</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    required</span><span style="color: #83A598;"> this</span><span style="color: #A89984;">.</span><span>initialModel</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    required</span><span style="color: #83A598;"> this</span><span style="color: #A89984;">.</span><span>update</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    required</span><span style="color: #83A598;"> this</span><span style="color: #A89984;">.</span><span>view</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>  })</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #83A598;font-weight: bold;">  @override</span></span>
+<span class="giallo-l"><span>  MVUState&lt;M, Msg&gt;</span><span style="color: #FABD2F;"> createState</span><span>() </span><span style="color: #8EC07C;">=&gt;</span><span> MVUState&lt;M, Msg&gt;()</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// Here we change our state based on the dispatched Msg</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">class</span><span> MVUState&lt;M, Msg&gt;</span><span style="color: #FB4934;"> extends</span><span> State&lt;MVU&lt;M, Msg&gt;&gt; {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  late</span><span> M model</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #83A598;font-weight: bold;">  @override</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  void</span><span style="color: #FABD2F;"> initState</span><span>() {</span></span>
+<span class="giallo-l"><span style="color: #83A598;">    super</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">initState</span><span>()</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>    model </span><span style="color: #8EC07C;">=</span><span> widget</span><span style="color: #A89984;">.</span><span>initialModel</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FE8019;">  void</span><span style="color: #FABD2F;"> dispatch</span><span>(Msg msg) {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    final</span><span> newModel </span><span style="color: #8EC07C;">=</span><span> widget</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">update</span><span>(model</span><span style="color: #A89984;">,</span><span> msg)</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    setState</span><span>(() {</span></span>
+<span class="giallo-l"><span>      model </span><span style="color: #8EC07C;">=</span><span> newModel</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>    })</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #83A598;font-weight: bold;">  @override</span></span>
+<span class="giallo-l"><span>  Widget</span><span style="color: #FABD2F;"> build</span><span>(BuildContext context) {</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    return</span><span> widget</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">view</span><span>(model</span><span style="color: #A89984;">,</span><span> dispatch)</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  }</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>Now we will create our <code>Model</code> and <code>Msg</code>. Because the first is immutable, and the second is actually an ADT, we will use <code>freezed</code> package for this.</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span style="color: #FB4934;">import</span><span style="color: #B8BB26;"> &#39;package:freezed_annotation/freezed_annotation.dart&#39;</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">part</span><span style="color: #B8BB26;"> &#39;model.freezed.dart&#39;</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #83A598;font-weight: bold;">@freezed</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">abstract class</span><span> Model</span><span style="color: #FB4934;"> with</span><span> _$Model {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  const</span><span> Model</span><span style="color: #A89984;">.</span><span>_()</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">  // Declare our fields here</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  const</span><span style="color: #FB4934;"> factory</span><span> Model({</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    required</span><span> int value</span></span>
+<span class="giallo-l"><span>  }) </span><span style="color: #8EC07C;">=</span><span> _Model</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">  // Initial state</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">  factory</span><span> Model</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">initial</span><span>() </span><span style="color: #8EC07C;">=&gt;</span><span> Model(</span></span>
+<span class="giallo-l"><span>    value</span><span style="color: #8EC07C;">:</span><span style="color: #D3869B;"> 0</span></span>
+<span class="giallo-l"><span>  )</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre><pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span style="color: #FB4934;">import</span><span style="color: #B8BB26;"> &#39;package:flutter/foundation.dart&#39;</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">import</span><span style="color: #B8BB26;"> &#39;package:freezed_annotation/freezed_annotation.dart&#39;</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">part</span><span style="color: #B8BB26;"> &#39;msg.freezed.dart&#39;</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #83A598;font-weight: bold;">@freezed</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">sealed class</span><span> Msg</span><span style="color: #FB4934;"> with</span><span> _$Msg {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  const</span><span style="color: #FB4934;"> factory</span><span> Msg</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">increment</span><span>() </span><span style="color: #8EC07C;">=</span><span> Increment</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  const</span><span style="color: #FB4934;"> factory</span><span> Msg</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">decrement</span><span>() </span><span style="color: #8EC07C;">=</span><span> Decrement</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>Variants of our <code>Msg</code> can also have fields, so we can pass some data sending events, but for our application it is not needed. Also, do not forget to add <code>build_runner</code> package to dependencies and run <code>dart run build_runner watch -d</code> to generate freezed files.</p>
+<p>Then we initialize our application and main widget, containing the <code>MVU</code>:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span style="color: #FE8019;">void</span><span style="color: #FABD2F;"> main</span><span>() </span><span style="color: #8EC07C;">=&gt;</span><span style="color: #FABD2F;"> runApp</span><span>(</span><span style="color: #FE8019;">const</span><span> AppRoot())</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">class</span><span> AppRoot</span><span style="color: #FB4934;"> extends</span><span> StatelessWidget {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  const</span><span> AppRoot({</span><span style="color: #83A598;">super</span><span style="color: #A89984;">.</span><span>key})</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #83A598;font-weight: bold;">  @override</span></span>
+<span class="giallo-l"><span>  Widget</span><span style="color: #FABD2F;"> build</span><span>(BuildContext context) </span><span style="color: #8EC07C;">=&gt;</span><span> MVU&lt;Model, Msg&gt;(</span></span>
+<span class="giallo-l"><span>    initialModel</span><span style="color: #8EC07C;">:</span><span> Model</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">initial</span><span>()</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>    update</span><span style="color: #8EC07C;">:</span><span> update</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>    view</span><span style="color: #8EC07C;">:</span><span> view</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>  )</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>In the <code>update</code> function, we will process our events, which are dispatched in UI. In our application it is simple for now (and pure):</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span>Model</span><span style="color: #FABD2F;"> update</span><span>(Model model</span><span style="color: #A89984;">,</span><span> Msg msg) </span><span style="color: #8EC07C;">=&gt;</span><span style="color: #FB4934;"> switch</span><span> (msg) {</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">  // Copying immutable models in `freezed` </span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">  // is actually cheap, unlike deep cloning</span></span>
+<span class="giallo-l"><span>  Increment() </span><span style="color: #8EC07C;">=&gt;</span><span> model</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">copyWith</span><span>(value</span><span style="color: #8EC07C;">:</span><span> model</span><span style="color: #A89984;">.</span><span>value </span><span style="color: #8EC07C;">+</span><span style="color: #D3869B;"> 1</span><span>)</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>  Decrement() </span><span style="color: #8EC07C;">=&gt;</span><span> model</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">copyWith</span><span>(value</span><span style="color: #8EC07C;">:</span><span> model</span><span style="color: #A89984;">.</span><span>value </span><span style="color: #8EC07C;">-</span><span style="color: #D3869B;"> 1</span><span>)</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>}</span><span style="color: #A89984;">;</span></span></code></pre>
+<p>And in <code>view</code> we will initialize our UI, which will be based on our <code>Model</code> and could dispatch events with <code>Msg</code>:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span>Widget</span><span style="color: #FABD2F;"> view</span><span>(Model model</span><span style="color: #A89984;">,</span><span style="color: #FE8019;"> void</span><span> Function(Msg) dispatch) </span><span style="color: #8EC07C;">=&gt;</span><span> MaterialApp(</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">  // General stuff</span></span>
+<span class="giallo-l"><span>  debugShowCheckedModeBanner</span><span style="color: #8EC07C;">:</span><span style="color: #D3869B;"> false</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>  title</span><span style="color: #8EC07C;">:</span><span style="color: #B8BB26;"> &#39;Counter MVU&#39;</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>  theme</span><span style="color: #8EC07C;">:</span><span> ThemeData</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">light</span><span>()</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>  home</span><span style="color: #8EC07C;">:</span><span> Scaffold(</span></span>
+<span class="giallo-l"><span>    body</span><span style="color: #8EC07C;">:</span><span> Row(</span></span>
+<span class="giallo-l"><span>      mainAxisAlignment</span><span style="color: #8EC07C;">:</span><span> MainAxisAlignment</span><span style="color: #A89984;">.</span><span>center</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>      crossAxisAlignment</span><span style="color: #8EC07C;">:</span><span> CrossAxisAlignment</span><span style="color: #A89984;">.</span><span>center</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>      children</span><span style="color: #8EC07C;">:</span><span> [</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">        // This button dispatches `Increment` event</span></span>
+<span class="giallo-l"><span>        TextButton(</span></span>
+<span class="giallo-l"><span>          onPressed</span><span style="color: #8EC07C;">:</span><span> () </span><span style="color: #8EC07C;">=&gt;</span><span style="color: #FABD2F;"> dispatch</span><span>(Increment())</span><span style="color: #A89984;">,</span><span> </span></span>
+<span class="giallo-l"><span>          child</span><span style="color: #8EC07C;">:</span><span> Text(</span><span style="color: #B8BB26;">&#39;Increment&#39;</span><span>)</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>        )</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">        // Here we print value from the model</span></span>
+<span class="giallo-l"><span>        Text(</span><span style="color: #B8BB26;">&#39;Value: ${</span><span style="color: #83A598;">model</span><span style="color: #B8BB26;">.</span><span style="color: #83A598;">value</span><span style="color: #B8BB26;">}&#39;</span><span>)</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">        // This button dispatches `Decrement` event</span></span>
+<span class="giallo-l"><span>        TextButton(</span></span>
+<span class="giallo-l"><span>          onPressed</span><span style="color: #8EC07C;">:</span><span> () </span><span style="color: #8EC07C;">=&gt;</span><span style="color: #FABD2F;"> dispatch</span><span>(Decrement())</span><span style="color: #A89984;">,</span><span> </span></span>
+<span class="giallo-l"><span>          child</span><span style="color: #8EC07C;">:</span><span> Text(</span><span style="color: #B8BB26;">&#39;Decrement&#39;</span><span>)</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>        )</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>      ]</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>    )</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>  )</span></span>
+<span class="giallo-l"><span>)</span><span style="color: #A89984;">;</span></span></code></pre>
+<p>And that's it! Now we have a pure MVU-idiomatic counter application, which we can easily extend and maintain, as each event the application sends, can and must be processed explicitly.</p>
+<p><img src="/img/blog/mvu-flutter/img2.svg" alt="MVU application diagram" /></p>
+<h2 id="mvu-with-nested-widgets">MVU with nested widgets</h2>
+<p>However, as the project grows, we create new widgets which don't have direct access to our <code>MVUState</code> and <code>dispatch</code> function. How to deal with it? The answer is clear and quite Dart'ish: we just create anonymous functions, which enclosure dispatch calls for every needed <code>Msg</code> and then pass them to our widgets' constructors, so we can call them from there.</p>
+<p>In our example, we will separate buttons into different widgets; it's not very good to do this, as they are semantically similar, but it's for an educational purpose 😊</p>
+<p>Create two simple classes:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span style="color: #FB4934;">class</span><span> IncButton</span><span style="color: #FB4934;"> extends</span><span> StatelessWidget {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  final</span><span> VoidCallback onIncrement</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  </span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  const</span><span> IncButton({</span><span style="color: #83A598;">super</span><span style="color: #A89984;">.</span><span>key</span><span style="color: #A89984;">,</span><span style="color: #FE8019;"> required</span><span style="color: #83A598;"> this</span><span style="color: #A89984;">.</span><span>onIncrement})</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  </span></span>
+<span class="giallo-l"><span style="color: #83A598;font-weight: bold;">  @override</span></span>
+<span class="giallo-l"><span>  Widget</span><span style="color: #FABD2F;"> build</span><span>(BuildContext context) </span><span style="color: #8EC07C;">=&gt;</span><span> TextButton(</span></span>
+<span class="giallo-l"><span>    onPressed</span><span style="color: #8EC07C;">:</span><span> onIncrement</span><span style="color: #A89984;">,</span><span> </span></span>
+<span class="giallo-l"><span>    child</span><span style="color: #8EC07C;">:</span><span> Text(</span><span style="color: #B8BB26;">&#39;Increment&#39;</span><span>)</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>  )</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">class</span><span> DecButton</span><span style="color: #FB4934;"> extends</span><span> StatelessWidget {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  final</span><span> VoidCallback onDecrement</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  </span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  const</span><span> DecButton({</span><span style="color: #83A598;">super</span><span style="color: #A89984;">.</span><span>key</span><span style="color: #A89984;">,</span><span style="color: #FE8019;"> required</span><span style="color: #83A598;"> this</span><span style="color: #A89984;">.</span><span>onDecrement})</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  </span></span>
+<span class="giallo-l"><span style="color: #83A598;font-weight: bold;">  @override</span></span>
+<span class="giallo-l"><span>  Widget</span><span style="color: #FABD2F;"> build</span><span>(BuildContext context) </span><span style="color: #8EC07C;">=&gt;</span><span> TextButton(</span></span>
+<span class="giallo-l"><span>    onPressed</span><span style="color: #8EC07C;">:</span><span> onDecrement</span><span style="color: #A89984;">,</span><span> </span></span>
+<span class="giallo-l"><span>    child</span><span style="color: #8EC07C;">:</span><span> Text(</span><span style="color: #B8BB26;">&#39;Increment&#39;</span><span>)</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>  )</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>And pass anonymous function with a correct <code>dispatch</code>:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span style="color: #A89984;">...</span></span>
+<span class="giallo-l"><span>children</span><span style="color: #8EC07C;">:</span><span> [</span></span>
+<span class="giallo-l"><span>  IncButton(onIncrement</span><span style="color: #8EC07C;">:</span><span> () </span><span style="color: #8EC07C;">=&gt;</span><span style="color: #FABD2F;"> dispatch</span><span>(Increment()))</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>  Text(</span><span style="color: #B8BB26;">&#39;Value: ${</span><span style="color: #83A598;">model</span><span style="color: #B8BB26;">.</span><span style="color: #83A598;">value</span><span style="color: #B8BB26;">}&#39;</span><span>)</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>  DecButton(onDecrement</span><span style="color: #8EC07C;">:</span><span> () </span><span style="color: #8EC07C;">=&gt;</span><span style="color: #FABD2F;"> dispatch</span><span>(Decrement()))</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>]</span></span>
+<span class="giallo-l"><span style="color: #A89984;">...</span></span></code></pre><h2 id="side-effects-and-async">Side effects and async</h2>
+<p>But what if we want some side effects to occur, when processing our events: reading from file, printing to terminal, web requests etc.? If they are synced, we could just rewrite our <code>update</code> function imperatively and use side effects implicitly. However, the better way would be to use <code>IO</code> wrapper to explicitly show that our event can have side effects. And even better <code>Task</code> wrapper, because most Flutter side effects are async, so that it won't freeze our UI.</p>
+<p>So to introduce side effects in our MVU pattern, let's first change the signature of our <code>Update</code> type alias:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span style="color: #928374;font-style: italic;">// Semantically means: returns `Task`, that processes model M</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">typedef</span><span> Update&lt;M, Msg&gt;</span><span style="color: #8EC07C;"> =</span><span> Task&lt;M&gt; Function(M model</span><span style="color: #A89984;">,</span><span> Msg msg)</span><span style="color: #A89984;">;</span></span></code></pre>
+<p>and dispatch method inside <code>MVU</code> widget:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span style="color: #928374;font-style: italic;">// Changed to async context</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">void</span><span style="color: #FABD2F;"> dispatch</span><span>(Msg msg) </span><span style="color: #FB4934;">async</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">  // Added .run() to execute `Task`</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  final</span><span> newModel </span><span style="color: #8EC07C;">=</span><span style="color: #FB4934;"> await</span><span> widget</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">update</span><span>(model</span><span style="color: #A89984;">,</span><span> msg)</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">run</span><span>()</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FABD2F;">  setState</span><span>(() {</span></span>
+<span class="giallo-l"><span>    model </span><span style="color: #8EC07C;">=</span><span> newModel</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  })</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>For example, let's add some side effects to the <code>Increment</code> event to save some data using <code>SharedPreferences</code>. For this we should add a new variant <code>SaveData(int data)</code> to <code>Msg</code> and use <code>Task</code> or <code>Task.Do</code> (which is actually more useful in TaskEither.Do). To evoke an event from another event, we can simply call the <code>update</code> function with the new model and the needed <code>Msg</code>. But in the <code>Task</code> context, it is more interesting:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span style="color: #928374;font-style: italic;">// We return Task instead of a raw Model</span></span>
+<span class="giallo-l"><span>Task&lt;Model&gt;</span><span style="color: #FABD2F;"> update</span><span>(Model model</span><span style="color: #A89984;">,</span><span> Msg msg) </span><span style="color: #8EC07C;">=&gt;</span><span style="color: #FB4934;"> switch</span><span> (msg) {</span></span>
+<span class="giallo-l"><span>  Increment() </span><span style="color: #8EC07C;">=&gt;</span><span> Task</span><span style="color: #A89984;">.</span><span>Do(</span></span>
+<span class="giallo-l"><span>    ($) </span><span style="color: #FB4934;">async</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">      // Compute a new model</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">      final</span><span> newModel </span><span style="color: #8EC07C;">=</span><span> model</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">copyWith</span><span>(value</span><span style="color: #8EC07C;">:</span><span> model</span><span style="color: #A89984;">.</span><span>value </span><span style="color: #8EC07C;">+</span><span style="color: #D3869B;"> 1</span><span>)</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">      // Return the result of the `SaveData` event with `$`</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">      // (we will talk about `$` later)</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">      return</span><span> $(</span><span style="color: #FABD2F;">update</span><span>(newModel</span><span style="color: #A89984;">,</span><span> SaveData(model</span><span style="color: #A89984;">.</span><span>value)))</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>    }</span></span>
+<span class="giallo-l"><span>  )</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>  Decrement() </span><span style="color: #8EC07C;">=&gt;</span><span> Task</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">of</span><span>(model</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">copyWith</span><span>(value</span><span style="color: #8EC07C;">:</span><span> model</span><span style="color: #A89984;">.</span><span>value </span><span style="color: #8EC07C;">-</span><span style="color: #D3869B;"> 1</span><span>))</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>  SaveData(</span><span style="color: #8EC07C;">:</span><span style="color: #FE8019;">final</span><span> data) </span><span style="color: #8EC07C;">=&gt;</span><span> Task</span><span style="color: #A89984;">.</span><span>Do(</span></span>
+<span class="giallo-l"><span>    ($) </span><span style="color: #FB4934;">async</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">      // Do some async stuff</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">      final</span><span> pref </span><span style="color: #8EC07C;">=</span><span style="color: #FB4934;"> await</span><span> SharedPreferences</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">getInstance</span><span>()</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">      await</span><span> pref</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">setInt</span><span>(</span><span style="color: #B8BB26;">&quot;counter&quot;</span><span style="color: #A89984;">,</span><span> data)</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">      // Return model as is, because we haven&#39;t done any computation here</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">      return</span><span> model</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>    }</span></span>
+<span class="giallo-l"><span>  )</span></span>
+<span class="giallo-l"><span>}</span><span style="color: #A89984;">;</span></span></code></pre>
+<p><img src="/img/blog/mvu-flutter/img3.svg" alt="MVU with side effects" /></p>
+<p>You might notice that the <code>Do</code> and the <code>$</code> operator are implementation of the monad <code>do-notation</code> borrowed from Haskell:</p>
+<ul>
+<li><code>Do</code> is a syntax sugar to present monad consecutive computation in a imperative way;</li>
+<li><code>$</code> is actually a function which is almost an analogue of the <code>&lt;-</code> operator in Haskell: it "unwraps" a context, some mysterious box, where the value is hidden, and returns it, if it is available, to continue computation. With a <code>Task</code> semantics, it is like: <em>"if the value is computed asynchronously — get it and pass forward, if not yet — wait, if it is failed — stop computation."</em> We will discuss this stuff below.</li>
+</ul>
+<h2 id="more-functional-features-option-either-taskeither">More functional features: Option, Either, TaskEither</h2>
+<p>The <code>$</code> operator is more useful and, what is more important, understandable in contexts like <code>Option</code> — context with "optional value" semantics or <code>Either</code> — context with "value or error" semantics.</p>
+<p>For example, say we have two functions: one, which returns a reciprocal of a number, and another, which returns a square root. First of all, how do we handle situations where these functions are not defined? We can do it implicitly by throwing an exception, but we should specify all error cases in documentation, which not everyone does. Also, we can return something like <code>-1</code> value, but, again, without proper documentation it can still cause a lot of errors. In Flutter, we can return a nullable type, and it is better. <code>fpdart</code>'s <code>Option</code> type is the same as nullable, but with the possibility to be used in consecutive (monadic) computations.</p>
+<p>Let's write these functions:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span>Option&lt;double&gt;</span><span style="color: #FABD2F;"> reciprocal</span><span>(double n) {</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">  if</span><span> (n </span><span style="color: #8EC07C;">==</span><span style="color: #D3869B;"> 0</span><span>) {</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    return</span><span> None()</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">  return</span><span> Some(</span><span style="color: #D3869B;">1</span><span style="color: #8EC07C;"> /</span><span> n)</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>Option&lt;double&gt;</span><span style="color: #FABD2F;"> root</span><span>(double n) {</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">  if</span><span> (n </span><span style="color: #8EC07C;">&lt;</span><span style="color: #D3869B;"> 0</span><span>) {</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    return</span><span> None()</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">  return</span><span> Some(</span><span style="color: #FABD2F;">sqrt</span><span>(n))</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>Or in more functional way using pattern matching:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span>Option&lt;double&gt;</span><span style="color: #FABD2F;"> reciprocal</span><span>(double n) </span><span style="color: #8EC07C;">=&gt;</span><span style="color: #FB4934;"> switch</span><span> (n) {</span></span>
+<span class="giallo-l"><span style="color: #D3869B;">  0</span><span style="color: #8EC07C;"> =&gt;</span><span> None()</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>  _ </span><span style="color: #8EC07C;">=&gt;</span><span> Some(</span><span style="color: #D3869B;">1</span><span style="color: #8EC07C;"> /</span><span> n)</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>}</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>Option&lt;double&gt;</span><span style="color: #FABD2F;"> root</span><span>(double n) </span><span style="color: #8EC07C;">=&gt;</span><span style="color: #FB4934;"> switch</span><span> (n) {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  final</span><span> invalid </span><span style="color: #FB4934;">when</span><span> invalid </span><span style="color: #8EC07C;">&lt;</span><span style="color: #D3869B;"> 0</span><span style="color: #8EC07C;"> =&gt;</span><span> </span></span>
+<span class="giallo-l"><span>    None()</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FE8019;">  final</span><span> other </span><span style="color: #8EC07C;">=&gt;</span><span> </span></span>
+<span class="giallo-l"><span>    Some(</span><span style="color: #FABD2F;">sqrt</span><span>(other))</span></span>
+<span class="giallo-l"><span>}</span><span style="color: #A89984;">;</span></span></code></pre>
+<p>And then, what will be the <strong>composition</strong> of these functions? Obviously, it is a "reciprocal root" of a number, but what would it look like in code?</p>
+<p>We can simply check the return value of each function like null-checking in Java:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span>Option&lt;double&gt;</span><span style="color: #FABD2F;"> reciprocalRoot</span><span>(double n) {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  final</span><span> x </span><span style="color: #8EC07C;">=</span><span style="color: #FABD2F;"> root</span><span>(n)</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">  if</span><span> (x</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">isSome</span><span>()) {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    final</span><span> y </span><span style="color: #8EC07C;">=</span><span style="color: #FABD2F;"> reciprocal</span><span>(x</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">toNullable</span><span>()</span><span style="color: #FB4934;">!</span><span>)</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    return</span><span> y</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  } </span><span style="color: #FB4934;">else</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    return</span><span> None()</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  }</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>But what if we had 10 optional computations, how many nested brackets would we get? The question is rhetorical 😅</p>
+<p>To avoid it, we can use an approach which we'd use in Rust dealing with consecutive <code>Option</code>s — <code>and_then</code>. While writing this post, I found out that <code>fpdart</code> analogue of <code>and_then</code> is <code>flatMap</code>, while <code>andThen</code> is a really different function, but <em>whatever</em> 😁</p>
+<p>It would look like this:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span>Option&lt;double&gt;</span><span style="color: #FABD2F;"> reciprocalRoot</span><span>(double n) </span><span style="color: #8EC07C;">=&gt;</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">  root</span><span>(n)</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    .</span><span style="color: #FABD2F;">flatMap</span><span>((value) </span><span style="color: #8EC07C;">=&gt;</span><span style="color: #FABD2F;"> reciprocal</span><span>(value))</span><span style="color: #A89984;">;</span></span></code></pre>
+<p>Much better. Now even having multiple steps, everything will be linear, without nested brackets. But we can go even further — use a functional approach in an imperative way, even if it sounds paradoxical. This is where do-notation comes in. We can write our <code>Option</code>-computations as a sequence of imperative commands, "unwrapping" values for the next computation using the previously defined <code>$</code> operator:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span>Option&lt;double&gt;</span><span style="color: #FABD2F;"> reciprocalRoot</span><span>(double n) </span><span style="color: #8EC07C;">=&gt;</span><span> Option</span><span style="color: #A89984;">.</span><span>Do(</span></span>
+<span class="giallo-l"><span>  ($) {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    final</span><span> x </span><span style="color: #8EC07C;">=</span><span> $(</span><span style="color: #FABD2F;">root</span><span>(n))</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    final</span><span> y </span><span style="color: #8EC07C;">=</span><span> $(</span><span style="color: #FABD2F;">reciprocal</span><span>(x))</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">    return</span><span> y</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  }</span></span>
+<span class="giallo-l"><span>)</span><span style="color: #A89984;">;</span></span></code></pre>
+<p>or more simply, without a redundant binding:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span>Option&lt;double&gt;</span><span style="color: #FABD2F;"> reciprocalRoot</span><span>(double n) </span><span style="color: #8EC07C;">=&gt;</span><span> Option</span><span style="color: #A89984;">.</span><span>Do(</span></span>
+<span class="giallo-l"><span>  ($) {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    final</span><span> x </span><span style="color: #8EC07C;">=</span><span> $(</span><span style="color: #FABD2F;">root</span><span>(n))</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>    </span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    return</span><span> $(</span><span style="color: #FABD2F;">reciprocal</span><span>(x))</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  }</span></span>
+<span class="giallo-l"><span>)</span><span style="color: #A89984;">;</span></span></code></pre>
+<p><code>$</code> here does exactly the same as in a <code>Task</code> case: <em>"if a value exists — get it and pass it forward, otherwise — stop the computation"</em>.</p>
+<p><img src="/img/blog/mvu-flutter/img5.svg" alt="Option demonstration" /></p>
+<p><code>Either</code> is similar to <code>Option</code>, but instead of <code>None</code>, we can indicate some "erroneous" computation with a custom error type — <code>String</code>, some ADT etc. <code>TaskOption</code> and <code>TaskEither</code> are async wrappers for optional and erroneous types which indicate: <em>"this function describes an async computation with effects which may fail"</em>.</p>
+<p>This is really useful in handling consecutive web requests. Here are some examples from my <a rel="external" href="https://github.com/konceptosociala/frago">Frago</a> project: one with do-notation:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"><span>TaskEither&lt;LoginError, String&gt;</span><span style="color: #FABD2F;"> pollForToken</span><span>({</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  required</span><span> String clientId</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">  required</span><span> String deviceCode</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>  int interval </span><span style="color: #8EC07C;">=</span><span style="color: #D3869B;"> 5</span></span>
+<span class="giallo-l"><span>}) </span><span style="color: #8EC07C;">=&gt;</span><span> TaskEither</span><span style="color: #A89984;">.</span><span>Do(</span></span>
+<span class="giallo-l"><span>  ($) </span><span style="color: #FB4934;">async</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    await</span><span> Future</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">delayed</span><span>(Duration(seconds</span><span style="color: #8EC07C;">:</span><span> interval))</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FE8019;">    final</span><span> accessTokenInfo </span><span style="color: #8EC07C;">=</span><span style="color: #FB4934;"> await</span><span> $(</span><span style="color: #FABD2F;">accessToken</span><span>(</span></span>
+<span class="giallo-l"><span>      clientId</span><span style="color: #8EC07C;">:</span><span> clientId</span><span style="color: #A89984;">,</span><span> </span></span>
+<span class="giallo-l"><span>      deviceCode</span><span style="color: #8EC07C;">:</span><span> deviceCode</span></span>
+<span class="giallo-l"><span>    ))</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">    return switch</span><span> (accessTokenInfo) {</span></span>
+<span class="giallo-l"><span>      Token(token</span><span style="color: #8EC07C;">:</span><span style="color: #FE8019;"> final</span><span> token) </span><span style="color: #8EC07C;">=&gt;</span><span> token</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>      Error(err</span><span style="color: #8EC07C;">:</span><span style="color: #FE8019;"> final</span><span> err) </span><span style="color: #8EC07C;">=&gt;</span><span style="color: #FB4934;"> switch</span><span> (err) {</span></span>
+<span class="giallo-l"><span>        AuthPending() </span><span style="color: #8EC07C;">=&gt;</span><span> $(</span><span style="color: #FABD2F;">pollForToken</span><span>(</span></span>
+<span class="giallo-l"><span>          clientId</span><span style="color: #8EC07C;">:</span><span> clientId</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>          deviceCode</span><span style="color: #8EC07C;">:</span><span> deviceCode</span></span>
+<span class="giallo-l"><span>        ))</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>        ExpiredToken() </span><span style="color: #8EC07C;">=&gt;</span><span> $(TaskEither</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">left</span><span>(</span></span>
+<span class="giallo-l"><span>          LoginError(kind</span><span style="color: #8EC07C;">:</span><span> LoginErrorKind</span><span style="color: #A89984;">.</span><span>expiredToken)</span></span>
+<span class="giallo-l"><span>        ))</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>        </span></span>
+<span class="giallo-l"><span style="color: #A89984;">        ...</span></span>
+<span class="giallo-l"><span>      }</span></span>
+<span class="giallo-l"><span>    }</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span>  }</span></span>
+<span class="giallo-l"><span>)</span><span style="color: #A89984;">;</span></span></code></pre>
+<p>and one without it:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="dart"><span class="giallo-l"></span>
+<span class="giallo-l"><span>TaskEither&lt;LoginError, String&gt;</span><span style="color: #FABD2F;"> fetchGitHubUser</span><span>(String token) </span><span style="color: #8EC07C;">=&gt;</span><span> TaskEither</span></span>
+<span class="giallo-l"><span style="color: #A89984;">  .</span><span style="color: #FABD2F;">tryCatch</span><span>(</span></span>
+<span class="giallo-l"><span>    () </span><span style="color: #FB4934;">async</span><span style="color: #8EC07C;"> =&gt;</span><span style="color: #FB4934;"> await</span><span> http</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">get</span><span>(</span></span>
+<span class="giallo-l"><span>      Uri</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">parse</span><span>(</span><span style="color: #B8BB26;">&#39;https://api.github.com/user&#39;</span><span>)</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>      headers</span><span style="color: #8EC07C;">:</span><span> {</span></span>
+<span class="giallo-l"><span style="color: #B8BB26;">        &#39;Authorization&#39;</span><span style="color: #8EC07C;">:</span><span style="color: #B8BB26;"> &#39;token $</span><span style="color: #83A598;">token</span><span style="color: #B8BB26;">&#39;</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #B8BB26;">        &#39;Accept&#39;</span><span style="color: #8EC07C;">:</span><span style="color: #B8BB26;"> &#39;application/vnd.github.v3+json&#39;</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>      }</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>    )</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>    (_</span><span style="color: #A89984;">,</span><span> __) </span><span style="color: #8EC07C;">=&gt;</span><span> LoginError(kind</span><span style="color: #8EC07C;">:</span><span> LoginErrorKind</span><span style="color: #A89984;">.</span><span>cannotResolve)</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span>  )</span></span>
+<span class="giallo-l"><span>  </span></span>
+<span class="giallo-l"><span style="color: #A89984;">  ...</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #A89984;">  .</span><span style="color: #FABD2F;">map</span><span>((data) </span><span style="color: #8EC07C;">=&gt;</span><span> data[</span><span style="color: #B8BB26;">&#39;login&#39;</span><span>]</span><span style="color: #FB4934;">! as</span><span> String)</span><span style="color: #A89984;">;</span></span></code></pre><h2 id="conclusion">Conclusion</h2>
+<p>The MVU pattern offers a refreshing alternative to the traditional, often tangled approaches to state management in Flutter. By centralizing state in an immutable model and routing every change through explicit messages and an <code>update</code> function, MVU dramatically simplifies reasoning about how an application behaves. Instead of chasing <code>setState</code> calls or synchronizing multiple widget states, you work with a predictable, linear data flow that scales naturally as your project grows.</p>
+<p>Introducing functional ideas like <code>Task</code>, <code>Option</code>, and <code>Either</code> further strengthens this foundation. Side effects become explicit, async workflows become easier to follow, and error handling becomes intentional rather than accidental. These tools let you write code that not only works but clearly communicates what it does and why.</p>
+<p>Also, in this tutorial we used <code>freezed</code> and <code>fpdart</code> packages, however they are much more powerful than presented here, so you're welcome to visit their homepages for more info:</p>
+<ul>
+<li><a rel="external" href="https://pub.dev/packages/fpdart">fpdart</a></li>
+<li><a rel="external" href="https://pub.dev/packages/freezed">freezed</a></li>
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between flex-wrap gap-3">
+    
+    <span></span>
+    
+    
+    <a href="https:&#x2F;&#x2F;example.com&#x2F;tutorials&#x2F;making-a-static-blog-in-elm&#x2F;" class="rpg-post-nav-link text-end">Making a Static Blog in Elm: Why and How? <i class="ph ph-arrow-right"></i></a>
+    
+  </div>
+</article>
+
+
+  </div>
+</main>
+
+<footer class="py-4 text-center">
+  <div class="container">
+    <p class="mb-2">KONCEPTO SOCIALA (c) 2026</p>
+    <div class="d-flex justify-content-center gap-3">
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;konceptosociala" target="_blank"><i class="ph ph-github-logo fs-5"></i></a>
+      <a href="https://example.com/atom.xml"><i class="ph ph-rss fs-5"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

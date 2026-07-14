@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://example.com/style/style.css">
+<title>Making a Static Blog in Elm: Why and How? - Koncepto Sociala</title>
+</head>
+<body>
+
+<header class="d-flex flex-row flex-wrap justify-content-center align-items-center py-5 px-2">
+  <a href="/"><img class="img-thumbnail rounded-circle mx-4" width="256" src="https://example.com/img/avatarka.jpeg"></a>
+  <div class="d-flex flex-column align-items-center">
+    <h1 class="display-1 mt-5 mb-0 text-center">Koncepto Sociala</h1>
+    <h2 class="mb-4 text-center">Little blog for programming and life <u><i>prikols</i></u><img class="ms-2" src="https://example.com/img/dwarf_violet.svg" height="50"></h2>
+    <div class="d-flex mb-3 justify-content-center gap-2 flex-wrap">
+      <a href="https://example.com/blog" class="btn btn-outline-light nav-pill  rounded-pill px-3 py-1"><i class="ph ph-newspaper me-1"></i>blog</a>
+      <a href="https://example.com/tutorials" class="btn btn-outline-light nav-pill active rounded-pill px-3 py-1"><i class="ph ph-book-open-text me-1"></i>tutorials</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;konceptosociala" target="_blank" class="btn btn-outline-light nav-pill rounded-pill px-3 py-1"><i class="ph ph-github-logo me-1"></i>github</a>
+    </div>
+  </div>
+</header>
+<section class="header-section-gradient"></section>
+
+
+<div class="subnav py-2">
+  <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <a href="https://example.com/tutorials" class="subnav-back"><i class="ph ph-arrow-left"></i> BACK TO CODEX</a>
+    <span class="subnav-title"><i class="ph ph-book-open-text me-1"></i>THE CODEX</span>
+  </div>
+</div>
+
+
+<main>
+  <div class="container py-5">
+    
+
+<article class="mx-auto" style="max-width: 760px;">
+  <div class="pixel-panel-wrap mb-4">
+    <div class="entry-card pixel-panel p-4 p-md-5">
+      <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+        
+        <span class="tag-chip tag-lang-elm">ELM</span>
+        
+        <span class="entry-meta">AUG 21, 2025</span>
+      </div>
+      <h1 class="entry-title mb-3" style="font-size: 2rem;">Making a Static Blog in Elm: Why and How?</h1>
+      <span class="entry-meta d-block mb-4"><i class="ph ph-clock"></i> 12 min read</span>
+      <div class="post-body">
+        <p><strong>Warning:</strong> this post is more like a cheat sheet than a full tutorial, so you should get acquainted with some basics
+of functional programming, or at least read <a rel="external" href="https://guide.elm-lang.org/">the official Elm guide</a> first.</p>
+<p>I've been remaking my tech blog on GitHub Pages several times: I switched themes for Jekyll
+static website generator, then moved from Jekyll to Zola, <a rel="external" href="https://github.com/konceptosociala/socio/">wrote my own Zola theme</a>, returned to Jekyll back with a simple no-style design, but it was really <strong>boring</strong>.
+I still write my blog posts in plain old Markdown, as I did before, but I wanted to try something new and
+quite captivating; however, writing my own Jekyll/Zola theme from scratch seemed unsound, because it's still the same HTML/CSS/JS, which we all "love" so much.</p>
+<p>About a year ago I got acquainted with Elm. Then it seemed to me like another one "compile-to-JS" stuff, with a
+weird syntax, but still well-known and cool MVP paradigm, like in Flutter, Relm and other declarative UI frameworks.
+And now in 2025, when I got used to Haskell syntax as well as a functional programming paradigm, I clearly see
+Elm as a simplified version of Haskell (what it really is), developed for web frontend. And now this website, at least as of the 21st of August, 2025, is completely written in Elm, and I'll show you how exactly.</p>
+<h2 id="why">Why?</h2>
+<p>You should use Elm for building a website for several reasons:</p>
+<ol>
+<li>Strict static typing: no <code>null</code>, <code>undefined</code>, <code>[] + {} - " "</code> expressions and other undebuggable stuff — only<br />
+strong and concrete data types;</li>
+<li>Cool functional features, like immutability, pattern matching,
+<a rel="external" href="https://en.wikipedia.org/wiki/Algebraic_data_type">ADTs</a> etc;</li>
+<li>Reactive and modern Model-View-Update architecture, which is fast and pretty easy to use for creating
+responsive applications (even a blog);</li>
+<li>No JavaScript! You may use it only if you need some specific stuff, written in JS, which is not present in
+Elm infrastructure (like highlight.js; you can read about it below).</li>
+</ol>
+<h2 id="how">How?</h2>
+<p>First of all, install Elm and make a basic web app setup, following <a rel="external" href="https://guide.elm-lang.org/install/elm.html">this guide</a>.</p>
+<p>Now create base <code>index.html</code> file with the following contents:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="html"><span class="giallo-l"><span style="color: #83A598;">&lt;!</span><span style="color: #8EC07C;font-weight: bold;">DOCTYPE</span><span style="color: #FABD2F;"> html</span><span style="color: #83A598;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #83A598;">&lt;</span><span style="color: #8EC07C;font-weight: bold;">html</span><span style="color: #83A598;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #83A598;">&lt;</span><span style="color: #8EC07C;font-weight: bold;">head</span><span style="color: #83A598;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #83A598;">  &lt;</span><span style="color: #8EC07C;font-weight: bold;">meta</span><span style="color: #FABD2F;"> charset</span><span style="color: #A89984;">=&quot;</span><span style="color: #B8BB26;">UTF-8</span><span style="color: #A89984;">&quot;</span><span style="color: #83A598;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #83A598;">  &lt;</span><span style="color: #8EC07C;font-weight: bold;">meta</span><span style="color: #FABD2F;"> name</span><span style="color: #A89984;">=&quot;</span><span style="color: #B8BB26;">viewport</span><span style="color: #A89984;">&quot;</span><span style="color: #FABD2F;"> content</span><span style="color: #A89984;">=&quot;</span><span style="color: #B8BB26;">width=device-width, initial-scale=1.0</span><span style="color: #A89984;">&quot;</span><span style="color: #83A598;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #83A598;">  &lt;</span><span style="color: #8EC07C;font-weight: bold;">link</span><span style="color: #FABD2F;"> rel</span><span style="color: #A89984;">=&quot;</span><span style="color: #B8BB26;">stylesheet</span><span style="color: #A89984;">&quot;</span><span style="color: #FABD2F;"> href</span><span style="color: #A89984;">=&quot;</span><span style="color: #B8BB26;">/absolute/path/to/css</span><span style="color: #A89984;">&quot;</span><span style="color: #83A598;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #83A598;">  &lt;</span><span style="color: #8EC07C;font-weight: bold;">title</span><span style="color: #83A598;">&gt;&lt;/</span><span style="color: #8EC07C;font-weight: bold;">title</span><span style="color: #83A598;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #83A598;">&lt;/</span><span style="color: #8EC07C;font-weight: bold;">head</span><span style="color: #83A598;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #83A598;">&lt;</span><span style="color: #8EC07C;font-weight: bold;">body</span><span style="color: #83A598;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #83A598;">  &lt;</span><span style="color: #8EC07C;font-weight: bold;">script</span><span style="color: #FABD2F;"> src</span><span style="color: #A89984;">=&quot;</span><span style="color: #B8BB26;">/elm.js</span><span style="color: #A89984;">&quot;</span><span style="color: #83A598;">&gt;&lt;/</span><span style="color: #8EC07C;font-weight: bold;">script</span><span style="color: #83A598;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #83A598;">  &lt;</span><span style="color: #8EC07C;font-weight: bold;">script</span><span style="color: #83A598;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    var</span><span style="color: #83A598;"> app</span><span style="color: #8EC07C;"> =</span><span style="color: #83A598;"> Elm</span><span style="color: #A89984;">.</span><span style="color: #83A598;">Main</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">init</span><span>()</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span style="color: #83A598;">  &lt;/</span><span style="color: #8EC07C;font-weight: bold;">script</span><span style="color: #83A598;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #83A598;">&lt;/</span><span style="color: #8EC07C;font-weight: bold;">body</span><span style="color: #83A598;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #83A598;">&lt;/</span><span style="color: #8EC07C;font-weight: bold;">html</span><span style="color: #83A598;">&gt;</span></span></code></pre>
+<p><strong>Note</strong>: you should also copy your <code>index.html</code> contents to <code>404.html</code> file as your server will redirect every page to a 404 default page, which would be useful to turn out to be a copy of the app's main page :)</p>
+<p>In this tutorial we won't use <code>elm reactor</code>, because it can't work with html files and it will be hard to debug, imo.
+Instead, I'd recommend to install <a rel="external" href="https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave">Run on Save VS Code extension</a> and write the following lines to your <code>.vscode/settings.json</code>:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="json"><span class="giallo-l"><span style="color: #A89984;">{</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    &quot;</span><span style="color: #689D6A;">emeraldwalk.runonsave</span><span style="color: #A89984;">&quot;: {</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    &quot;</span><span style="color: #689D6A;">commands</span><span style="color: #A89984;">&quot;: [</span></span>
+<span class="giallo-l"><span style="color: #A89984;">      {</span></span>
+<span class="giallo-l"><span style="color: #A89984;">        &quot;</span><span style="color: #689D6A;">match</span><span style="color: #A89984;">&quot;: &quot;</span><span style="color: #D3869B;">\\</span><span style="color: #83A598;">.(elm)$</span><span style="color: #A89984;">&quot;,</span></span>
+<span class="giallo-l"><span style="color: #A89984;">        &quot;</span><span style="color: #689D6A;">cmd</span><span style="color: #A89984;">&quot;: &quot;</span><span style="color: #83A598;">elm make src/Main.elm --optimize --output=elm.js</span><span style="color: #A89984;">&quot;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">      }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    ]</span></span>
+<span class="giallo-l"><span style="color: #A89984;">  }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">}</span></span></code></pre>
+<p>Now every time you save any of your Elm files, the project will be compiled to an <code>elm.js</code> file
+and you will be able to test your app in your browser using some kind of HTTP server. I haven't come up
+with anything better than using a custom Python HTTP server, run with a simple script, which you can find
+on <a rel="external" href="https://pastebin.com/eGXvBERW">this pastebin link</a>, as I don't want to write the full code here.</p>
+<p>Now let's start coding in Elm! Start with <code>Model</code> and <code>Event</code> types, which are crucial in every Elm application:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="elm"><span class="giallo-l"><span style="color: #FB4934;">type alias </span><span style="color: #FE8019;">Model</span><span style="color: #83A598;"> msg</span><span style="color: #8EC07C;"> =</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">   -- Navigation key used in URL change</span></span>
+<span class="giallo-l"><span style="color: #A89984;">   {</span><span style="color: #FABD2F;"> key</span><span style="color: #FB4934;"> :</span><span> Browser</span><span style="color: #FB4934;">.</span><span>Navigation</span><span style="color: #FB4934;">.</span><span style="color: #FE8019;">Key</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">   -- Route to navigate through our pages</span></span>
+<span class="giallo-l"><span style="color: #A89984;">   ,</span><span style="color: #FABD2F;"> route</span><span style="color: #FB4934;"> :</span><span style="color: #FE8019;"> Route</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">   -- Current page content to be loaded</span></span>
+<span class="giallo-l"><span style="color: #A89984;">   ,</span><span style="color: #FABD2F;"> currentPage</span><span style="color: #FB4934;"> :</span><span style="color: #FE8019;"> Maybe</span><span> (</span><span style="color: #FE8019;">Html</span><span style="color: #83A598;"> msg</span><span>)</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">   -- Current title to be loaded</span></span>
+<span class="giallo-l"><span style="color: #A89984;">   ,</span><span style="color: #FABD2F;"> currentTitle</span><span style="color: #FB4934;"> :</span><span style="color: #FE8019;"> Maybe</span><span> (</span><span style="color: #FE8019;">String</span><span>)</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">   -- Loaded blog post previews (like date + title + link)</span></span>
+<span class="giallo-l"><span style="color: #A89984;">   ,</span><span style="color: #FABD2F;"> blogPosts</span><span style="color: #FB4934;"> :</span><span style="color: #FE8019;"> Maybe</span><span> (</span><span style="color: #FE8019;">List PostData</span><span>)</span></span>
+<span class="giallo-l"><span style="color: #A89984;">   }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">-- Different events (predominantly for data loading)</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">type </span><span style="color: #FE8019;">Event</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">   =</span><span style="color: #D3869B;"> UrlChange</span><span style="color: #FE8019;"> Url</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">   |</span><span style="color: #D3869B;"> LinkClicked</span><span style="color: #FE8019;"> UrlRequest</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">   |</span><span style="color: #D3869B;"> PostLoaded</span><span> (</span><span style="color: #FE8019;">Result</span><span> Http</span><span style="color: #FB4934;">.</span><span style="color: #FE8019;">Error String</span><span>)</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">   |</span><span style="color: #D3869B;"> PostsIndexLoaded</span><span> (</span><span style="color: #FE8019;">Result</span><span> Http</span><span style="color: #FB4934;">.</span><span style="color: #FE8019;">Error</span><span> (</span><span style="color: #FE8019;">List PostData</span><span>))</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">   -- Will be used for Highlight.js example</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">   |</span><span style="color: #D3869B;"> DomReady</span></span></code></pre>
+<p>And let's write some simple routes parsing:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="elm"><span class="giallo-l"><span style="color: #FB4934;">type </span><span style="color: #FE8019;">Route</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">   =</span><span style="color: #D3869B;"> Home</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">   |</span><span style="color: #D3869B;"> About</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">   |</span><span style="color: #D3869B;"> Blog</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">   |</span><span style="color: #D3869B;"> Post</span><span style="color: #FE8019;"> String</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">   |</span><span style="color: #D3869B;"> NotFound</span><span style="color: #FE8019;"> String</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FABD2F;">routeParser</span><span style="color: #FB4934;"> :</span><span style="color: #FE8019;"> Parser</span><span style="color: #A89984;"> (</span><span style="color: #FE8019;">Route</span><span style="color: #8EC07C;"> -&gt;</span><span style="color: #83A598;"> a</span><span style="color: #A89984;">)</span><span style="color: #83A598;"> a</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">routeParser</span><span style="color: #FB4934;"> =</span><span> oneOf</span></span>
+<span class="giallo-l"><span style="color: #A89984;">   [</span><span> map</span><span style="color: #D3869B;"> Home</span><span> top</span><span style="color: #928374;font-style: italic;">                   -- /</span></span>
+<span class="giallo-l"><span style="color: #A89984;">   ,</span><span> map</span><span style="color: #D3869B;"> About</span><span style="color: #A89984;"> (</span><span>s</span><span style="color: #A89984;"> &quot;</span><span style="color: #B8BB26;">about</span><span style="color: #A89984;">&quot;)</span><span style="color: #928374;font-style: italic;">          -- /about</span></span>
+<span class="giallo-l"><span style="color: #A89984;">   ,</span><span> map</span><span style="color: #D3869B;"> Blog</span><span style="color: #A89984;"> (</span><span>s</span><span style="color: #A89984;"> &quot;</span><span style="color: #B8BB26;">blog</span><span style="color: #A89984;">&quot;)</span><span style="color: #928374;font-style: italic;">            -- /blog</span></span>
+<span class="giallo-l"><span style="color: #A89984;">   ,</span><span> map</span><span style="color: #D3869B;"> Post</span><span style="color: #A89984;"> (</span><span>s</span><span style="color: #A89984;"> &quot;</span><span style="color: #B8BB26;">post</span><span style="color: #A89984;">&quot;</span><span style="color: #8EC07C;"> &lt;/&gt;</span><span> string</span><span style="color: #A89984;">)</span><span style="color: #928374;font-style: italic;"> -- /post/my-super-post</span></span>
+<span class="giallo-l"><span style="color: #A89984;">   ]</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FABD2F;">parseUrl</span><span style="color: #FB4934;"> :</span><span> Url</span><span style="color: #FB4934;">.</span><span style="color: #FE8019;">Url</span><span style="color: #8EC07C;"> -&gt;</span><span style="color: #FE8019;"> Route</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">parseUrl</span><span> url</span><span style="color: #FB4934;"> =</span></span>
+<span class="giallo-l"><span>   parse routeParser url</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">      |&gt;</span><span> Maybe</span><span style="color: #FB4934;">.</span><span>withDefault</span><span style="color: #A89984;"> (</span><span style="color: #D3869B;">NotFound</span><span style="color: #A89984;"> (</span><span>String</span><span style="color: #FB4934;">.</span><span>dropLeft</span><span style="color: #D3869B;"> 1</span><span> url</span><span style="color: #FB4934;">.</span><span style="color: #FABD2F;">path</span><span style="color: #A89984;">))</span></span></code></pre>
+<p>Now let's take a look at our <code>main</code> function in <code>Main.elm</code>:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="elm"><span class="giallo-l"><span style="color: #FABD2F;">main</span><span style="color: #FB4934;"> :</span><span style="color: #FE8019;"> Program</span><span style="color: #D3869B;"> ()</span><span style="color: #A89984;"> (</span><span style="color: #FE8019;">Model Event</span><span style="color: #A89984;">)</span><span style="color: #FE8019;"> Event</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">main</span><span style="color: #FB4934;"> =</span></span>
+<span class="giallo-l"><span>   Browser</span><span style="color: #FB4934;">.</span><span>application</span></span>
+<span class="giallo-l"><span style="color: #A89984;">      {</span><span style="color: #FABD2F;"> init</span><span style="color: #8EC07C;"> =</span><span> init</span></span>
+<span class="giallo-l"><span style="color: #A89984;">      ,</span><span style="color: #FABD2F;"> view</span><span style="color: #8EC07C;"> =</span><span style="color: #FB4934;"> \</span><span>m</span><span style="color: #8EC07C;"> -&gt;</span><span> </span></span>
+<span class="giallo-l"><span style="color: #A89984;">         {</span><span style="color: #FABD2F;"> title</span><span style="color: #8EC07C;"> =</span><span> </span></span>
+<span class="giallo-l"><span style="color: #FB4934;">            case </span><span>m</span><span style="color: #FB4934;">.</span><span style="color: #FABD2F;">currentTitle</span><span style="color: #FB4934;"> of</span></span>
+<span class="giallo-l"><span style="color: #D3869B;">               Just</span><span> title </span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">                  -&gt;</span><span> title</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #D3869B;">               Nothing</span><span> </span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">                  -&gt;</span><span style="color: #A89984;"> &quot;</span><span style="color: #B8BB26;">Loading...</span><span style="color: #A89984;">&quot;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         ,</span><span style="color: #FABD2F;"> body</span><span style="color: #8EC07C;"> =</span><span> </span></span>
+<span class="giallo-l"><span style="color: #FB4934;">            case </span><span>m</span><span style="color: #FB4934;">.</span><span style="color: #FABD2F;">currentPage</span><span style="color: #FB4934;"> of</span></span>
+<span class="giallo-l"><span style="color: #D3869B;">               Just</span><span> pageView</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">                  [</span><span> pageView</span><span style="color: #A89984;"> ]</span></span>
+<span class="giallo-l"><span>                  </span></span>
+<span class="giallo-l"><span style="color: #D3869B;">               Nothing</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">                  [</span><span> text</span><span style="color: #A89984;"> &quot;</span><span style="color: #B8BB26;">Loading...</span><span style="color: #A89984;">&quot; ]</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">      ,</span><span style="color: #FABD2F;"> update</span><span style="color: #8EC07C;"> =</span><span> update</span></span>
+<span class="giallo-l"><span style="color: #A89984;">      ,</span><span style="color: #FABD2F;"> subscriptions</span><span style="color: #8EC07C;"> =</span><span> always Sub</span><span style="color: #FB4934;">.</span><span>none</span></span>
+<span class="giallo-l"><span style="color: #A89984;">      ,</span><span style="color: #FABD2F;"> onUrlChange</span><span style="color: #8EC07C;"> =</span><span style="color: #D3869B;"> UrlChange</span></span>
+<span class="giallo-l"><span style="color: #A89984;">      ,</span><span style="color: #FABD2F;"> onUrlRequest</span><span style="color: #8EC07C;"> =</span><span style="color: #D3869B;"> LinkClicked</span></span>
+<span class="giallo-l"><span style="color: #A89984;">      }</span></span></code></pre>
+<p>Let's highlight the most important moments:</p>
+<ol>
+<li><code>view</code> function: as we get a part of our views from HTTP requests, we can't just rely on static
+view for each route like "if home then view home", "if post then view post" etc. We will just try to
+show some results, stored in the Model, which will be computed in <code>init</code> and <code>update</code> functions;</li>
+<li><code>init</code> function: there we will parse our passed URL, construct our initial Model with the data given
+and check the route to perform further actions: load view directly (Home, About) or send an HTTP request
+(Blog, Post). Here it is:<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="elm"><span class="giallo-l"><span style="color: #FABD2F;">init</span><span style="color: #FB4934;"> :</span><span style="color: #D3869B;"> ()</span><span style="color: #8EC07C;"> -&gt;</span><span style="color: #FE8019;"> Url</span><span style="color: #8EC07C;"> -&gt;</span><span> Nav</span><span style="color: #FB4934;">.</span><span style="color: #FE8019;">Key</span><span style="color: #8EC07C;"> -&gt;</span><span style="color: #A89984;"> (</span><span style="color: #FE8019;"> Model Event</span><span style="color: #A89984;">,</span><span style="color: #FE8019;"> Cmd Event</span><span style="color: #A89984;"> )</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">init</span><span style="color: #FB4934;"> _</span><span> url key</span><span style="color: #FB4934;"> =</span><span> </span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">   -- Parse our url and generate initial model</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">   let</span></span>
+<span class="giallo-l"><span>      route</span><span style="color: #FB4934;"> =</span><span> parseUrl url</span></span>
+<span class="giallo-l"><span>      model</span><span style="color: #FB4934;"> =</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         {</span><span style="color: #FABD2F;"> key</span><span style="color: #8EC07C;"> =</span><span> key</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         ,</span><span style="color: #FABD2F;"> route</span><span style="color: #8EC07C;"> =</span><span> route</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         ,</span><span style="color: #FABD2F;"> currentPage</span><span style="color: #8EC07C;"> =</span><span style="color: #D3869B;"> Nothing</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         ,</span><span style="color: #FABD2F;"> currentTitle</span><span style="color: #8EC07C;"> =</span><span style="color: #D3869B;"> Nothing</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         ,</span><span style="color: #FABD2F;"> blogPosts</span><span style="color: #8EC07C;"> =</span><span style="color: #D3869B;"> Nothing</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         }</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">   in</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">   case </span><span>model</span><span style="color: #FB4934;">.</span><span style="color: #FABD2F;">route</span><span style="color: #FB4934;"> of</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">      -- Load view directly</span></span>
+<span class="giallo-l"><span style="color: #D3869B;">      Home</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         (  {</span><span> model </span></span>
+<span class="giallo-l"><span style="color: #FB4934;">               |</span><span style="color: #FABD2F;"> currentPage</span><span style="color: #8EC07C;"> =</span><span style="color: #D3869B;"> Just</span><span style="color: #A89984;"> (</span><span>pageLayout model</span><span style="color: #FB4934;">.</span><span style="color: #FABD2F;">route</span><span style="color: #A89984;"> &quot;</span><span style="color: #B8BB26;">Koncepto Sociala</span><span style="color: #A89984;">&quot;</span><span> Home</span><span style="color: #FB4934;">.</span><span>view</span><span style="color: #A89984;">)</span><span> </span></span>
+<span class="giallo-l"><span style="color: #A89984;">               ,</span><span style="color: #FABD2F;"> currentTitle</span><span style="color: #8EC07C;"> =</span><span style="color: #D3869B;"> Just</span><span style="color: #A89984;"> &quot;</span><span style="color: #B8BB26;">Koncepto Sociala</span><span style="color: #A89984;">&quot;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">            }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         ,</span><span> Cmd</span><span style="color: #FB4934;">.</span><span>none</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         )</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">      -- Send some HTTP request with a result returned as our Event</span></span>
+<span class="giallo-l"><span style="color: #D3869B;">      Blog</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         (</span><span> model</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         ,</span><span> Http</span><span style="color: #FB4934;">.</span><span>get</span></span>
+<span class="giallo-l"><span style="color: #A89984;">            {</span><span style="color: #FABD2F;"> url</span><span style="color: #8EC07C;"> =</span><span style="color: #A89984;"> &quot;</span><span style="color: #B8BB26;">../posts/index.json</span><span style="color: #A89984;">&quot;</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">            -- result will be parsed from JSON to our `List PostData` type</span></span>
+<span class="giallo-l"><span style="color: #A89984;">            ,</span><span style="color: #FABD2F;"> expect</span><span style="color: #8EC07C;"> =</span><span> Http</span><span style="color: #FB4934;">.</span><span>expectJson</span><span style="color: #D3869B;"> PostsIndexLoaded</span><span> postListDecoder</span></span>
+<span class="giallo-l"><span style="color: #A89984;">            }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">      -- Other routes</span></span></code></pre></li>
+<li><code>update</code> function: here we will process all the events emitted:<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="elm"><span class="giallo-l"><span style="color: #FABD2F;">update</span><span style="color: #FB4934;"> :</span><span style="color: #FE8019;"> Event</span><span style="color: #8EC07C;"> -&gt;</span><span style="color: #FE8019;"> Model Event</span><span style="color: #8EC07C;"> -&gt;</span><span style="color: #A89984;"> (</span><span style="color: #FE8019;"> Model Event</span><span style="color: #A89984;">,</span><span style="color: #FE8019;"> Cmd Event</span><span style="color: #A89984;"> )</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">update</span><span> msg model</span><span style="color: #FB4934;"> =</span><span> </span></span>
+<span class="giallo-l"><span style="color: #FB4934;">   case </span><span>msg</span><span style="color: #FB4934;"> of</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">      -- event matching</span></span></code></pre><code>UrlChange</code> and <code>LinkClicked</code> are
+usual for most of Elm apps where manipulation with links happens:<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="elm"><span class="giallo-l"><span style="color: #D3869B;">UrlChange</span><span> url</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">   -- We call init for every URL change, as we need to parse it</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">   -- for every route and remove unnecessary data</span></span>
+<span class="giallo-l"><span>   init</span><span style="color: #D3869B;"> ()</span><span> url model</span><span style="color: #FB4934;">.</span><span style="color: #FABD2F;">key</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #D3869B;">LinkClicked</span><span> req</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">   case </span><span>req</span><span style="color: #FB4934;"> of </span></span>
+<span class="giallo-l"><span style="color: #D3869B;">      External</span><span> href</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         (</span><span> model</span><span style="color: #A89984;">,</span><span> Nav</span><span style="color: #FB4934;">.</span><span>load href</span><span style="color: #A89984;"> )</span></span>
+<span class="giallo-l"><span style="color: #D3869B;">      Internal</span><span> url</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         (</span><span> model</span><span style="color: #A89984;">,</span><span> Nav</span><span style="color: #FB4934;">.</span><span>pushUrl model</span><span style="color: #FB4934;">.</span><span style="color: #FABD2F;">key</span><span style="color: #A89984;"> (</span><span>Url</span><span style="color: #FB4934;">.</span><span>toString url</span><span style="color: #A89984;">) )</span><span> </span></span></code></pre>But let's also look at a more interesting event:<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="elm"><span class="giallo-l"><span style="color: #928374;font-style: italic;">-- Emitted, when a post loaded from HTTP request</span></span>
+<span class="giallo-l"><span style="color: #D3869B;">PostLoaded</span><span> result</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">   case </span><span>result</span><span style="color: #FB4934;"> of</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">      -- If it is actually loaded — we parse its content</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">      -- to our Post model using custom parser;</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">      -- for more info, look at a repo of this website (links are at the post footer)</span></span>
+<span class="giallo-l"><span style="color: #D3869B;">      Ok</span><span> content</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">         let </span><span>post</span><span style="color: #FB4934;"> =</span><span> Parser</span><span style="color: #FB4934;">.</span><span>run PostModel</span><span style="color: #FB4934;">.</span><span>parse content</span><span style="color: #FB4934;"> in</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">         case </span><span>post</span><span style="color: #FB4934;"> of</span></span>
+<span class="giallo-l"><span style="color: #D3869B;">            Ok</span><span> p</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">               (  {</span><span> model </span></span>
+<span class="giallo-l"><span style="color: #FB4934;">                     |</span><span style="color: #FABD2F;"> currentPage</span><span style="color: #8EC07C;"> =</span><span style="color: #D3869B;"> Just</span><span style="color: #A89984;"> (</span><span>pageLayout model</span><span style="color: #FB4934;">.</span><span style="color: #FABD2F;">route</span><span> p</span><span style="color: #FB4934;">.</span><span style="color: #FABD2F;">name</span><span style="color: #A89984;"> (</span><span>Post</span><span style="color: #FB4934;">.</span><span>view p</span><span style="color: #A89984;">))</span><span> </span></span>
+<span class="giallo-l"><span style="color: #A89984;">                     ,</span><span style="color: #FABD2F;"> currentTitle</span><span style="color: #8EC07C;"> =</span><span style="color: #D3869B;"> Just</span><span> p</span><span style="color: #FB4934;">.</span><span style="color: #FABD2F;">name</span></span>
+<span class="giallo-l"><span style="color: #A89984;">                  }</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">               -- What is this? We&#39;ll find out soon</span></span>
+<span class="giallo-l"><span style="color: #A89984;">               ,</span><span> nextTick</span><span style="color: #D3869B;"> DomReady</span></span>
+<span class="giallo-l"><span style="color: #A89984;">               )</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">            -- Print errors, if parsing failed, for debug purposes</span></span>
+<span class="giallo-l"><span style="color: #D3869B;">            Err</span><span> errors</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">               (  {</span><span> model </span></span>
+<span class="giallo-l"><span style="color: #FB4934;">                     |</span><span style="color: #FABD2F;"> currentPage</span><span style="color: #8EC07C;"> =</span><span style="color: #D3869B;"> Just</span><span style="color: #A89984;"> (</span><span>text</span><span style="color: #A89984;"> (&quot;</span><span style="color: #B8BB26;">Post parsing error:</span><span style="color: #D3869B;">\n</span><span style="color: #A89984;">&quot;</span><span style="color: #8EC07C;"> ++</span><span> parsingErrors errors</span><span style="color: #A89984;">))</span></span>
+<span class="giallo-l"><span style="color: #A89984;">                     ,</span><span style="color: #FABD2F;"> currentTitle</span><span style="color: #8EC07C;"> =</span><span style="color: #D3869B;"> Just</span><span style="color: #A89984;"> &quot;</span><span style="color: #B8BB26;">Post parsing error</span><span style="color: #A89984;">&quot;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">                  }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">               ,</span><span> Cmd</span><span style="color: #FB4934;">.</span><span>none</span></span>
+<span class="giallo-l"><span style="color: #A89984;">               )</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">      -- Loading failed ;(</span></span>
+<span class="giallo-l"><span style="color: #D3869B;">      Err</span><span style="color: #FB4934;"> _</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         ( {</span><span> model </span></span>
+<span class="giallo-l"><span style="color: #FB4934;">               |</span><span style="color: #FABD2F;"> currentPage</span><span style="color: #8EC07C;"> =</span><span style="color: #D3869B;"> Just</span><span style="color: #A89984;"> (</span><span>text</span><span style="color: #A89984;"> &quot;</span><span style="color: #B8BB26;">Post not found</span><span style="color: #A89984;">&quot;)</span><span> </span></span>
+<span class="giallo-l"><span style="color: #A89984;">               ,</span><span style="color: #FABD2F;"> currentTitle</span><span style="color: #8EC07C;"> =</span><span style="color: #D3869B;"> Just</span><span style="color: #A89984;"> &quot;</span><span style="color: #B8BB26;">Post not found</span><span style="color: #A89984;">&quot;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">            }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         ,</span><span> Cmd</span><span style="color: #FB4934;">.</span><span>none</span></span>
+<span class="giallo-l"><span style="color: #A89984;">         )</span></span></code></pre></li>
+</ol>
+<h2 id="highlight-js-or-sync-pitfalls">Highlight.js or sync pitfalls</h2>
+<p>What if we want to use some external JS library, which will process/change our DOM like Highlight.js?
+How shall we synchronize Elm, finishing generating our DOM, and our library, which must
+process it afterwards? Official documentation suggests, that we need <strong>ports</strong> — tool for
+interracting with some JavaScript code in Elm.</p>
+<p>Include needed libraries and change Elm initialization like this (don't forget to sync 404.html
+and index.html):</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="javascript"><span class="giallo-l"><span style="color: #928374;font-style: italic;">// Init Elm app</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">var</span><span style="color: #83A598;"> app</span><span style="color: #8EC07C;"> =</span><span style="color: #83A598;"> Elm</span><span style="color: #A89984;">.</span><span style="color: #83A598;">Main</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">init</span><span>()</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// We will call hljs.highlightAll(); only when the message is sent</span></span>
+<span class="giallo-l"><span style="color: #83A598;">app</span><span style="color: #A89984;">.</span><span style="color: #83A598;">ports</span><span style="color: #A89984;">.</span><span style="color: #83A598;">sendMessage</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">subscribe</span><span>(</span><span style="color: #FE8019;">function</span><span style="color: #A89984;"> (</span><span style="color: #83A598;">message</span><span style="color: #A89984;">) {</span></span>
+<span class="giallo-l"><span style="color: #83A598;">   hljs</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">highlightAll</span><span>()</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span style="color: #A89984;">}</span><span>)</span><span style="color: #A89984;">;</span></span></code></pre>
+<p>Then we rename our <code>module</code> to <code>port module</code> and add <code>port sendMessage : () -&gt; Cmd msg</code> to the top of
+our module, where events are processed. However, if you try to use <code>sendMessage</code> directly, as suggested
+in official tutorials, you may find out, that Highlight.js works... but every other time. It happens because
+Highlight.js is still not really synchronized well and may be called before the DOM is completely generated.</p>
+<p>To avoid this behaviour, we will use our custom <code>DomReady</code> event, which we prepared before, along with our custom <code>nextTick</code> function to make a small delay before calling JavaScript (20 ms should be sufficient):</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="elm"><span class="giallo-l"><span style="color: #FABD2F;">nextTick</span><span style="color: #FB4934;"> :</span><span style="color: #83A598;"> msg</span><span style="color: #8EC07C;"> -&gt;</span><span style="color: #FE8019;"> Cmd</span><span style="color: #83A598;"> msg</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">nextTick</span><span> msg</span><span style="color: #FB4934;"> =</span></span>
+<span class="giallo-l"><span>   Task</span><span style="color: #FB4934;">.</span><span>perform</span><span style="color: #A89984;"> (</span><span style="color: #FB4934;">\_</span><span style="color: #8EC07C;"> -&gt;</span><span> msg</span><span style="color: #A89984;">) (</span><span>Process</span><span style="color: #FB4934;">.</span><span>sleep</span><span style="color: #D3869B;"> 20</span><span style="color: #A89984;">)</span></span></code></pre>
+<p>Now, when we send <code>nextTick DomReady</code> command every time, where our JS library should be called, we will wait for
+20 ms and then push <code>DomReady</code> event to the application, which will be processed in a following straightforward way:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="elm"><span class="giallo-l"><span style="color: #D3869B;">DomReady</span><span style="color: #8EC07C;"> -&gt;</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">   -- means: send request event for JavaScript call</span></span>
+<span class="giallo-l"><span style="color: #A89984;">   (</span><span> model</span><span style="color: #A89984;">,</span><span> sendMessage</span><span style="color: #D3869B;"> ()</span><span style="color: #A89984;"> )</span></span></code></pre><h2 id="what-s-next">What's next?</h2>
+<p>In this post I've not covered all the topics, that would be useful for making your Elm blog or
+another application using Elm, so here is some utile resources and libraries to learn:</p>
+<ol>
+<li><a rel="external" href="https://github.com/konceptosociala/konceptosociala.github.io/">This website full code</a> — nothing to say
+more: useful utilities for parsing, data types and functions to work with them;</li>
+<li><a rel="external" href="https://package.elm-lang.org/packages/rtfeldman/elm-css/latest/">elm-css</a> — using CSS styling
+directly in Elm code;</li>
+<li><a rel="external" href="https://package.elm-lang.org/packages/elm/parser/latest/">elm-parser</a> — writing parsers easily;</li>
+<li><a rel="external" href="https://package.elm-lang.org/packages/mdgriffith/elm-ui/latest/">elm-ui</a> — UI design toolkit as
+alternative for HTML/CSS. Looks promising, but I don't quite understand it yet;</li>
+<li><a rel="external" href="https://package.elm-lang.org/packages/elm/json/latest/">json</a> and
+<a rel="external" href="https://package.elm-lang.org/packages/elm/http/latest/">http</a> libraries — mandatory for any web app.</li>
+</ol>
+<p>If I missed something or made a mistake — don't hesitate and <a rel="external" href="https://github.com/konceptosociala/konceptosociala.github.io/issues">file an issue</a> :3</p>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between flex-wrap gap-3">
+    
+    <a href="https:&#x2F;&#x2F;example.com&#x2F;tutorials&#x2F;mvu-pattern-flutter&#x2F;" class="rpg-post-nav-link"><i class="ph ph-arrow-left"></i> MVU Pattern and Functional Approach in Flutter</a>
+    
+    
+    <a href="https:&#x2F;&#x2F;example.com&#x2F;tutorials&#x2F;loading-3d-texture-in-bevy&#x2F;" class="rpg-post-nav-link text-end">Loading 3D texture in Bevy <i class="ph ph-arrow-right"></i></a>
+    
+  </div>
+</article>
+
+
+  </div>
+</main>
+
+<footer class="py-4 text-center">
+  <div class="container">
+    <p class="mb-2">KONCEPTO SOCIALA (c) 2026</p>
+    <div class="d-flex justify-content-center gap-3">
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;konceptosociala" target="_blank"><i class="ph ph-github-logo fs-5"></i></a>
+      <a href="https://example.com/atom.xml"><i class="ph ph-rss fs-5"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

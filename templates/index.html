@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}{{ config.title }}{% endblock title %}
+
+{% block content %}
+
+<div class="text-center mb-5">
+  <p class="section-eyebrow mb-1">choose your path</p>
+</div>
+
+<div class="row g-4 justify-content-center mb-5">
+  <div class="col-md-6 col-lg-5">
+    <a href="{{ get_url(path="blog") }}" class="hub-card-wrap text-decoration-none d-block h-100">
+      <div class="pixel-panel-wrap h-100">
+        <div class="hub-card pixel-panel text-center">
+          <i class="ph ph-newspaper hub-card-icon d-block mb-3"></i>
+          <div class="hub-card-title mb-2">THE CHRONICLE</div>
+          <p class="hub-card-blurb mb-4">Devlogs, life prikols, and whatever's rattling around my head between commits.</p>
+          <span class="hub-card-cta">ENTER BLOG</span>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-6 col-lg-5">
+    <a href="{{ get_url(path="tutorials") }}" class="hub-card-wrap text-decoration-none d-block h-100">
+      <div class="pixel-panel-wrap h-100">
+        <div class="hub-card pixel-panel text-center">
+          <i class="ph ph-book-open-text hub-card-icon d-block mb-3"></i>
+          <div class="hub-card-title mb-2">THE CODEX</div>
+          <p class="hub-card-blurb mb-4">Guides, tutorials, and cheat codes for your next programming prikol.</p>
+          <span class="hub-card-cta">ENTER TUTORIALS</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div class="mb-4">
+  <p class="section-eyebrow mb-1">recent quests</p>
+  <h3 style="color: var(--dark-slate-gray);">Latest from both worlds</h3>
+</div>
+
+{% set blog_section = get_section(path="blog/_index.md") %}
+{% set tutorials_section = get_section(path="tutorials/_index.md") %}
+{% set_global recent = [] %}
+{% for p in blog_section.pages %}{% set_global recent = recent | concat(with=p) %}{% endfor %}
+{% for p in tutorials_section.pages %}{% set_global recent = recent | concat(with=p) %}{% endfor %}
+{% set recent_sorted = recent | sort(attribute="date") | reverse %}
+
+<div class="row g-4">
+  {% for page in recent_sorted | slice(end=3) %}
+    {% if page.taxonomies.language %}
+      {{ macros::tutorial_card(page=page) }}
+    {% else %}
+      {{ macros::blog_card(page=page) }}
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% endblock content %}

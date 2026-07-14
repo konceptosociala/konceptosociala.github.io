@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}The Chronicle - {{ config.title }}{% endblock title %}
+
+{% block nav_blog %}active{% endblock nav_blog %}
+
+{% block subnav %}
+<div class="subnav py-2">
+  <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <a href="{{ get_url(path="/") }}" class="subnav-back"><i class="ph ph-arrow-left"></i> BACK TO HUB</a>
+    <span class="subnav-title"><i class="ph ph-newspaper me-1"></i>THE CHRONICLE</span>
+  </div>
+</div>
+{% endblock subnav %}
+
+{% block content %}
+
+<div class="mb-4">
+  <p class="section-eyebrow mb-1">devlog / lifestyle / rants</p>
+</div>
+
+<div class="row g-4 mb-5">
+  {% for page in paginator.pages %}
+    {{ macros::blog_card(page=page) }}
+  {% endfor %}
+</div>
+
+{% if paginator.number_pagers > 1 %}
+<nav class="d-flex justify-content-center align-items-center gap-3 rpg-pagination">
+  {% if paginator.previous %}
+  <a href="{{ paginator.previous }}"><i class="ph ph-arrow-left"></i></a>
+  {% endif %}
+  <span class="rpg-page-indicator">PAGE {{ paginator.current_index }} / {{ paginator.number_pagers }}</span>
+  {% if paginator.next %}
+  <a href="{{ paginator.next }}"><i class="ph ph-arrow-right"></i></a>
+  {% endif %}
+</nav>
+{% endif %}
+
+{% endblock content %}

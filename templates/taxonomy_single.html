@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}{{ term.name | upper }} - {{ config.title }}{% endblock title %}
+
+{% block subnav %}
+<div class="subnav py-2">
+  <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <a href="{{ get_url(path="/") }}" class="subnav-back"><i class="ph ph-arrow-left"></i> BACK TO HUB</a>
+    <span class="subnav-title">{{ taxonomy.name | upper }}: {{ term.name | upper }}</span>
+  </div>
+</div>
+{% endblock subnav %}
+
+{% block content %}
+<div class="mb-4">
+  <p class="section-eyebrow mb-1">{{ taxonomy.name }}</p>
+  <h3 style="color: var(--dark-slate-gray);">Everything tagged {{ term.name | upper }}</h3>
+</div>
+<div class="row g-4">
+  {% for page in term.pages %}
+    {% if page.taxonomies.language %}
+      {{ macros::tutorial_card(page=page) }}
+    {% else %}
+      {{ macros::blog_card(page=page) }}
+    {% endif %}
+  {% endfor %}
+</div>
+{% endblock content %}

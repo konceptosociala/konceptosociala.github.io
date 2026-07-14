@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://example.com/style/style.css">
+<title>Loading 3D texture in Bevy - Koncepto Sociala</title>
+</head>
+<body>
+
+<header class="d-flex flex-row flex-wrap justify-content-center align-items-center py-5 px-2">
+  <a href="/"><img class="img-thumbnail rounded-circle mx-4" width="256" src="https://example.com/img/avatarka.jpeg"></a>
+  <div class="d-flex flex-column align-items-center">
+    <h1 class="display-1 mt-5 mb-0 text-center">Koncepto Sociala</h1>
+    <h2 class="mb-4 text-center">Little blog for programming and life <u><i>prikols</i></u><img class="ms-2" src="https://example.com/img/dwarf_violet.svg" height="50"></h2>
+    <div class="d-flex mb-3 justify-content-center gap-2 flex-wrap">
+      <a href="https://example.com/blog" class="btn btn-outline-light nav-pill  rounded-pill px-3 py-1"><i class="ph ph-newspaper me-1"></i>blog</a>
+      <a href="https://example.com/tutorials" class="btn btn-outline-light nav-pill active rounded-pill px-3 py-1"><i class="ph ph-book-open-text me-1"></i>tutorials</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;konceptosociala" target="_blank" class="btn btn-outline-light nav-pill rounded-pill px-3 py-1"><i class="ph ph-github-logo me-1"></i>github</a>
+    </div>
+  </div>
+</header>
+<section class="header-section-gradient"></section>
+
+
+<div class="subnav py-2">
+  <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <a href="https://example.com/tutorials" class="subnav-back"><i class="ph ph-arrow-left"></i> BACK TO CODEX</a>
+    <span class="subnav-title"><i class="ph ph-book-open-text me-1"></i>THE CODEX</span>
+  </div>
+</div>
+
+
+<main>
+  <div class="container py-5">
+    
+
+<article class="mx-auto" style="max-width: 760px;">
+  <div class="pixel-panel-wrap mb-4">
+    <div class="entry-card pixel-panel p-4 p-md-5">
+      <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+        
+        <span class="tag-chip tag-lang-rust">RUST</span>
+        
+        <span class="entry-meta">MAY 27, 2025</span>
+      </div>
+      <h1 class="entry-title mb-3" style="font-size: 2rem;">Loading 3D texture in Bevy</h1>
+      <span class="entry-meta d-block mb-4"><i class="ph ph-clock"></i> 12 min read</span>
+      <div class="post-body">
+        <p>To load an image into our app Bevy provides us with a custom <code>Image</code> type. However, <code>AssetServer</code>
+in Bevy (as of version 0.15) only supports 2D image loading for now, so we need to perhaps
+implement a custom 3D image asset loader. For our tutorial we will use png and jpeg raster image
+types, but you can also try to implement importing of raw MagicaVoxel data, e.g. using <code>dot_vox</code> crate.</p>
+<h2 id="implementing-image3dloader">Implementing Image3dLoader</h2>
+<p>First, we'll define our voxel texture format, Bevy plugin and loader struct itself:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="rust"><span class="giallo-l"><span style="color: #928374;font-style: italic;">// RGB for color, A - 1 for `active`, 0 for `inactive`.</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">//</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// As optimization in ray tracing you can consider using 1 byte</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// texture format like R8Uint and use 0 value for `inactive` </span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// and 1-255 values as color palette indices.</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">pub</span><span style="color: #FE8019;"> const</span><span style="color: #D3869B;font-weight: bold;"> IMAGE_3D_FORMAT</span><span style="color: #8EC07C;">:</span><span style="color: #FABD2F;"> TextureFormat</span><span style="color: #8EC07C;"> =</span><span style="color: #FABD2F;"> TextureFormat</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">Rgba8Uint</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">pub</span><span style="color: #FE8019;"> struct</span><span style="color: #FABD2F;"> Image3dPlugin</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// Use a plugin to register our asset loader</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">impl</span><span style="color: #FABD2F;"> Plugin</span><span style="color: #FB4934;"> for</span><span style="color: #FABD2F;"> Image3dPlugin</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    fn</span><span style="color: #FABD2F;"> build</span><span style="color: #A89984;">(</span><span style="color: #8EC07C;">&amp;</span><span style="color: #83A598;">self</span><span style="color: #A89984;">,</span><span style="color: #83A598;"> app</span><span style="color: #8EC07C;">: &amp;</span><span style="color: #FE8019;">mut</span><span style="color: #FABD2F;"> App</span><span style="color: #A89984;">) {</span></span>
+<span class="giallo-l"><span style="color: #83A598;">        app</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">init_asset_loader</span><span style="color: #8EC07C;">::</span><span style="color: #A89984;">&lt;</span><span style="color: #FABD2F;">Image3dLoader</span><span style="color: #A89984;">&gt;();</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #A89984;">#[</span><span>derive</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">Default</span><span style="color: #A89984;">)]</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">pub</span><span style="color: #FE8019;"> struct</span><span style="color: #FABD2F;"> Image3dLoader</span><span style="color: #A89984;">;</span></span></code></pre>
+<p>And our loader settings will look like this:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="rust"><span class="giallo-l"><span style="color: #A89984;">#[</span><span>derive</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">Serialize</span><span style="color: #A89984;">,</span><span style="color: #FABD2F;"> Deserialize</span><span style="color: #A89984;">,</span><span style="color: #FABD2F;"> Debug</span><span style="color: #A89984;">)]</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">pub</span><span style="color: #FE8019;"> struct</span><span style="color: #FABD2F;"> Image3dLoaderSettings</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    pub</span><span style="color: #83A598;"> format</span><span style="color: #8EC07C;">:</span><span style="color: #FABD2F;"> ImageFormatSetting</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    pub</span><span style="color: #83A598;"> columns</span><span style="color: #8EC07C;">:</span><span style="color: #FABD2F;"> u32</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    pub</span><span style="color: #83A598;"> rows</span><span style="color: #8EC07C;">:</span><span style="color: #FABD2F;"> u32</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #A89984;">}</span></span></code></pre>
+<p>It's important to note, that Bevy <code>AssetServer</code> supports only 1 loader per file extension
+(or a bundle of extensions), but we need to use png and jpeg formats, which are already
+bound by default loader. The easiest approach is to add an extension prefix, e.g. <code>.3d</code>.</p>
+<p>We'd also like to define image column and row count in a filename for quick import, like
+(NxM). So our filename template will be: <code>&lt;image_name&gt;.(&lt;N&gt;x&lt;M&gt;).3d.png</code>. Now getting our loading
+settings from a file path is straightforward:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="rust"><span class="giallo-l"><span style="color: #FB4934;">impl</span><span style="color: #FABD2F;"> Image3dLoaderSettings</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    pub fn</span><span style="color: #FABD2F;"> from_path</span><span style="color: #A89984;">(</span><span style="color: #83A598;">path</span><span style="color: #8EC07C;">:</span><span style="color: #FB4934;"> impl</span><span style="color: #FABD2F;"> AsRef</span><span style="color: #A89984;">&lt;</span><span style="color: #FABD2F;">Path</span><span style="color: #A89984;">&gt;)</span><span style="color: #8EC07C;"> -&gt;</span><span style="color: #FABD2F;"> Result</span><span style="color: #A89984;">&lt;</span><span style="color: #83A598;">Self</span><span style="color: #A89984;">,</span><span style="color: #FABD2F;"> Image3dLoaderError</span><span style="color: #A89984;">&gt; {</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">        // get &quot;&lt;image_name&gt;.(&lt;N&gt;x&lt;M&gt;).3d&quot; part from path</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">        let</span><span style="color: #83A598;"> stem</span><span style="color: #8EC07C;"> =</span><span style="color: #FABD2F;"> format!</span><span style="color: #A89984;">(&quot;{</span><span style="color: #B8BB26;">:?</span><span style="color: #A89984;">}&quot;,</span><span style="color: #83A598;"> path</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">as_ref</span><span style="color: #A89984;">()</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">file_stem</span><span style="color: #A89984;">()</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">unwrap_or_default</span><span style="color: #A89984;">());</span></span>
+<span class="giallo-l"><span>        </span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">        Image3dLoaderSettings</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">from_str</span><span style="color: #A89984;">(</span><span style="color: #8EC07C;">&amp;</span><span style="color: #83A598;">stem</span><span style="color: #A89984;">)</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// And implement `from_str`</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">impl</span><span style="color: #FABD2F;"> FromStr</span><span style="color: #FB4934;"> for</span><span style="color: #FABD2F;"> Image3dLoaderSettings</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    type</span><span style="color: #FABD2F;"> Err</span><span style="color: #8EC07C;"> =</span><span style="color: #FABD2F;"> Image3dLoaderError</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">    fn</span><span style="color: #FABD2F;"> from_str</span><span style="color: #A89984;">(</span><span style="color: #83A598;">s</span><span style="color: #8EC07C;">: &amp;</span><span style="color: #FABD2F;">str</span><span style="color: #A89984;">)</span><span style="color: #8EC07C;"> -&gt;</span><span style="color: #FABD2F;"> Result</span><span style="color: #A89984;">&lt;</span><span style="color: #83A598;">Self</span><span style="color: #A89984;">,</span><span style="color: #83A598;"> Self</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">Err</span><span style="color: #A89984;">&gt; {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">        let</span><span style="color: #83A598;"> cols_rows</span><span style="color: #8EC07C;"> =</span><span style="color: #83A598;"> s</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">            // &quot;(&lt;cols&gt;x&lt;rows&gt;)&quot;</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">            .</span><span style="color: #FABD2F;">trim_matches</span><span style="color: #A89984;">(&#39;</span><span style="color: #B8BB26;">&quot;</span><span style="color: #A89984;">&#39;)</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">            .</span><span style="color: #FABD2F;">trim_end_matches</span><span style="color: #A89984;">(&quot;</span><span style="color: #B8BB26;">.3d</span><span style="color: #A89984;">&quot;)</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">            .</span><span style="color: #FABD2F;">split</span><span style="color: #A89984;">(&#39;</span><span style="color: #B8BB26;">.</span><span style="color: #A89984;">&#39;)</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">            .</span><span style="color: #FABD2F;">next_back</span><span style="color: #A89984;">()</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">            .</span><span style="color: #FABD2F;">ok_or</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">Image3dLoaderError</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">FromStrError</span><span style="color: #A89984;">(</span><span style="color: #83A598;">s</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">to_owned</span><span style="color: #A89984;">()))</span><span style="color: #8EC07C;">?</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">            // &quot;&lt;cols&gt;x&lt;rows&gt;&quot;</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">            .</span><span style="color: #FABD2F;">trim_start_matches</span><span style="color: #A89984;">(&#39;</span><span style="color: #B8BB26;">(</span><span style="color: #A89984;">&#39;)</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">            .</span><span style="color: #FABD2F;">trim_end_matches</span><span style="color: #A89984;">(&#39;</span><span style="color: #B8BB26;">)</span><span style="color: #A89984;">&#39;)</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">            // (&quot;&lt;cols&gt;&quot;, &quot;&lt;rows&gt;&quot;)</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">            .</span><span style="color: #FABD2F;">split_once</span><span style="color: #A89984;">(&quot;</span><span style="color: #B8BB26;">x</span><span style="color: #A89984;">&quot;)</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">            .</span><span style="color: #FABD2F;">ok_or</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">Image3dLoaderError</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">FromStrError</span><span style="color: #A89984;">(</span><span style="color: #83A598;">s</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">to_owned</span><span style="color: #A89984;">()))</span><span style="color: #8EC07C;">?</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FE8019;">        let</span><span style="color: #83A598;"> columns</span><span style="color: #8EC07C;"> =</span><span style="color: #83A598;"> cols_rows</span><span style="color: #8EC07C;">.</span><span style="color: #D3869B;">0</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">parse</span><span style="color: #8EC07C;">::</span><span style="color: #A89984;">&lt;</span><span style="color: #FABD2F;">u32</span><span style="color: #A89984;">&gt;()</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">            .</span><span style="color: #FABD2F;">map_err</span><span style="color: #A89984;">(</span><span style="color: #FB4934;">|</span><span style="color: #83A598;">_</span><span style="color: #FB4934;">|</span><span style="color: #FABD2F;"> Image3dLoaderError</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">FromStrError</span><span style="color: #A89984;">(</span><span style="color: #83A598;">s</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">to_owned</span><span style="color: #A89984;">()))</span><span style="color: #8EC07C;">?</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FE8019;">        let</span><span style="color: #83A598;"> rows</span><span style="color: #8EC07C;"> =</span><span style="color: #83A598;"> cols_rows</span><span style="color: #8EC07C;">.</span><span style="color: #D3869B;">1</span><span style="color: #A89984;">.</span><span style="color: #FABD2F;">parse</span><span style="color: #8EC07C;">::</span><span style="color: #A89984;">&lt;</span><span style="color: #FABD2F;">u32</span><span style="color: #A89984;">&gt;()</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">            .</span><span style="color: #FABD2F;">map_err</span><span style="color: #A89984;">(</span><span style="color: #FB4934;">|</span><span style="color: #83A598;">_</span><span style="color: #FB4934;">|</span><span style="color: #FABD2F;"> Image3dLoaderError</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">FromStrError</span><span style="color: #A89984;">(</span><span style="color: #83A598;">s</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">to_owned</span><span style="color: #A89984;">()))</span><span style="color: #8EC07C;">?</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FABD2F;">        Ok</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">Image3dLoaderSettings</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #83A598;">            columns</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #83A598;">            rows</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">            ..</span><span style="color: #FABD2F;">Default</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">default</span><span style="color: #A89984;">()</span></span>
+<span class="giallo-l"><span style="color: #A89984;">        })</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">}</span></span></code></pre>
+<p>The last thing to consider before implementing <code>Image3dLoader</code> is a custom
+error type which will handle all possible problems while loading our 3D image.
+We'll use <code>thiserror</code> crate for simplicity:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="rust"><span class="giallo-l"><span style="color: #A89984;">#[</span><span>non_exhaustive</span><span style="color: #A89984;">]</span></span>
+<span class="giallo-l"><span style="color: #A89984;">#[</span><span>derive</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">Debug</span><span style="color: #A89984;">,</span><span style="color: #FABD2F;"> Error</span><span style="color: #A89984;">)]</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">pub</span><span style="color: #FE8019;"> enum</span><span style="color: #FABD2F;"> Image3dLoaderError</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    #[</span><span>error</span><span style="color: #A89984;">(&quot;</span><span style="color: #B8BB26;">Invalid columns number: </span><span style="color: #A89984;">{</span><span style="color: #B8BB26;">0</span><span style="color: #A89984;">}&quot;)]</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    InvalidColumnsNumber</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">u32</span><span style="color: #A89984;">),</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    #[</span><span>error</span><span style="color: #A89984;">(&quot;</span><span style="color: #B8BB26;">Invalid rows number: </span><span style="color: #A89984;">{</span><span style="color: #B8BB26;">0</span><span style="color: #A89984;">}&quot;)]</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    InvalidRowsNumber</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">u32</span><span style="color: #A89984;">),</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    #[</span><span>error</span><span style="color: #A89984;">(&quot;</span><span style="color: #B8BB26;">Guessed format is unknown and cannot be determined</span><span style="color: #A89984;">&quot;)]</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    UnknownFormat</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    #[</span><span>error</span><span style="color: #A89984;">(&quot;</span><span style="color: #B8BB26;">Unsupported native format: </span><span style="color: #A89984;">{</span><span style="color: #B8BB26;">0:?</span><span style="color: #A89984;">}&quot;)]</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    InvalidNativeFormat</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">bevy</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">image</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">ImageFormat</span><span style="color: #A89984;">),</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    #[</span><span>error</span><span style="color: #A89984;">(&quot;</span><span style="color: #B8BB26;">Invalid extension: </span><span style="color: #A89984;">{</span><span style="color: #B8BB26;">0:?</span><span style="color: #A89984;">}&quot;)]</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    InvalidExtension</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">Option</span><span style="color: #A89984;">&lt;</span><span style="color: #FABD2F;">OsString</span><span style="color: #A89984;">&gt;),</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    #[</span><span>error</span><span style="color: #A89984;">(&quot;</span><span style="color: #B8BB26;">Cannot load 3D image: </span><span style="color: #A89984;">{</span><span style="color: #B8BB26;">0</span><span style="color: #A89984;">}&quot;)]</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    ImageError</span><span style="color: #A89984;">(#[</span><span>from</span><span style="color: #A89984;">]</span><span style="color: #FABD2F;"> image</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">ImageError</span><span style="color: #A89984;">),</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    #[</span><span>error</span><span style="color: #A89984;">(&quot;</span><span style="color: #B8BB26;">I/O error: </span><span style="color: #A89984;">{</span><span style="color: #B8BB26;">0</span><span style="color: #A89984;">}</span><span style="color: #B8BB26;"> (</span><span style="color: #A89984;">{</span><span style="color: #B8BB26;">0:?</span><span style="color: #A89984;">}</span><span style="color: #B8BB26;">)</span><span style="color: #A89984;">&quot;)]</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    IoError</span><span style="color: #A89984;">(#[</span><span>from</span><span style="color: #A89984;">]</span><span style="color: #FABD2F;"> io</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">Error</span><span style="color: #A89984;">),</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    #[</span><span>error</span><span style="color: #A89984;">(&quot;</span><span style="color: #B8BB26;">Cannot convert path to 3D image settings: invalid string format </span><span style="color: #A89984;">{</span><span style="color: #B8BB26;">0</span><span style="color: #A89984;">}</span><span style="color: #B8BB26;">; expected &lt;name&gt;.(&lt;columns&gt;x&lt;rows&gt;).3d</span><span style="color: #A89984;">&quot;)]</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    FromStrError</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">String</span><span style="color: #A89984;">),</span></span>
+<span class="giallo-l"><span style="color: #A89984;">}</span></span></code></pre>
+<p>Finally, fill our <code>AssetLoader</code> trait implementation with required types and functions:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="rust"><span class="giallo-l"><span style="color: #FB4934;">impl</span><span style="color: #FABD2F;"> AssetLoader</span><span style="color: #FB4934;"> for</span><span style="color: #FABD2F;"> Image3dLoader</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    type</span><span style="color: #FABD2F;"> Asset</span><span style="color: #8EC07C;"> =</span><span style="color: #FABD2F;"> Image</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    type</span><span style="color: #FABD2F;"> Settings</span><span style="color: #8EC07C;"> =</span><span style="color: #FABD2F;"> Option</span><span style="color: #A89984;">&lt;</span><span style="color: #FABD2F;">Image3dLoaderSettings</span><span style="color: #A89984;">&gt;;</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    type</span><span style="color: #FABD2F;"> Error</span><span style="color: #8EC07C;"> =</span><span style="color: #FABD2F;"> Image3dLoaderError</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">    fn</span><span style="color: #FABD2F;"> extensions</span><span style="color: #A89984;">(</span><span style="color: #8EC07C;">&amp;</span><span style="color: #83A598;">self</span><span style="color: #A89984;">)</span><span style="color: #8EC07C;"> -&gt; &amp;</span><span style="color: #A89984;">[</span><span style="color: #8EC07C;">&amp;</span><span style="color: #FABD2F;">str</span><span style="color: #A89984;">] {</span><span> </span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">        &amp;</span><span style="color: #A89984;">[</span></span>
+<span class="giallo-l"><span style="color: #A89984;">            &quot;</span><span style="color: #B8BB26;">3d.png</span><span style="color: #A89984;">&quot;,</span></span>
+<span class="giallo-l"><span style="color: #A89984;">            &quot;</span><span style="color: #B8BB26;">3d.jpg</span><span style="color: #A89984;">&quot;,</span></span>
+<span class="giallo-l"><span style="color: #A89984;">            &quot;</span><span style="color: #B8BB26;">3d.jpeg</span><span style="color: #A89984;">&quot;,</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">            // Other image types if needed</span></span>
+<span class="giallo-l"><span style="color: #A89984;">        ]</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">    async fn</span><span style="color: #FABD2F;"> load</span><span style="color: #A89984;">(</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">        &amp;</span><span style="color: #83A598;">self</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #83A598;">        reader</span><span style="color: #8EC07C;">: &amp;</span><span style="color: #FE8019;">mut</span><span style="color: #FB4934;"> dyn</span><span style="color: #FABD2F;"> Reader</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #83A598;">        settings</span><span style="color: #8EC07C;">: &amp;</span><span style="color: #83A598;">Self</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">Settings</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #83A598;">        load_context</span><span style="color: #8EC07C;">: &amp;</span><span style="color: #FE8019;">mut</span><span style="color: #FABD2F;"> LoadContext</span><span style="color: #A89984;">&lt;&#39;</span><span style="color: #FABD2F;">_</span><span style="color: #A89984;">&gt;,</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    )</span><span style="color: #8EC07C;"> -&gt;</span><span style="color: #FABD2F;"> Result</span><span style="color: #A89984;">&lt;</span><span style="color: #83A598;">Self</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">Asset</span><span style="color: #A89984;">,</span><span style="color: #83A598;"> Self</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">Error</span><span style="color: #A89984;">&gt; {</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">        // implementation later</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">}</span></span></code></pre>
+<p>At first place, retrieve all loader settings:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="rust"><span class="giallo-l"><span style="color: #FB4934;">use</span><span style="color: #FABD2F;"> ImageFormatSetting</span><span style="color: #8EC07C;">::*</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// If settings are not provided, retrieve them from our file path</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">let</span><span style="color: #83A598;"> settings</span><span style="color: #8EC07C;"> =</span><span style="color: #FB4934;"> match</span><span style="color: #83A598;"> settings</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    Some</span><span style="color: #A89984;">(</span><span style="color: #83A598;">s</span><span style="color: #A89984;">)</span><span style="color: #8EC07C;"> =&gt;</span><span style="color: #83A598;"> s</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">clone</span><span style="color: #A89984;">(),</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    None</span><span style="color: #8EC07C;"> =&gt;</span><span style="color: #FABD2F;"> Image3dLoaderSettings</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">from_path</span><span style="color: #A89984;">(</span><span style="color: #83A598;">load_context</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">path</span><span style="color: #A89984;">())</span><span style="color: #8EC07C;">?</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #A89984;">};</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// Check whether our row and column count is correct</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">if</span><span style="color: #83A598;"> settings</span><span style="color: #8EC07C;">.</span><span>columns </span><span style="color: #8EC07C;">==</span><span style="color: #D3869B;"> 0</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    return</span><span style="color: #FABD2F;"> Err</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">Image3dLoaderError</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">InvalidColumnsNumber</span><span style="color: #A89984;">(</span><span style="color: #83A598;">settings</span><span style="color: #8EC07C;">.</span><span>columns</span><span style="color: #A89984;">));</span></span>
+<span class="giallo-l"><span style="color: #A89984;">}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FB4934;">if</span><span style="color: #83A598;"> settings</span><span style="color: #8EC07C;">.</span><span>rows </span><span style="color: #8EC07C;">==</span><span style="color: #D3869B;"> 0</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    return</span><span style="color: #FABD2F;"> Err</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">Image3dLoaderError</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">InvalidRowsNumber</span><span style="color: #A89984;">(</span><span style="color: #83A598;">settings</span><span style="color: #8EC07C;">.</span><span>rows</span><span style="color: #A89984;">));</span></span>
+<span class="giallo-l"><span style="color: #A89984;">}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// Read asset file to `Vec`</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">let mut</span><span style="color: #83A598;"> bytes</span><span style="color: #8EC07C;"> =</span><span style="color: #FABD2F;"> vec!</span><span style="color: #A89984;">[];</span></span>
+<span class="giallo-l"><span style="color: #83A598;">reader</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">read_to_end</span><span style="color: #A89984;">(</span><span style="color: #8EC07C;">&amp;</span><span style="color: #FE8019;">mut</span><span style="color: #83A598;"> bytes</span><span style="color: #A89984;">)</span><span style="color: #8EC07C;">.</span><span style="color: #FB4934;">await</span><span style="color: #8EC07C;">?</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FE8019;">let</span><span style="color: #83A598;"> ext</span><span style="color: #8EC07C;"> =</span><span style="color: #83A598;"> load_context</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">path</span><span style="color: #A89984;">()</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">    .</span><span style="color: #FABD2F;">extension</span><span style="color: #A89984;">()</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">    .</span><span style="color: #FABD2F;">map</span><span style="color: #A89984;">(</span><span style="color: #FB4934;">|</span><span style="color: #83A598;">ext</span><span style="color: #FB4934;">|</span><span style="color: #83A598;"> ext</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">to_owned</span><span style="color: #A89984;">())</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">    .</span><span style="color: #FABD2F;">ok_or</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">Image3dLoaderError</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">InvalidExtension</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">None</span><span style="color: #A89984;">))</span><span style="color: #8EC07C;">?</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// Get image format to load: by extension, manually or by `magic guessing`</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">let</span><span style="color: #83A598;"> format</span><span style="color: #8EC07C;"> =</span><span style="color: #FB4934;"> match</span><span style="color: #83A598;"> settings</span><span style="color: #8EC07C;">.</span><span>format </span><span style="color: #A89984;">{</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    FromExtension</span><span style="color: #8EC07C;"> =&gt;</span><span style="color: #FABD2F;"> ImageFormat</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">from_extension</span><span style="color: #A89984;">(</span><span style="color: #83A598;">ext</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">clone</span><span style="color: #A89984;">())</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">        .</span><span style="color: #FABD2F;">ok_or</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">Image3dLoaderError</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">InvalidExtension</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">Some</span><span style="color: #A89984;">(</span><span style="color: #83A598;">ext</span><span style="color: #A89984;">)))</span><span style="color: #8EC07C;">?</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    Format</span><span style="color: #A89984;">(</span><span style="color: #83A598;">f</span><span style="color: #A89984;">)</span><span style="color: #8EC07C;"> =&gt;</span><span style="color: #83A598;"> f</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">        .</span><span style="color: #FABD2F;">as_image_crate_format</span><span style="color: #A89984;">()</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">        .</span><span style="color: #FABD2F;">ok_or</span><span style="color: #A89984;">(</span><span style="color: #FABD2F;">Image3dLoaderError</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">InvalidNativeFormat</span><span style="color: #A89984;">(</span><span style="color: #83A598;">f</span><span style="color: #A89984;">))</span><span style="color: #8EC07C;">?</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FABD2F;">    Guess</span><span style="color: #8EC07C;"> =&gt;</span><span style="color: #FABD2F;"> image</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">guess_format</span><span style="color: #A89984;">(</span><span style="color: #8EC07C;">&amp;</span><span style="color: #83A598;">bytes</span><span style="color: #A89984;">)</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">        .</span><span style="color: #FABD2F;">map_err</span><span style="color: #A89984;">(</span><span style="color: #FB4934;">|</span><span style="color: #83A598;">_</span><span style="color: #FB4934;">|</span><span style="color: #FABD2F;"> Image3dLoaderError</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">UnknownFormat</span><span style="color: #A89984;">)</span><span style="color: #8EC07C;">?</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #A89984;">};</span></span></code></pre>
+<p>Now we need to store our 3D data, retrieved from row-column aligned 2D image, to 1d bytes array,
+because all data is transfered to GPU bit-by-bit. This may sound complicated, but we can calculate each
+next pixel, pushed to 1d array, with a following simple formula:</p>
+<p><img src="/img/blog/voxel-ray-tracing/formula.svg" alt="formula" /></p>
+<p>where <code>c</code> and <code>r</code> are current column and row accordingly, <code>x</code> and <code>y</code> are current tile coordinates and
+<code>w</code> and <code>h</code> are single tile width and height. The algorithm will look like this:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="rust"><span class="giallo-l"><span style="color: #928374;font-style: italic;">// Load image with `image` crate using previously determined format</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">let</span><span style="color: #83A598;"> img</span><span style="color: #8EC07C;"> =</span><span style="color: #FABD2F;"> image</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">load_from_memory_with_format</span><span style="color: #A89984;">(</span><span style="color: #8EC07C;">&amp;</span><span style="color: #83A598;">bytes</span><span style="color: #A89984;">,</span><span style="color: #83A598;"> format</span><span style="color: #A89984;">)</span><span style="color: #8EC07C;">?</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">    .</span><span style="color: #FABD2F;">to_rgba8</span><span style="color: #A89984;">();</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FE8019;">let</span><span style="color: #83A598;"> bw</span><span style="color: #8EC07C;"> =</span><span style="color: #83A598;"> img</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">width</span><span style="color: #A89984;">();</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">let</span><span style="color: #83A598;"> bh</span><span style="color: #8EC07C;"> =</span><span style="color: #83A598;"> img</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">height</span><span style="color: #A89984;">();</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// Calculate single tile dimensions using previously determined</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// column and row size</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">let</span><span style="color: #83A598;"> w</span><span style="color: #8EC07C;"> =</span><span style="color: #83A598;"> bw</span><span style="color: #8EC07C;"> /</span><span style="color: #83A598;"> settings</span><span style="color: #8EC07C;">.</span><span>columns</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">let</span><span style="color: #83A598;"> h</span><span style="color: #8EC07C;"> =</span><span style="color: #83A598;"> bh</span><span style="color: #8EC07C;"> /</span><span style="color: #83A598;"> settings</span><span style="color: #8EC07C;">.</span><span>rows</span><span style="color: #A89984;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FE8019;">let mut</span><span style="color: #83A598;"> data</span><span style="color: #8EC07C;"> =</span><span style="color: #FABD2F;"> vec!</span><span style="color: #A89984;">[];</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// Calculate each next pixel position</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">for</span><span style="color: #83A598;"> r</span><span style="color: #FB4934;"> in</span><span style="color: #D3869B;"> 0</span><span style="color: #8EC07C;">..</span><span style="color: #83A598;">settings</span><span style="color: #8EC07C;">.</span><span>rows </span><span style="color: #A89984;">{</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">    for</span><span style="color: #83A598;"> c</span><span style="color: #FB4934;"> in</span><span style="color: #D3869B;"> 0</span><span style="color: #8EC07C;">..</span><span style="color: #83A598;">settings</span><span style="color: #8EC07C;">.</span><span>columns </span><span style="color: #A89984;">{</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">        for</span><span style="color: #83A598;"> y</span><span style="color: #FB4934;"> in</span><span style="color: #D3869B;"> 0</span><span style="color: #8EC07C;">..</span><span style="color: #83A598;">h</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #FB4934;">            for</span><span style="color: #83A598;"> x</span><span style="color: #FB4934;"> in</span><span style="color: #D3869B;"> 0</span><span style="color: #8EC07C;">..</span><span style="color: #83A598;">w</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">                let</span><span style="color: #83A598;"> pixel</span><span style="color: #8EC07C;"> =</span><span style="color: #83A598;"> img</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">get_pixel</span><span style="color: #A89984;">(</span><span style="color: #83A598;">x</span><span style="color: #8EC07C;"> +</span><span style="color: #83A598;"> c</span><span style="color: #8EC07C;"> *</span><span style="color: #83A598;"> w</span><span style="color: #A89984;">,</span><span style="color: #83A598;"> y</span><span style="color: #8EC07C;"> +</span><span style="color: #83A598;"> r</span><span style="color: #8EC07C;"> *</span><span style="color: #83A598;"> h</span><span style="color: #A89984;">);</span></span>
+<span class="giallo-l"><span style="color: #83A598;">                data</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">extend</span><span style="color: #A89984;">(</span><span style="color: #83A598;">pixel</span><span style="color: #8EC07C;">.</span><span style="color: #D3869B;">0</span><span style="color: #A89984;">);</span></span>
+<span class="giallo-l"><span style="color: #A89984;">            }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">        }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    }</span></span>
+<span class="giallo-l"><span style="color: #A89984;">}</span></span></code></pre>
+<p>And finally we create an <code>Image</code> instance using a GPU texture descriptor:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="rust"><span class="giallo-l"><span style="color: #928374;font-style: italic;">// Define image dimensions</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">let</span><span style="color: #83A598;"> size</span><span style="color: #8EC07C;"> =</span><span style="color: #FABD2F;"> Extent3d</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #83A598;">    width</span><span style="color: #8EC07C;">:</span><span style="color: #83A598;"> w</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #83A598;">    height</span><span style="color: #8EC07C;">:</span><span style="color: #83A598;"> h</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #83A598;">    depth_or_array_layers</span><span style="color: #8EC07C;">:</span><span style="color: #83A598;"> settings</span><span style="color: #8EC07C;">.</span><span>columns </span><span style="color: #8EC07C;">*</span><span style="color: #83A598;"> settings</span><span style="color: #8EC07C;">.</span><span>rows</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #A89984;">};</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #FE8019;">let</span><span style="color: #83A598;"> img</span><span style="color: #8EC07C;"> =</span><span style="color: #FABD2F;"> Image</span><span style="color: #A89984;"> {</span></span>
+<span class="giallo-l"><span style="color: #83A598;">    texture_descriptor</span><span style="color: #8EC07C;">:</span><span style="color: #FABD2F;"> TextureDescriptor</span><span style="color: #A89984;"> {</span><span> </span></span>
+<span class="giallo-l"><span style="color: #83A598;">        label</span><span style="color: #8EC07C;">:</span><span style="color: #FABD2F;"> Some</span><span style="color: #A89984;">(&quot;</span><span style="color: #B8BB26;">image 3d</span><span style="color: #A89984;">&quot;),</span><span> </span></span>
+<span class="giallo-l"><span style="color: #83A598;">        size</span><span style="color: #A89984;">,</span><span> </span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">        // Change it, if you need mip-map optimizations</span></span>
+<span class="giallo-l"><span style="color: #83A598;">        mip_level_count</span><span style="color: #8EC07C;">:</span><span style="color: #D3869B;"> 1</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #83A598;">        sample_count</span><span style="color: #8EC07C;">:</span><span style="color: #D3869B;"> 1</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #83A598;">        dimension</span><span style="color: #8EC07C;">:</span><span style="color: #FABD2F;"> TextureDimension</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">D3</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #83A598;">        format</span><span style="color: #8EC07C;">:</span><span style="color: #D3869B;font-weight: bold;"> IMAGE_3D_FORMAT</span><span style="color: #A89984;">,</span><span> </span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">        // Add other usages if needed</span></span>
+<span class="giallo-l"><span style="color: #83A598;">        usage</span><span style="color: #8EC07C;">:</span><span style="color: #FABD2F;"> TextureUsages</span><span style="color: #8EC07C;">::</span><span style="color: #D3869B;font-weight: bold;">TEXTURE_BINDING</span><span> </span></span>
+<span class="giallo-l"><span style="color: #FB4934;">            |</span><span style="color: #FABD2F;"> TextureUsages</span><span style="color: #8EC07C;">::</span><span style="color: #D3869B;font-weight: bold;">COPY_DST</span><span> </span></span>
+<span class="giallo-l"><span style="color: #FB4934;">            |</span><span style="color: #FABD2F;"> TextureUsages</span><span style="color: #8EC07C;">::</span><span style="color: #D3869B;font-weight: bold;">STORAGE_BINDING</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #83A598;">        view_formats</span><span style="color: #8EC07C;">: &amp;</span><span style="color: #A89984;">[</span><span style="color: #D3869B;font-weight: bold;">IMAGE_3D_FORMAT</span><span style="color: #A89984;">],</span></span>
+<span class="giallo-l"><span style="color: #A89984;">    },</span></span>
+<span class="giallo-l"><span style="color: #83A598;">    data</span><span style="color: #A89984;">,</span></span>
+<span class="giallo-l"><span style="color: #83A598;">    asset_usage</span><span style="color: #8EC07C;">:</span><span style="color: #FABD2F;"> RenderAssetUsages</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">all</span><span style="color: #A89984;">(),</span></span>
+<span class="giallo-l"><span style="color: #8EC07C;">    ..</span><span style="color: #FABD2F;">Default</span><span style="color: #8EC07C;">::</span><span style="color: #FABD2F;">default</span><span style="color: #A89984;">()</span></span>
+<span class="giallo-l"><span style="color: #A89984;">};</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">// Return our loaded 3D image</span></span>
+<span class="giallo-l"><span style="color: #FABD2F;">Ok</span><span style="color: #A89984;">(</span><span style="color: #83A598;">img</span><span style="color: #A89984;">)</span></span></code></pre>
+<p>Let's test it! Just add an asset server to our system and load our image as an asset:</p>
+<pre class="giallo" style="color: #EBDBB2; background-color: #282828;"><code data-lang="rust"><span class="giallo-l"><span style="color: #FB4934;">fn</span><span style="color: #FABD2F;"> system</span><span style="color: #A89984;">(</span><span style="color: #83A598;">asset_server</span><span style="color: #8EC07C;">:</span><span style="color: #FABD2F;"> Res</span><span style="color: #A89984;">&lt;</span><span style="color: #FABD2F;">AssetServer</span><span style="color: #A89984;">&gt;) {</span></span>
+<span class="giallo-l"><span style="color: #FE8019;">    let</span><span style="color: #83A598;"> handle</span><span style="color: #8EC07C;">:</span><span style="color: #FABD2F;"> Handle</span><span style="color: #A89984;">&lt;</span><span style="color: #FABD2F;">Image</span><span style="color: #A89984;">&gt;</span><span style="color: #8EC07C;"> =</span><span style="color: #83A598;"> asset_server</span><span style="color: #8EC07C;">.</span><span style="color: #FABD2F;">load</span><span style="color: #A89984;">(&quot;</span><span style="color: #B8BB26;">my_image.(5x2).3d.png</span><span style="color: #A89984;">&quot;);</span></span>
+<span class="giallo-l"><span style="color: #A89984;">}</span></span></code></pre><h2 id="conclusion">Conclusion</h2>
+<p>In this post, we explored how to implement a custom 3D texture loader for Bevy by leveraging the asset pipeline and extending it to support 3D data stored in standard 2D image formats. By organizing our 3D data as tiled slices and parsing loader settings from filenames, we can efficiently import and use 3D textures in our Bevy projects. This approach opens up new possibilities for voxel rendering, volumetric effects, and custom texture workflows, even before native 3D texture support lands in Bevy. Happy experimenting!</p>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between flex-wrap gap-3">
+    
+    <a href="https:&#x2F;&#x2F;example.com&#x2F;tutorials&#x2F;making-a-static-blog-in-elm&#x2F;" class="rpg-post-nav-link"><i class="ph ph-arrow-left"></i> Making a Static Blog in Elm: Why and How?</a>
+    
+    
+  </div>
+</article>
+
+
+  </div>
+</main>
+
+<footer class="py-4 text-center">
+  <div class="container">
+    <p class="mb-2">KONCEPTO SOCIALA (c) 2026</p>
+    <div class="d-flex justify-content-center gap-3">
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;konceptosociala" target="_blank"><i class="ph ph-github-logo fs-5"></i></a>
+      <a href="https://example.com/atom.xml"><i class="ph ph-rss fs-5"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
