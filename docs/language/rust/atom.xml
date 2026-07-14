@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Koncepto Sociala - rust</title>
     <subtitle>Little blog for programming and life</subtitle>
-    <link rel="self" type="application/atom+xml" href="https://example.com/language/rust/atom.xml"/>
-    <link rel="alternate" type="text/html" href="https://example.com"/>
+    <link rel="self" type="application/atom+xml" href="https://konceptosociala.eu.org/language/rust/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://konceptosociala.eu.org"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2025-05-27T00:00:00+00:00</updated>
-    <id>https://example.com/language/rust/atom.xml</id>
+    <id>https://konceptosociala.eu.org/language/rust/atom.xml</id>
     <entry xml:lang="en">
         <title>Loading 3D texture in Bevy</title>
         <published>2025-05-27T00:00:00+00:00</published>
@@ -20,10 +20,10 @@
           </name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://example.com/tutorials/loading-3d-texture-in-bevy/"/>
-        <id>https://example.com/tutorials/loading-3d-texture-in-bevy/</id>
+        <link rel="alternate" type="text/html" href="https://konceptosociala.eu.org/tutorials/loading-3d-texture-in-bevy/"/>
+        <id>https://konceptosociala.eu.org/tutorials/loading-3d-texture-in-bevy/</id>
         
-        <content type="html" xml:base="https://example.com/tutorials/loading-3d-texture-in-bevy/">&lt;p&gt;To load an image into our app Bevy provides us with a custom &lt;code&gt;Image&lt;&#x2F;code&gt; type. However, &lt;code&gt;AssetServer&lt;&#x2F;code&gt;
+        <content type="html" xml:base="https://konceptosociala.eu.org/tutorials/loading-3d-texture-in-bevy/">&lt;p&gt;To load an image into our app Bevy provides us with a custom &lt;code&gt;Image&lt;&#x2F;code&gt; type. However, &lt;code&gt;AssetServer&lt;&#x2F;code&gt;
 in Bevy (as of version 0.15) only supports 2D image loading for now, so we need to perhaps
 implement a custom 3D image asset loader. For our tutorial we will use png and jpeg raster image
 types, but you can also try to implement importing of raw MagicaVoxel data, e.g. using &lt;code&gt;dot_vox&lt;&#x2F;code&gt; crate.&lt;&#x2F;p&gt;

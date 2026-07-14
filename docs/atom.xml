@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Koncepto Sociala</title>
     <subtitle>Little blog for programming and life</subtitle>
-    <link rel="self" type="application/atom+xml" href="https://example.com/atom.xml"/>
-    <link rel="alternate" type="text/html" href="https://example.com"/>
+    <link rel="self" type="application/atom+xml" href="https://konceptosociala.eu.org/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://konceptosociala.eu.org"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2026-07-12T00:00:00+00:00</updated>
-    <id>https://example.com/atom.xml</id>
+    <id>https://konceptosociala.eu.org/atom.xml</id>
     <entry xml:lang="en">
         <title>What I have made during the summer</title>
         <published>2026-07-12T00:00:00+00:00</published>
@@ -20,10 +20,10 @@
           </name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://example.com/blog/why-i-rebuilt-my-blog/"/>
-        <id>https://example.com/blog/why-i-rebuilt-my-blog/</id>
+        <link rel="alternate" type="text/html" href="https://konceptosociala.eu.org/blog/why-i-rebuilt-my-blog/"/>
+        <id>https://konceptosociala.eu.org/blog/why-i-rebuilt-my-blog/</id>
         
-        <content type="html" xml:base="https://example.com/blog/why-i-rebuilt-my-blog/">&lt;p&gt;&lt;strong&gt;Xide (Java, Kotlin)&lt;&#x2F;strong&gt;: I&#x27;ve decided to replace RSyntaxTextArea completely (it takes much more time, but I guess it worth it), because it was primarily developed for conservative old school IDEs like eclipse, not really suitable for LSPs or tree sitter, so I am making editor from scratch, using Piece Table optimization. The next step will be text selection and syntax highlighting. I also added Kotlin support to my project and now all the plugins are or will be written in Kotlin. I am also still fighting with the style, I think that the previous version is too dark for every monitor, so I am sticking to GitHub Dark FlatLaf theme, looks nice (but not for ever :))&lt;&#x2F;p&gt;
+        <content type="html" xml:base="https://konceptosociala.eu.org/blog/why-i-rebuilt-my-blog/">&lt;p&gt;&lt;strong&gt;Xide (Java, Kotlin)&lt;&#x2F;strong&gt;: I&#x27;ve decided to replace RSyntaxTextArea completely (it takes much more time, but I guess it worth it), because it was primarily developed for conservative old school IDEs like eclipse, not really suitable for LSPs or tree sitter, so I am making editor from scratch, using Piece Table optimization. The next step will be text selection and syntax highlighting. I also added Kotlin support to my project and now all the plugins are or will be written in Kotlin. I am also still fighting with the style, I think that the previous version is too dark for every monitor, so I am sticking to GitHub Dark FlatLaf theme, looks nice (but not for ever :))&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;strong&gt;XastC (Haskell)&lt;&#x2F;strong&gt;: Xast programming language compiler, now I am on semantic analysis stage – name resolution, import resolution, Hindley Milner type inference are implemented almost, but the hardest part is going further – many optimizations (CoW, unique types, compile time expressions, and so on, and so on....) as well as desugaring and maybe even more syntax sugar to make the language usable for big projects. Semantics are still in development.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;strong&gt;XastGE (Rust)&lt;&#x2F;strong&gt;: I fully replaced my half-OOP libGDX-like architecture with World storage, with fully ECS based approach - Flecs modules, systems and sometimes compiled queries. I also added simple UI (text rendering with automatic layout and tweening hover animations) and C Flecs shared .so plugins support, so I could later write my game logic in Xast, compiling it to C and using it as plugins for my engine. Now it is being developed and scaled much more naturally and easily!&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;strong&gt;Carol (former Java, now Vala)&lt;&#x2F;strong&gt;: Yes, it is really strange idea to fully migrate from feature rich and big ecosystem language like Java, with libGDX framework to a language, which was made for GTK (Linux GUI toolkit) apps and has literally no game engines and frameworks... But it is really fun, because this language looks a lot like Java&#x2F;C#, but is compiled to C, so, without GC (but sometimes with reference counting), VM, very fast compilation and near C performance. And it just looks fun. And also libGDX just broke my X11 WM because of, idk really what, but maybe old LWJGL version, used because of Nifty GUI (cool lib though). But nevertheless, I am not sure, when I&#x27;ll continue developing this concrete game (I almost fully transferred it from Java to Vala), because I don&#x27;t really know, what it must become, and what the story should be about, so... We&#x27;ll see :)&lt;&#x2F;p&gt;
@@ -43,10 +43,10 @@
           </name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://example.com/tutorials/mvu-pattern-flutter/"/>
-        <id>https://example.com/tutorials/mvu-pattern-flutter/</id>
+        <link rel="alternate" type="text/html" href="https://konceptosociala.eu.org/tutorials/mvu-pattern-flutter/"/>
+        <id>https://konceptosociala.eu.org/tutorials/mvu-pattern-flutter/</id>
         
-        <content type="html" xml:base="https://example.com/tutorials/mvu-pattern-flutter/">&lt;p&gt;When learning Flutter, its view-state management is straightforward at first glance: you create your own widget classes and use anonymous functions as callbacks directly in the view, where you use built-in &lt;code&gt;setState(...)&lt;&#x2F;code&gt; function to change a state inside this widget. But as the project grows, you can face some problems using this approach:&lt;&#x2F;p&gt;
+        <content type="html" xml:base="https://konceptosociala.eu.org/tutorials/mvu-pattern-flutter/">&lt;p&gt;When learning Flutter, its view-state management is straightforward at first glance: you create your own widget classes and use anonymous functions as callbacks directly in the view, where you use built-in &lt;code&gt;setState(...)&lt;&#x2F;code&gt; function to change a state inside this widget. But as the project grows, you can face some problems using this approach:&lt;&#x2F;p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Synchronization of state and presentation&lt;&#x2F;strong&gt;. When you change some value in one place, which should change a presentation (view) in another place, when your widget depends on another widget&#x27;s state, when and how should you call your &lt;code&gt;setState(...)&lt;&#x2F;code&gt;?&lt;&#x2F;p&gt;
@@ -428,10 +428,10 @@
           </name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://example.com/tutorials/making-a-static-blog-in-elm/"/>
-        <id>https://example.com/tutorials/making-a-static-blog-in-elm/</id>
+        <link rel="alternate" type="text/html" href="https://konceptosociala.eu.org/tutorials/making-a-static-blog-in-elm/"/>
+        <id>https://konceptosociala.eu.org/tutorials/making-a-static-blog-in-elm/</id>
         
-        <content type="html" xml:base="https://example.com/tutorials/making-a-static-blog-in-elm/">&lt;p&gt;&lt;strong&gt;Warning:&lt;&#x2F;strong&gt; this post is more like a cheat sheet than a full tutorial, so you should get acquainted with some basics
+        <content type="html" xml:base="https://konceptosociala.eu.org/tutorials/making-a-static-blog-in-elm/">&lt;p&gt;&lt;strong&gt;Warning:&lt;&#x2F;strong&gt; this post is more like a cheat sheet than a full tutorial, so you should get acquainted with some basics
 of functional programming, or at least read &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;guide.elm-lang.org&#x2F;&quot;&gt;the official Elm guide&lt;&#x2F;a&gt; first.&lt;&#x2F;p&gt;
 &lt;p&gt;I&#x27;ve been remaking my tech blog on GitHub Pages several times: I switched themes for Jekyll
 static website generator, then moved from Jekyll to Zola, &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;konceptosociala&#x2F;socio&#x2F;&quot;&gt;wrote my own Zola theme&lt;&#x2F;a&gt;, returned to Jekyll back with a simple no-style design, but it was really &lt;strong&gt;boring&lt;&#x2F;strong&gt;.
@@ -701,10 +701,10 @@ alternative for HTML&#x2F;CSS. Looks promising, but I don&#x27;t quite understan
           </name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://example.com/tutorials/loading-3d-texture-in-bevy/"/>
-        <id>https://example.com/tutorials/loading-3d-texture-in-bevy/</id>
+        <link rel="alternate" type="text/html" href="https://konceptosociala.eu.org/tutorials/loading-3d-texture-in-bevy/"/>
+        <id>https://konceptosociala.eu.org/tutorials/loading-3d-texture-in-bevy/</id>
         
-        <content type="html" xml:base="https://example.com/tutorials/loading-3d-texture-in-bevy/">&lt;p&gt;To load an image into our app Bevy provides us with a custom &lt;code&gt;Image&lt;&#x2F;code&gt; type. However, &lt;code&gt;AssetServer&lt;&#x2F;code&gt;
+        <content type="html" xml:base="https://konceptosociala.eu.org/tutorials/loading-3d-texture-in-bevy/">&lt;p&gt;To load an image into our app Bevy provides us with a custom &lt;code&gt;Image&lt;&#x2F;code&gt; type. However, &lt;code&gt;AssetServer&lt;&#x2F;code&gt;
 in Bevy (as of version 0.15) only supports 2D image loading for now, so we need to perhaps
 implement a custom 3D image asset loader. For our tutorial we will use png and jpeg raster image
 types, but you can also try to implement importing of raw MagicaVoxel data, e.g. using &lt;code&gt;dot_vox&lt;&#x2F;code&gt; crate.&lt;&#x2F;p&gt;

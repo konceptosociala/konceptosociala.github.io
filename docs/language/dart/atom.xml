@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Koncepto Sociala - dart</title>
     <subtitle>Little blog for programming and life</subtitle>
-    <link rel="self" type="application/atom+xml" href="https://example.com/language/dart/atom.xml"/>
-    <link rel="alternate" type="text/html" href="https://example.com"/>
+    <link rel="self" type="application/atom+xml" href="https://konceptosociala.eu.org/language/dart/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://konceptosociala.eu.org"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2025-12-08T00:00:00+00:00</updated>
-    <id>https://example.com/language/dart/atom.xml</id>
+    <id>https://konceptosociala.eu.org/language/dart/atom.xml</id>
     <entry xml:lang="en">
         <title>MVU Pattern and Functional Approach in Flutter</title>
         <published>2025-12-08T00:00:00+00:00</published>
@@ -20,10 +20,10 @@
           </name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://example.com/tutorials/mvu-pattern-flutter/"/>
-        <id>https://example.com/tutorials/mvu-pattern-flutter/</id>
+        <link rel="alternate" type="text/html" href="https://konceptosociala.eu.org/tutorials/mvu-pattern-flutter/"/>
+        <id>https://konceptosociala.eu.org/tutorials/mvu-pattern-flutter/</id>
         
-        <content type="html" xml:base="https://example.com/tutorials/mvu-pattern-flutter/">&lt;p&gt;When learning Flutter, its view-state management is straightforward at first glance: you create your own widget classes and use anonymous functions as callbacks directly in the view, where you use built-in &lt;code&gt;setState(...)&lt;&#x2F;code&gt; function to change a state inside this widget. But as the project grows, you can face some problems using this approach:&lt;&#x2F;p&gt;
+        <content type="html" xml:base="https://konceptosociala.eu.org/tutorials/mvu-pattern-flutter/">&lt;p&gt;When learning Flutter, its view-state management is straightforward at first glance: you create your own widget classes and use anonymous functions as callbacks directly in the view, where you use built-in &lt;code&gt;setState(...)&lt;&#x2F;code&gt; function to change a state inside this widget. But as the project grows, you can face some problems using this approach:&lt;&#x2F;p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Synchronization of state and presentation&lt;&#x2F;strong&gt;. When you change some value in one place, which should change a presentation (view) in another place, when your widget depends on another widget&#x27;s state, when and how should you call your &lt;code&gt;setState(...)&lt;&#x2F;code&gt;?&lt;&#x2F;p&gt;
